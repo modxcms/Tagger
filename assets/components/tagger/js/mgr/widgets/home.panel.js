@@ -15,13 +15,13 @@ Tagger.panel.Home = function(config) {
             ,activeItem: 0
             ,hideMode: 'offsets'
             ,items: [{
-                title: _('tagger.items')
+                title: _('tagger.tag.tags')
                 ,items: [{
-                    html: '<p>'+_('tagger.intro_msg')+'</p>'
+                    html: '<p>'+_('tagger.tag.intro_msg')+'</p>'
                     ,border: false
                     ,bodyCssClass: 'panel-desc'
                 },{
-                    xtype: 'tagger-grid-items'
+                    xtype: 'tagger-grid-tag'
                     ,preventRender: true
                     ,cls: 'main-wrapper'
                 }]

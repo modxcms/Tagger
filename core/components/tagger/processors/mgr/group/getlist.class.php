@@ -12,6 +12,23 @@ class TaggerGroupGetListProcessor extends modObjectGetListProcessor {
     public $defaultSortDirection = 'ASC';
     public $objectType = 'tagger.group';
 
+    public function initialize() {
+        $initialized = parent::initialize();
+
+        $this->setDefaultProperties(array(
+            'addNone' => false,
+        ));
+
+        return $initialized;
+    }
+
+    public function beforeIteration(array $list) {
+        if ($this->getProperty('addNone',false)) {
+            $list[] = array('id' => 0, 'name' => $this->modx->lexicon('tagger.group.all'));
+        }
+        return $list;
+    }
+
     public function prepareQueryBeforeCount(xPDOQuery $c) {
         $query = $this->getProperty('query');
 

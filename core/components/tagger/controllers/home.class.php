@@ -11,9 +11,12 @@ class TaggerHomeManagerController extends TaggerBaseManagerController {
     }
     public function getPageTitle() { return $this->modx->lexicon('tagger'); }
     public function loadCustomCssJs() {
-    
-    
-        $this->addJavascript($this->tagger->getOption('jsUrl').'mgr/widgets/items.grid.js');
+
+        $this->addJavascript($this->tagger->getOption('jsUrl').'mgr/extras/tagger.combo.js');
+
+        $this->addJavascript($this->tagger->getOption('jsUrl').'mgr/widgets/tag/tag.grid.js');
+        $this->addJavascript($this->tagger->getOption('jsUrl').'mgr/widgets/tag/tag.window.js');
+
         $this->addJavascript($this->tagger->getOption('jsUrl').'mgr/widgets/group/group.grid.js');
         $this->addJavascript($this->tagger->getOption('jsUrl').'mgr/widgets/group/group.window.js');
         $this->addJavascript($this->tagger->getOption('jsUrl').'mgr/widgets/home.panel.js');
