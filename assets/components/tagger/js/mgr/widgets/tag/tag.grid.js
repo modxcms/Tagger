@@ -17,15 +17,18 @@ Tagger.grid.Tag = function(config) {
             header: _('id')
             ,dataIndex: 'id'
             ,width: 70
+            ,sortable: true
         },{
             header: _('tagger.tag.name')
             ,dataIndex: 'name'
             ,width: 200
+            ,sortable: true
             ,editor: { xtype: 'textfield' }
         },{
             header: _('tagger.tag.group')
             ,dataIndex: 'group'
             ,width: 200
+            ,sortable: true
             ,editor: {xtype: 'tagger-combo-group', renderer: true, disabled: true}
         }]
         ,tbar: [{

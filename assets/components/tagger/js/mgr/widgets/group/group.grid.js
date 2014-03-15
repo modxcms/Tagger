@@ -17,10 +17,12 @@ Tagger.grid.Group = function(config) {
             header: _('id')
             ,dataIndex: 'id'
             ,width: 70
+            ,sortable: true
         },{
             header: _('tagger.group.name')
             ,dataIndex: 'name'
             ,width: 200
+            ,sortable: true
             ,editor: { xtype: 'textfield' }
         }]
         ,tbar: [{
