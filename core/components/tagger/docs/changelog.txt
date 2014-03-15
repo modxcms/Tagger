@@ -1,5 +1,8 @@
 Changelog for Tagger.
 
-Tagger 0.0.1
+Tagger 0.1.0
 ==============
+- Added sorting option to tag and group grids
+- Tag management
+- Group management
 - Initial release.
