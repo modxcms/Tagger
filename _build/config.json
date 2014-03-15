@@ -15,7 +15,10 @@
             ,"action": 1
         }],
         "elements": {
-            "plugins": [],
+            "plugins": [{
+                "name": "Tagger"
+                ,"events": ["OnDocFormSave", "OnDocFormPrerender"]
+            }],
             "snippets": [],
             "chunks": []
         },

@@ -60,4 +60,26 @@ class Tagger {
         }
         return $option;
     }
+
+    public function onDocFormPrerender() {
+        $this->modx->controller->addLexiconTopic('tagger:default');
+
+        $this->modx->regClientStartupScript($this->getOption('jsUrl').'mgr/tagger.js');
+
+        $groups = $this->modx->getIterator('TaggerGroup');
+        $groupsArray = [];
+        foreach ($groups as $group) {
+            $groupsArray[] = $group->toArray();
+        }
+
+        $this->modx->regClientStartupHTMLBlock('<script type="text/javascript">
+        //Ext.onReady(function() {
+            Tagger.config = '.$this->modx->toJSON($this->options).';
+            Tagger.config.connector_url = "'.$this->getOption('connectorUrl').'";
+            Tagger.groups = ' . $this->modx->toJSON($groupsArray) . ';
+        //});
+        </script>');
+
+        $this->modx->regClientStartupScript($this->getOption('jsUrl').'mgr/inject/tab.js');
+    }
 }

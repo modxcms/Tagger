@@ -39,5 +39,10 @@ class TaggerGroupGetListProcessor extends modObjectGetListProcessor {
         }
         return $c;
     }
+
+    public function outputArray(array $array,$count = false) {
+        if ($count === false) { $count = count($array); }
+        return '{"success": true, "total":"'.$count.'","results":'.$this->modx->toJSON($array).'}';
+    }
 }
 return 'TaggerGroupGetListProcessor';
