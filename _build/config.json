@@ -1,0 +1,27 @@
+{
+    "name": "Tagger",
+    "lowCaseName": "tagger",
+    "description": "Tag management component",
+    "author": "Jan Peca",
+    "version": "0.1.0",
+    "package":{
+        "actions": [{
+            "id": 1
+            ,"controller": "index"
+        }],
+        "menus": [{
+            "text": "tagger.menu.tagger"
+            ,"description": "tagger.menu.tagger_desc"
+            ,"action": 1
+        }],
+        "elements": {
+            "plugins": [],
+            "snippets": [],
+            "chunks": []
+        },
+        "systemSettings": []
+    },
+    "database": {
+        "tables": ["TaggerGroup", "TaggerTag", "TaggerTagResource"]
+    }
+}
