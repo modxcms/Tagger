@@ -25,6 +25,17 @@ Tagger.panel.Home = function(config) {
                     ,preventRender: true
                     ,cls: 'main-wrapper'
                 }]
+            },{
+                title: _('tagger.group.groups')
+                ,items: [{
+                    html: '<p>'+_('tagger.group.intro_msg')+'</p>'
+                    ,border: false
+                    ,bodyCssClass: 'panel-desc'
+                },{
+                    xtype: 'tagger-grid-group'
+                    ,preventRender: true
+                    ,cls: 'main-wrapper'
+                }]
             }]
         }]
     });
