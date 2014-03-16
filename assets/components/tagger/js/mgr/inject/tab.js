@@ -40,10 +40,6 @@ Ext.override(MODx.panel.Resource, {
                ,fieldLabel: group.name
                ,name: 'tagger-' + group.id
                ,hiddenName: 'tagger-' + group.id
-               ,id: 'tagger-' + group.id
-//               ,editable: true
-//               ,typeAhead: true
-//               ,forceSelection: false
                ,displayField: 'tag'
                ,valueField: 'id'
                ,fields: ['tag','id']
