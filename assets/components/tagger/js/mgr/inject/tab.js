@@ -66,8 +66,9 @@ Ext.override(MODx.panel.Resource, {
                ,url: Tagger.config.connectorUrl
                ,allowAdd: group.allow_new
                ,allowBlank: group.allow_blank
+               ,pageSize: 0
                ,baseParams: {
-                   action: 'mgr/tag/getlist'
+                   action: 'mgr/extra/gettags'
                    ,group: group.id
                }
            });

@@ -2,6 +2,7 @@ Changelog for Tagger.
 
 Tagger 0.1.0
 ==============
+- Speed improvements in retrieving tags
 - Added groups options: field_type, allow_new, remove_unused and allow_blank
 - Added combobox for tags
 - Added tag field

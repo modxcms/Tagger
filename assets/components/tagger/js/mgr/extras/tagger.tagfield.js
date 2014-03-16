@@ -34,7 +34,7 @@ Tagger.fields.Tags = function(config) {
     this.addEvents('additem', 'removeitem');
 };
 Ext.extend(Tagger.fields.Tags,Ext.form.ComboBox,{
-    mode: 'local'
+    mode: 'remote'
     ,hideTrigger: true
 
     ,defaultAutoCreate : {tag: "input", type: "text", size: "24", autocomplete: "on"}
