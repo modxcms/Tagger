@@ -9,6 +9,7 @@
 $_lang['tagger'] = 'Tagger';
 
 $_lang['tagger.global.search'] = 'Search';
+$_lang['tagger.global.loading'] = 'Loading';
 
 $_lang['tagger.menu.tagger'] = 'Tagger';
 $_lang['tagger.menu.tagger_desc'] = 'Manage your groups and tags';

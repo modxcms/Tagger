@@ -8,7 +8,7 @@ Tagger.grid.Tag = function(config) {
         }
         ,save_action: 'mgr/tag/updatefromgrid'
         ,autosave: true
-        ,fields: ['id','name', 'group']
+        ,fields: ['id','tag', 'group']
         ,autoHeight: true
         ,paging: true
         ,remoteSort: true
@@ -20,7 +20,7 @@ Tagger.grid.Tag = function(config) {
             ,sortable: true
         },{
             header: _('tagger.tag.name')
-            ,dataIndex: 'name'
+            ,dataIndex: 'tag'
             ,width: 200
             ,sortable: true
             ,editor: { xtype: 'textfield' }

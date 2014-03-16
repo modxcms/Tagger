@@ -12,7 +12,7 @@ class TaggerTagUpdateProcessor extends modObjectUpdateProcessor {
     public $objectType = 'tagger.tag';
 
     public function beforeSet() {
-        $name = $this->getProperty('name');
+        $name = $this->getProperty('tag');
         $group = $this->getProperty('group');
 
         if (empty($name) || empty($group)) {
@@ -21,15 +21,15 @@ class TaggerTagUpdateProcessor extends modObjectUpdateProcessor {
             }
 
             if (empty($name)) {
-                $this->addFieldError('name',$this->modx->lexicon('tagger.err.tag_name_ns'));
+                $this->addFieldError('tag',$this->modx->lexicon('tagger.err.tag_name_ns'));
             }
         } else {
             if ($this->object->group != $group) {
                 $this->addFieldError('group',$this->modx->lexicon('tagger.err.tag_group_changed'));
             }
 
-            if ($this->modx->getCount($this->classKey, array('name' => $name, 'group' => $group)) && ($this->object->name != $name)) {
-                $this->addFieldError('name',$this->modx->lexicon('tagger.err.tag_name_ae'));
+            if ($this->modx->getCount($this->classKey, array('tag' => $name, 'group' => $group)) && ($this->object->tag != $name)) {
+                $this->addFieldError('tag',$this->modx->lexicon('tagger.err.tag_name_ae'));
             }
         }
 

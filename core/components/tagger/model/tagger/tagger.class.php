@@ -64,7 +64,10 @@ class Tagger {
     public function onDocFormPrerender() {
         $this->modx->controller->addLexiconTopic('tagger:default');
 
+        $this->modx->regClientCSS($this->getOption('cssUrl') . 'tagfield.css');
+
         $this->modx->regClientStartupScript($this->getOption('jsUrl').'mgr/tagger.js');
+        $this->modx->regClientStartupScript($this->getOption('jsUrl').'mgr/extras/tagger.tagfield.js');
 
         $groups = $this->modx->getIterator('TaggerGroup');
         $groupsArray = [];

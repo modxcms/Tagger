@@ -36,8 +36,22 @@ Ext.override(MODx.panel.Resource, {
 
         Ext.each(Tagger.groups, function(group) {
            fields.push({
-               xtype: 'textfield'
+               xtype: 'tagger-field-tags'
                ,fieldLabel: group.name
+               ,name: 'tagger-' + group.id
+               ,hiddenName: 'tagger-' + group.id
+               ,id: 'tagger-' + group.id
+//               ,editable: true
+//               ,typeAhead: true
+//               ,forceSelection: false
+               ,displayField: 'tag'
+               ,valueField: 'id'
+               ,fields: ['tag','id']
+               ,url: Tagger.config.connectorUrl
+               ,baseParams: {
+                   action: 'mgr/tag/getlist'
+                   ,group: group.id
+               }
            });
         });
 

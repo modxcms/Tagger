@@ -8,7 +8,7 @@
     </object>
 
     <object class="TaggerTag" table="tagger_tags" extends="xPDOSimpleObject">
-        <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" />
+        <field key="tag" dbtype="varchar" precision="100" phptype="string" null="false" />
         <field key="group" dbtype="integer" precision="10" phptype="int" null="false" />
 
         <aggregate alias="Group" class="TaggerGroup" local="group" foreign="id" cardinality="one" owner="foreign" />

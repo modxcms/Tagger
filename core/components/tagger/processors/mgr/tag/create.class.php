@@ -11,7 +11,7 @@ class TaggerTagCreateProcessor extends modObjectCreateProcessor {
     public $objectType = 'tagger.tag';
 
     public function beforeSave() {
-        $name = $this->getProperty('name');
+        $name = $this->getProperty('tag');
         $group = $this->getProperty('group');
 
         if (empty($name) || empty($group)) {
@@ -20,11 +20,11 @@ class TaggerTagCreateProcessor extends modObjectCreateProcessor {
             }
 
             if (empty($name)) {
-                $this->addFieldError('name',$this->modx->lexicon('tagger.err.tag_name_ns'));
+                $this->addFieldError('tag',$this->modx->lexicon('tagger.err.tag_name_ns'));
             }
         } else {
-            if ($this->doesAlreadyExist(array('name' => $name, 'group' => $group))) {
-                $this->addFieldError('name',$this->modx->lexicon('tagger.err.tag_name_ae'));
+            if ($this->doesAlreadyExist(array('tag' => $name, 'group' => $group))) {
+                $this->addFieldError('tag',$this->modx->lexicon('tagger.err.tag_name_ae'));
             }
         }
 

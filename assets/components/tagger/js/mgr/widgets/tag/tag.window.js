@@ -23,7 +23,7 @@ Ext.extend(Tagger.window.Tag,MODx.Window, {
         },{
             xtype: 'textfield'
             ,fieldLabel: _('tagger.tag.name')
-            ,name: 'name'
+            ,name: 'tag'
             ,anchor: '100%'
             ,allowBlank: false
         },{
