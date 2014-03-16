@@ -1,5 +1,6 @@
 var originalGetFields = MODx.panel.Resource.prototype.getFields;
 var originalSetup = MODx.panel.Resource.prototype.setup;
+var originalBeforeSubmit = MODx.panel.Resource.prototype.beforeSubmit;
 Ext.override(MODx.panel.Resource, {
     getFields: function(config) {
         var fields = originalGetFields.call(this, config);
@@ -36,8 +37,18 @@ Ext.override(MODx.panel.Resource, {
         if (!this.initialized) {
             this.getForm().setValues(Tagger.tags);
         }
-        
+
         originalSetup.call(this);
+    }
+
+    ,beforeSubmit: function(o) {
+        var tagFields = this.find('xtype', 'tagger-field-tags')
+
+        Ext.each(tagFields, function(tagField) {
+            tagField.addItemsFromField();
+        });
+
+        originalBeforeSubmit.call(this, o);
     }
 
     ,taggerGetFields: function(config) {

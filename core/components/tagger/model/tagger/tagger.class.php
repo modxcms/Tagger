@@ -164,7 +164,10 @@ class Tagger {
             }
 
             $oldTags = array_keys($oldTags);
-            $this->modx->removeObject('TaggerTagResource', array('id:IN' => $oldTags));
+            $toRemoveRelations = $this->modx->getIterator('TaggerTagResource', array('id:IN' => $oldTags));
+            foreach ($toRemoveRelations as $toRemoveRelation) {
+                $toRemoveRelation->remove();
+            }
 
             $tagsToRemoveQuery = $this->modx->newQuery('TaggerTag');
             $tagsToRemoveQuery->where(array(
