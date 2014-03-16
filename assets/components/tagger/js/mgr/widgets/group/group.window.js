@@ -25,6 +25,28 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,name: 'name'
             ,anchor: '100%'
             ,allowBlank: false
+        },{
+            xtype: 'tagger-combo-field-type'
+            ,fieldLabel: _('tagger.group.field_type')
+            ,name: 'field_type'
+            ,hiddenName: 'field_type'
+            ,anchor: '100%'
+            ,allowBlank: false
+        },{
+            xtype: 'xcheckbox'
+            ,fieldLabel: _('tagger.group.remove_unused')
+            ,name: 'remove_unused'
+            ,anchor: '100%'
+        },{
+            xtype: 'xcheckbox'
+            ,fieldLabel: _('tagger.group.allow_new')
+            ,name: 'allow_new'
+            ,anchor: '100%'
+        },{
+            xtype: 'xcheckbox'
+            ,fieldLabel: _('tagger.group.allow_blank')
+            ,name: 'allow_blank'
+            ,anchor: '100%'
         }];
 
         return fields;

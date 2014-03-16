@@ -10,6 +10,10 @@ $xpdo_meta_map['TaggerGroup']= array (
   'fields' => 
   array (
     'name' => NULL,
+    'field_type' => NULL,
+    'allow_new' => 0,
+    'remove_unused' => 0,
+    'allow_blank' => 0,
   ),
   'fieldMeta' => 
   array (
@@ -19,6 +23,37 @@ $xpdo_meta_map['TaggerGroup']= array (
       'precision' => '100',
       'phptype' => 'string',
       'null' => false,
+    ),
+    'field_type' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '100',
+      'phptype' => 'string',
+      'null' => false,
+    ),
+    'allow_new' => 
+    array (
+      'dbtype' => 'tinyint',
+      'precision' => '1',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
+    ),
+    'remove_unused' => 
+    array (
+      'dbtype' => 'tinyint',
+      'precision' => '1',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
+    ),
+    'allow_blank' => 
+    array (
+      'dbtype' => 'tinyint',
+      'precision' => '1',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
     ),
   ),
   'composites' => 

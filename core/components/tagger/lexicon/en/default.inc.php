@@ -14,9 +14,16 @@ $_lang['tagger.global.loading'] = 'Loading';
 $_lang['tagger.menu.tagger'] = 'Tagger';
 $_lang['tagger.menu.tagger_desc'] = 'Manage your groups and tags';
 
+$_lang['tagger.field.tagfield'] = 'Tag field';
+$_lang['tagger.field.combobox'] = 'Combo box';
+
 $_lang['tagger.group.groups'] = 'Groups';
 $_lang['tagger.group.intro_msg'] = 'In this section you can manage Groups. Each group will later contain tags.';
 $_lang['tagger.group.name'] = 'Name';
+$_lang['tagger.group.field_type'] = 'Field type';
+$_lang['tagger.group.remove_unused'] = 'Remove unused tags';
+$_lang['tagger.group.allow_new'] = 'Allow new tags from field';
+$_lang['tagger.group.allow_blank'] = 'Allow blank';
 $_lang['tagger.group.all'] = 'All groups';
 $_lang['tagger.group.create'] = 'Create a new Group';
 $_lang['tagger.group.update'] = 'Update Group';

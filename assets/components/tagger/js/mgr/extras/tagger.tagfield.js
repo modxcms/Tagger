@@ -291,6 +291,53 @@ Ext.extend(Tagger.fields.Tags,Ext.form.ComboBox,{
             this.fireEvent('select', this, record, index);
         }
     }
+
+    ,getErrors: function(value) {
+        var errors = Ext.form.TextField.superclass.getErrors.apply(this, arguments);
+
+        value = Ext.isDefined(value) ? value : this.processValue(this.getRawValue());
+
+        if (Ext.isFunction(this.validator)) {
+            var msg = this.validator(value);
+            if (msg !== true) {
+                errors.push(msg);
+            }
+        }
+
+        if (this.myStore.collect('tag').join() == '') {
+            if (this.allowBlank) {
+                //if value is blank and allowBlank is true, there cannot be any additional errors
+                return errors;
+            } else {
+                errors.push(this.blankText);
+            }
+        }
+
+        if (!this.allowBlank && (this.myStore.collect('tag').join() == '')) { // if it's blank
+            errors.push(this.blankText);
+        }
+
+        if (value.length < this.minLength) {
+            errors.push(String.format(this.minLengthText, this.minLength));
+        }
+
+        if (value.length > this.maxLength) {
+            errors.push(String.format(this.maxLengthText, this.maxLength));
+        }
+
+        if (this.vtype) {
+            var vt = Ext.form.VTypes;
+            if(!vt[this.vtype](value, this)){
+                errors.push(this.vtypeText || vt[this.vtype +'Text']);
+            }
+        }
+
+        if (this.regex && !this.regex.test(value)) {
+            errors.push(this.regexText);
+        }
+
+        return errors;
+    }
 });
 
 Tagger.fields.Tag = function(config){

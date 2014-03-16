@@ -8,7 +8,7 @@ Tagger.grid.Group = function(config) {
         }
         ,save_action: 'mgr/group/updatefromgrid'
         ,autosave: true
-        ,fields: ['id','name']
+        ,fields: ['id','name', 'field_type', 'remove_unused', 'allow_new', 'allow_blank']
         ,autoHeight: true
         ,paging: true
         ,remoteSort: true
@@ -24,6 +24,33 @@ Tagger.grid.Group = function(config) {
             ,width: 200
             ,sortable: true
             ,editor: { xtype: 'textfield' }
+        },{
+            header: _('tagger.group.field_type')
+            ,dataIndex: 'field_type'
+            ,width: 200
+            ,sortable: true
+            ,editor: { xtype: 'tagger-combo-field-type', renderer: true }
+        },{
+            header: _('tagger.group.remove_unused')
+            ,dataIndex: 'remove_unused'
+            ,width: 200
+            ,sortable: true
+            ,renderer: this.rendYesNo
+            ,editor: { xtype: 'modx-combo-boolean' }
+        },{
+            header: _('tagger.group.allow_new')
+            ,dataIndex: 'allow_new'
+            ,width: 200
+            ,sortable: true
+            ,renderer: this.rendYesNo
+            ,editor: { xtype: 'modx-combo-boolean' }
+        },{
+            header: _('tagger.group.allow_blank')
+            ,dataIndex: 'allow_blank'
+            ,width: 200
+            ,sortable: true
+            ,renderer: this.rendYesNo
+            ,editor: { xtype: 'modx-combo-boolean' }
         }]
         ,tbar: [{
             text: _('tagger.group.create')

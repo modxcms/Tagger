@@ -56,8 +56,7 @@ Ext.override(MODx.panel.Resource, {
 
         Ext.each(Tagger.groups, function(group) {
            fields.push({
-               xtype: 'tagger-field-tags'
-//               xtype: 'tagger-combo-tag'
+               xtype: group.field_type
                ,fieldLabel: group.name
                ,name: 'tagger-' + group.id
                ,hiddenName: 'tagger-' + group.id
@@ -65,7 +64,8 @@ Ext.override(MODx.panel.Resource, {
                ,valueField: 'tag'
                ,fields: ['tag']
                ,url: Tagger.config.connectorUrl
-               ,allowAdd: true
+               ,allowAdd: group.allow_new
+               ,allowBlank: group.allow_blank
                ,baseParams: {
                    action: 'mgr/tag/getlist'
                    ,group: group.id

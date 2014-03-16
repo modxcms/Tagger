@@ -2,6 +2,8 @@ Changelog for Tagger.
 
 Tagger 0.1.0
 ==============
+- Added groups options: field_type, allow_new, remove_unused and allow_blank
+- Added combobox for tags
 - Added tag field
 - Added sorting option to tag and group grids
 - Tag management

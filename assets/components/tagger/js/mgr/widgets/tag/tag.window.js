@@ -30,6 +30,7 @@ Ext.extend(Tagger.window.Tag,MODx.Window, {
             xtype: 'tagger-combo-group'
             ,fieldLabel: _('tagger.tag.group')
             ,name: 'group'
+            ,hiddenName: 'group'
             ,anchor: '100%'
             ,allowBlank: false
             ,disabled: config.isUpdate

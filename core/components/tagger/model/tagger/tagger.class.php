@@ -150,6 +150,10 @@ class Tagger {
                     }
 
                     if (!$tagObject) {
+                        if (!$group->allow_new) {
+                            continue;
+                        }
+
                         $tagObject = $this->modx->newObject('TaggerTag');
                         $tagObject->set('tag', $tag);
                         $tagObject->addOne($group, 'Group');
@@ -170,16 +174,18 @@ class Tagger {
                 $toRemoveRelation->remove();
             }
 
-            $tagsToRemoveQuery = $this->modx->newQuery('TaggerTag');
-            $tagsToRemoveQuery->where(array(
-                'group' => $group->id,
-                "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('TaggerTagResource')} r WHERE r.tag = TaggerTag.id)"
-            ));
+            if ($group->remove_unused) {
+                $tagsToRemoveQuery = $this->modx->newQuery('TaggerTag');
+                $tagsToRemoveQuery->where(array(
+                    'group' => $group->id,
+                    "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('TaggerTagResource')} r WHERE r.tag = TaggerTag.id)"
+                ));
 
-            $tagsToRemove = $this->modx->getIterator('TaggerTag', $tagsToRemoveQuery);
-            foreach ($tagsToRemove as $tag) {
-                /** @var TaggerTag $tag */
-                $tag->remove();
+                $tagsToRemove = $this->modx->getIterator('TaggerTag', $tagsToRemoveQuery);
+                foreach ($tagsToRemove as $tag) {
+                    /** @var TaggerTag $tag */
+                    $tag->remove();
+                }
             }
         }
     }

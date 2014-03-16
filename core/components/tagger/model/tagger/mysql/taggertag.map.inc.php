@@ -29,6 +29,17 @@ $xpdo_meta_map['TaggerTag']= array (
       'null' => false,
     ),
   ),
+  'composites' => 
+  array (
+    'Resources' => 
+    array (
+      'class' => 'TaggerTagResource',
+      'local' => 'id',
+      'foreign' => 'tag',
+      'cardinality' => 'many',
+      'owner' => 'local',
+    ),
+  ),
   'aggregates' => 
   array (
     'Group' => 
