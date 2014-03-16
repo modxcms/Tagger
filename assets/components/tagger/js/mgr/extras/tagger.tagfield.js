@@ -1,12 +1,12 @@
 Tagger.fields.Tags = function(config) {
     config = config || {};
-    Ext.apply(config,{
+    Ext.applyIf(config,{
         ignoreCase: false
         ,valueField: 'tag'
         ,displayField: 'tag'
         ,minChars: 1
+        ,allowAdd: true
     });
-
     Tagger.fields.Tags.superclass.constructor.call(this,config);
 
     this.myStore = new Ext.data.ArrayStore({
@@ -28,6 +28,8 @@ Tagger.fields.Tags = function(config) {
     });
 
     this.store.load();
+
+    this.config = config;
 
     this.addEvents('additem', 'removeitem');
 };
@@ -207,6 +209,13 @@ Ext.extend(Tagger.fields.Tags,Ext.form.ComboBox,{
 
             if(value == ''){
                 return;
+            }
+
+            if (this.config.allowAdd == false) {
+                this.store.clearFilter();
+                if (this.store.getCount() > 0 && this.store.find('tag', value) == -1) {
+                    return;
+                }
             }
 
             var item = new Tagger.fields.Tag({

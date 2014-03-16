@@ -61,9 +61,10 @@ Ext.override(MODx.panel.Resource, {
                ,name: 'tagger-' + group.id
                ,hiddenName: 'tagger-' + group.id
                ,displayField: 'tag'
-               ,valueField: 'id'
-               ,fields: ['tag','id']
+               ,valueField: 'tag'
+               ,fields: ['tag']
                ,url: Tagger.config.connectorUrl
+               ,allowAdd: true
                ,baseParams: {
                    action: 'mgr/tag/getlist'
                    ,group: group.id
