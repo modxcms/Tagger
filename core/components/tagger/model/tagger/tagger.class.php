@@ -61,7 +61,16 @@ class Tagger {
         return $option;
     }
 
-    public function onDocFormPrerender() {
+    public function explodeAndClean($array, $delimiter = ',') {
+        $array = explode($delimiter, $array);            // Explode fields to array
+        $array = array_map('trim', $array);       // Trim array's values
+        $array = array_keys(array_flip($array));  // Remove duplicate fields
+        $array = array_filter($array);            // Remove empty values from array
+
+        return $array;
+    }
+
+    public function onDocFormPrerender($scriptProperties) {
         $this->modx->controller->addLexiconTopic('tagger:default');
 
         $this->modx->regClientCSS($this->getOption('cssUrl') . 'tagfield.css');
@@ -84,5 +93,71 @@ class Tagger {
         </script>');
 
         $this->modx->regClientStartupScript($this->getOption('jsUrl').'mgr/inject/tab.js');
+    }
+
+    public function onDocFormSave($scriptProperties) {
+        $resource = $this->modx->getOption('resource', $scriptProperties, '');
+
+        $groups = $this->modx->getIterator('TaggerGroup');
+
+        foreach ($groups as $group) {
+            $oldTagsQuery = $this->modx->newQuery('TaggerTagResource');
+            $oldTagsQuery->leftJoin('TaggerTag', 'Tag');
+            $oldTagsQuery->where(array('resource' => $resource->id, 'Tag.group' => $group->id));
+            $oldTagsQuery->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', array('id')));
+
+            $oldTagsQuery->prepare();
+            $oldTagsQuery->stmt->execute();
+            $oldTags = $oldTagsQuery->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+            $oldTags = array_flip($oldTags);
+
+            $tags = $resource->get('tagger-' . $group->id);
+            if (isset($tags)) {
+                $tags = $this->explodeAndClean($tags);
+
+                foreach ($tags as $tag) {
+                    /** @var TaggerTag $tagObject */
+                    $tagObject = $this->modx->getObject('TaggerTag', array('tag' => $tag, 'group' => $group->id));
+                    if ($tagObject) {
+                        $existsRelation = $this->modx->getObject('TaggerTagResource', array('tag' => $tagObject->id));
+                        if ($existsRelation) {
+                            if (isset($oldTags[$existsRelation->id])) {
+                                unset($oldTags[$existsRelation->id]);
+                            }
+
+                            continue;
+                        }
+                    }
+
+                    if (!$tagObject) {
+                        $tagObject = $this->modx->newObject('TaggerTag');
+                        $tagObject->set('tag', $tag);
+                        $tagObject->addOne($group, 'Group');
+                        $tagObject->save();
+                    }
+
+                    /** @var TaggerTagResource $relationObject */
+                    $relationObject = $this->modx->newObject('TaggerTagResource');
+                    $relationObject->set('tag', $tagObject->id);
+                    $relationObject->set('resource', $resource->id);
+                    $relationObject->save();
+                }
+            }
+
+            $oldTags = array_keys($oldTags);
+            $this->modx->removeObject('TaggerTagResource', array('id:IN' => $oldTags));
+
+            $tagsToRemoveQuery = $this->modx->newQuery('TaggerTag');
+            $tagsToRemoveQuery->where(array(
+                'group' => $group->id,
+                "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('TaggerTagResource')} r WHERE r.tag = TaggerTag.id)"
+            ));
+
+            $tagsToRemove = $this->modx->getIterator('TaggerTag', $tagsToRemoveQuery);
+            foreach ($tagsToRemove as $tag) {
+                /** @var TaggerTag $tag */
+                $tag->remove();
+            }
+        }
     }
 }

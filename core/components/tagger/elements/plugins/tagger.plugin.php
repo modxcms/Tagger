@@ -19,13 +19,6 @@ $tagger = $modx->getService(
 );
 
 $eventName = $modx->event->name;
-switch($eventName) {
-    case 'OnDocFormPrerender':
-        $tagger->onDocFormPrerender();
-
-        break;
-
-    case 'OnDocFormSave':
-
-        break;
+if (method_exists($tagger, $eventName)) {
+    $tagger->$eventName($scriptProperties);
 }
