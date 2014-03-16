@@ -343,6 +343,9 @@ Ext.extend(Tagger.fields.Tag,Ext.Component, {
             var record = new Ext.data.Record({tag: this.value}, this.value);
             this.el.remove();
             this.owner.myStore.remove(this.owner.myStore.getById(this.value));
+            if(this.owner.hiddenField){
+                this.owner.hiddenField.value = this.owner.myStore.collect('tag').join();
+            }
 
             this.fireEvent('remove',this,this.value);
         }, this);
