@@ -71,6 +71,8 @@ class Tagger {
     }
 
     public function onDocFormPrerender($scriptProperties) {
+        $mode = $this->modx->getOption('mode', $scriptProperties, 'upd');
+
         $this->modx->controller->addLexiconTopic('tagger:default');
 
         $this->modx->regClientCSS($this->getOption('cssUrl') . 'tagfield.css');
@@ -84,11 +86,28 @@ class Tagger {
             $groupsArray[] = $group->toArray();
         }
 
+        $tagsArray = [];
+
+        if ($mode == 'upd') {
+            $c = $this->modx->newQuery('TaggerTagResource');
+            $c->where(array('resource' => intval($_GET['id'])));
+            $relatedTags = $this->modx->getIterator('TaggerTagResource', $c);
+
+            foreach ($relatedTags as $relatedTag) {
+                if (!isset($tagsArray['tagger-' . $relatedTag->Tag->group])) {
+                    $tagsArray['tagger-' . $relatedTag->Tag->group] = $relatedTag->Tag->tag;
+                } else {
+                    $tagsArray['tagger-' . $relatedTag->Tag->group] .= ',' . $relatedTag->Tag->tag;
+                }
+            }
+        }
+
         $this->modx->regClientStartupHTMLBlock('<script type="text/javascript">
         //Ext.onReady(function() {
             Tagger.config = '.$this->modx->toJSON($this->options).';
             Tagger.config.connector_url = "'.$this->getOption('connectorUrl').'";
             Tagger.groups = ' . $this->modx->toJSON($groupsArray) . ';
+            Tagger.tags = ' . $this->modx->toJSON($tagsArray) . ';
         //});
         </script>');
 

@@ -1,4 +1,5 @@
 var originalGetFields = MODx.panel.Resource.prototype.getFields;
+var originalSetup = MODx.panel.Resource.prototype.setup;
 Ext.override(MODx.panel.Resource, {
     getFields: function(config) {
         var fields = originalGetFields.call(this, config);
@@ -29,6 +30,14 @@ Ext.override(MODx.panel.Resource, {
         }
 
         return fields;
+    }
+
+    ,setup: function() {
+        if (!this.initialized) {
+            this.getForm().setValues(Tagger.tags);
+        }
+        
+        originalSetup.call(this);
     }
 
     ,taggerGetFields: function(config) {
