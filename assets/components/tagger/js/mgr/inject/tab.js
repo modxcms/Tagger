@@ -57,6 +57,7 @@ Ext.override(MODx.panel.Resource, {
         Ext.each(Tagger.groups, function(group) {
            fields.push({
                xtype: 'tagger-field-tags'
+//               xtype: 'tagger-combo-tag'
                ,fieldLabel: group.name
                ,name: 'tagger-' + group.id
                ,hiddenName: 'tagger-' + group.id

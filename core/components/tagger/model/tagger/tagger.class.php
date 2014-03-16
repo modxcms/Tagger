@@ -79,6 +79,7 @@ class Tagger {
 
         $this->modx->regClientStartupScript($this->getOption('jsUrl').'mgr/tagger.js');
         $this->modx->regClientStartupScript($this->getOption('jsUrl').'mgr/extras/tagger.tagfield.js');
+        $this->modx->regClientStartupScript($this->getOption('jsUrl').'mgr/extras/tagger.combo.js');
 
         $groups = $this->modx->getIterator('TaggerGroup');
         $groupsArray = [];
