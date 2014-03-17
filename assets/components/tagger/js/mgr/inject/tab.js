@@ -1,9 +1,11 @@
-var originalGetFields = MODx.panel.Resource.prototype.getFields;
-var originalSetup = MODx.panel.Resource.prototype.setup;
-var originalBeforeSubmit = MODx.panel.Resource.prototype.beforeSubmit;
 Ext.override(MODx.panel.Resource, {
-    getFields: function(config) {
-        var fields = originalGetFields.call(this, config);
+    taggerOriginals: {
+        getFields: MODx.panel.Resource.prototype.getFields
+        ,setup: MODx.panel.Resource.prototype.setup
+        ,beforeSubmit: MODx.panel.Resource.prototype.beforeSubmit
+    }
+    ,getFields: function(config) {
+        var fields = this.taggerOriginals.getFields.call(this, config);
 
         var tabs = fields.filter(function (row) {
             if(row.id == 'modx-resource-tabs') {
@@ -38,7 +40,7 @@ Ext.override(MODx.panel.Resource, {
             this.getForm().setValues(Tagger.tags);
         }
 
-        originalSetup.call(this);
+        this.taggerOriginals.setup.call(this);
     }
 
     ,beforeSubmit: function(o) {
@@ -48,7 +50,7 @@ Ext.override(MODx.panel.Resource, {
             tagField.addItemsFromField();
         });
 
-        originalBeforeSubmit.call(this, o);
+        this.taggerOriginals.beforeSubmit.call(this, o);
     }
 
     ,taggerGetFields: function(config) {
