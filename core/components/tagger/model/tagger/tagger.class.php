@@ -84,7 +84,9 @@ class Tagger {
         $groups = $this->modx->getIterator('TaggerGroup');
         $groupsArray = [];
         foreach ($groups as $group) {
-            $groupsArray[] = $group->toArray();
+            $showForTemplates = $group->show_for_templates;
+            $showForTemplates = $this->explodeAndClean($showForTemplates);
+            $groupsArray[] = array_merge($group->toArray(), array('show_for_templates' => $showForTemplates));
         }
 
         $tagsArray = [];
@@ -121,6 +123,14 @@ class Tagger {
         $groups = $this->modx->getIterator('TaggerGroup');
 
         foreach ($groups as $group) {
+            $showforTemplates = $group->show_for_templates;
+            $showforTemplates = $this->explodeAndClean($showforTemplates);
+            $showforTemplates = array_flip($showforTemplates);
+
+            if (!isset($showforTemplates[$resource->template])) {
+                continue;
+            }
+
             $oldTagsQuery = $this->modx->newQuery('TaggerTagResource');
             $oldTagsQuery->leftJoin('TaggerTag', 'Tag');
             $oldTagsQuery->where(array('resource' => $resource->id, 'Tag.group' => $group->id));

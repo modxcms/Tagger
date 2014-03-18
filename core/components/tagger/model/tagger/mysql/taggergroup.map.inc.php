@@ -14,6 +14,7 @@ $xpdo_meta_map['TaggerGroup']= array (
     'allow_new' => 0,
     'remove_unused' => 0,
     'allow_blank' => 0,
+    'show_for_templates' => '',
   ),
   'fieldMeta' => 
   array (
@@ -54,6 +55,13 @@ $xpdo_meta_map['TaggerGroup']= array (
       'phptype' => 'integer',
       'null' => false,
       'default' => 0,
+    ),
+    'show_for_templates' => 
+    array (
+      'dbtype' => 'text',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
     ),
   ),
   'composites' => 

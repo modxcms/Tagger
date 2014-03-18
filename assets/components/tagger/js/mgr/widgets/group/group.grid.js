@@ -8,7 +8,7 @@ Tagger.grid.Group = function(config) {
         }
         ,save_action: 'mgr/group/updatefromgrid'
         ,autosave: true
-        ,fields: ['id','name', 'field_type', 'remove_unused', 'allow_new', 'allow_blank']
+        ,fields: ['id','name', 'field_type', 'remove_unused', 'allow_new', 'allow_blank', 'show_for_templates']
         ,autoHeight: true
         ,paging: true
         ,remoteSort: true
@@ -51,6 +51,10 @@ Tagger.grid.Group = function(config) {
             ,sortable: true
             ,renderer: this.rendYesNo
             ,editor: { xtype: 'modx-combo-boolean' }
+        },{
+            header: _('tagger.group.show_for_templates')
+            ,dataIndex: 'show_for_templates'
+            ,width: 200
         }]
         ,tbar: [{
             text: _('tagger.group.create')
@@ -103,7 +107,7 @@ Ext.extend(Tagger.grid.Group,MODx.grid.Grid,{
             }
         });
 
-        createGroup.fp.getForm().reset();
+//        createGroup.fp.getForm().reset();
         createGroup.show(e.target);
     }
 
@@ -119,7 +123,7 @@ Ext.extend(Tagger.grid.Group,MODx.grid.Grid,{
             }
         });
 
-        updateGroup.fp.getForm().reset();
+//        updateGroup.fp.getForm().reset();
         updateGroup.fp.getForm().setValues(this.menu.record);
         updateGroup.show(e.target);
     }

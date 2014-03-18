@@ -16,20 +16,24 @@ Ext.override(MODx.panel.Resource, {
         });
 
         if (tabs != false && tabs[0]) {
-            tabs[0].items.push({
-                title: _('tagger')
-                ,layout: 'form'
-                ,forceLayout: true
-                ,deferredRender: false
-                ,labelWidth: 200
-                ,bodyCssClass: 'main-wrapper'
-                ,autoHeight: true
-                ,defaults: {
-                    border: false
-                    ,msgTarget: 'under'
-                }
-                ,items: this.taggerGetFields(config)
-            });
+            var taggerFields = this.taggerGetFields(config);
+
+            if (taggerFields.length > 0) {
+                tabs[0].items.push({
+                    title: _('tagger')
+                    ,layout: 'form'
+                    ,forceLayout: true
+                    ,deferredRender: false
+                    ,labelWidth: 200
+                    ,bodyCssClass: 'main-wrapper'
+                    ,autoHeight: true
+                    ,defaults: {
+                        border: false
+                        ,msgTarget: 'under'
+                    }
+                    ,items: this.taggerGetFields(config)
+                });
+            }
         }
 
         return fields;
@@ -57,23 +61,25 @@ Ext.override(MODx.panel.Resource, {
         var fields = [];
 
         Ext.each(Tagger.groups, function(group) {
-           fields.push({
-               xtype: group.field_type
-               ,fieldLabel: group.name
-               ,name: 'tagger-' + group.id
-               ,hiddenName: 'tagger-' + group.id
-               ,displayField: 'tag'
-               ,valueField: 'tag'
-               ,fields: ['tag']
-               ,url: Tagger.config.connectorUrl
-               ,allowAdd: group.allow_new
-               ,allowBlank: group.allow_blank
-               ,pageSize: 0
-               ,baseParams: {
-                   action: 'mgr/extra/gettags'
-                   ,group: group.id
-               }
-           });
+           if (group.show_for_templates.indexOf(parseInt(config.record.template)) != -1) {
+               fields.push({
+                   xtype: group.field_type
+                   ,fieldLabel: group.name
+                   ,name: 'tagger-' + group.id
+                   ,hiddenName: 'tagger-' + group.id
+                   ,displayField: 'tag'
+                   ,valueField: 'tag'
+                   ,fields: ['tag']
+                   ,url: Tagger.config.connectorUrl
+                   ,allowAdd: group.allow_new
+                   ,allowBlank: group.allow_blank
+                   ,pageSize: 0
+                   ,baseParams: {
+                       action: 'mgr/extra/gettags'
+                       ,group: group.id
+                   }
+               });
+            }
         });
 
         return fields;

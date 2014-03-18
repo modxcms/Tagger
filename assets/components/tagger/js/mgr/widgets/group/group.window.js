@@ -47,6 +47,12 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,fieldLabel: _('tagger.group.allow_blank')
             ,name: 'allow_blank'
             ,anchor: '100%'
+        },{
+            xtype: 'textfield'
+            ,fieldLabel: _('tagger.group.show_for_templates')
+            ,name: 'show_for_templates'
+            ,anchor: '100%'
+            ,hiddenName: 'show_for_templates'
         }];
 
         return fields;

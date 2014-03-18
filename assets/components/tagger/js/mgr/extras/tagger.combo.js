@@ -62,3 +62,46 @@ Tagger.combo.FieldType = function(config) {
 };
 Ext.extend(Tagger.combo.FieldType,MODx.combo.ComboBox);
 Ext.reg('tagger-combo-field-type',Tagger.combo.FieldType);
+
+Tagger.combo.Templates = function(config, getStore) {
+    config = config || {};
+    Ext.applyIf(config,{
+        name: 'templates'
+        ,hiddenName: 'templates'
+        ,displayField: 'templatename'
+        ,valueField: 'id'
+        ,fields: ['templatename','id']
+        ,mode: 'remote'
+        ,triggerAction: 'all'
+        ,typeAhead: true
+        ,editable: true
+        ,forceSelection: true
+        ,pageSize: 20
+        ,url: MODx.config.connectors_url + 'element/template.php'
+        ,baseParams: {
+            action: 'getlist'
+        }
+    });
+    Ext.applyIf(config,{
+        store: new Ext.data.JsonStore({
+            url: config.url
+            ,root: 'results'
+            ,totalProperty: 'total'
+            ,fields: config.fields
+            ,errorReader: MODx.util.JSONReader
+            ,baseParams: config.baseParams || {}
+            ,remoteSort: config.remoteSort || false
+            ,autoDestroy: true
+        })
+    });
+    if (getStore === true) {
+        config.store.load();
+        return config.store;
+    }
+    Tagger.combo.Templates.superclass.constructor.call(this,config);
+    this.config = config;
+    return this;
+};
+Ext.extend(Tagger.combo.Templates,Ext.ux.form.SuperBoxSelect);
+Ext.reg('tagger-combo-templates',Tagger.combo.Templates);
+

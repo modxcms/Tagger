@@ -7,6 +7,7 @@
         <field key="allow_new" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
         <field key="remove_unused" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
         <field key="allow_blank" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
+        <field key="show_for_templates" dbtype="text" phptype="string" null="false" default="" />
 
         <composite alias="Tags" class="TaggerTag" local="id" foreign="group" cardinality="many" owner="local" />
     </object>
