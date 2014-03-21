@@ -123,18 +123,18 @@ class Tagger {
         $groups = $this->modx->getIterator('TaggerGroup');
 
         foreach ($groups as $group) {
-            $showforTemplates = $group->show_for_templates;
-            $showforTemplates = $this->explodeAndClean($showforTemplates);
-            $showforTemplates = array_flip($showforTemplates);
+            $showForTemplates = $group->show_for_templates;
+            $showForTemplates = $this->explodeAndClean($showForTemplates);
+            $showForTemplates = array_flip($showForTemplates);
 
-            if (!isset($showforTemplates[$resource->template])) {
+            if (!isset($showForTemplates[$resource->template])) {
                 continue;
             }
 
             $oldTagsQuery = $this->modx->newQuery('TaggerTagResource');
             $oldTagsQuery->leftJoin('TaggerTag', 'Tag');
             $oldTagsQuery->where(array('resource' => $resource->id, 'Tag.group' => $group->id));
-            $oldTagsQuery->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', array('id')));
+            $oldTagsQuery->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', array('tag')));
 
             $oldTagsQuery->prepare();
             $oldTagsQuery->stmt->execute();
@@ -149,10 +149,10 @@ class Tagger {
                     /** @var TaggerTag $tagObject */
                     $tagObject = $this->modx->getObject('TaggerTag', array('tag' => $tag, 'group' => $group->id));
                     if ($tagObject) {
-                        $existsRelation = $this->modx->getObject('TaggerTagResource', array('tag' => $tagObject->id));
+                        $existsRelation = $this->modx->getObject('TaggerTagResource', array('tag' => $tagObject->id, 'resource' => $resource->id));
                         if ($existsRelation) {
-                            if (isset($oldTags[$existsRelation->id])) {
-                                unset($oldTags[$existsRelation->id]);
+                            if (isset($oldTags[$existsRelation->tag])) {
+                                unset($oldTags[$existsRelation->tag]);
                             }
 
                             continue;
@@ -179,23 +179,23 @@ class Tagger {
             }
 
             $oldTags = array_keys($oldTags);
-            $toRemoveRelations = $this->modx->getIterator('TaggerTagResource', array('id:IN' => $oldTags));
-            foreach ($toRemoveRelations as $toRemoveRelation) {
-                $toRemoveRelation->remove();
-            }
+            $this->modx->removeCollection('TaggerTagResource', array(
+                'tag:IN' => $oldTags,
+                'AND:resource:=' => $resource->id
+            ));
 
             if ($group->remove_unused) {
-                $tagsToRemoveQuery = $this->modx->newQuery('TaggerTag');
-                $tagsToRemoveQuery->where(array(
-                    'group' => $group->id,
-                    "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('TaggerTagResource')} r WHERE r.tag = TaggerTag.id)"
+                $c = $this->modx->newQuery('TaggerTagResource');
+                $c->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', array('tag')));
+                $c->where(array(
+                    'resource' => $resource->id
                 ));
+                $c->prepare();
+                $c->stmt->execute();
+                $IDs = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
-                $tagsToRemove = $this->modx->getIterator('TaggerTag', $tagsToRemoveQuery);
-                foreach ($tagsToRemove as $tag) {
-                    /** @var TaggerTag $tag */
-                    $tag->remove();
-                }
+                $this->modx->removeCollection('TaggerTag', array('id:NOT IN' => $IDs, 'group' => $group->id));
+
             }
         }
     }

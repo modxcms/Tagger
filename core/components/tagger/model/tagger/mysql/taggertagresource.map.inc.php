@@ -6,7 +6,7 @@ $xpdo_meta_map['TaggerTagResource']= array (
   'package' => 'tagger',
   'version' => NULL,
   'table' => 'tagger_tag_resources',
-  'extends' => 'xPDOSimpleObject',
+  'extends' => 'xPDOObject',
   'fields' => 
   array (
     'tag' => NULL,
@@ -17,16 +17,45 @@ $xpdo_meta_map['TaggerTagResource']= array (
     'tag' => 
     array (
       'dbtype' => 'integer',
+      'attributes' => 'unsigned',
       'precision' => '10',
       'phptype' => 'int',
       'null' => false,
+      'index' => 'pk',
     ),
     'resource' => 
     array (
       'dbtype' => 'integer',
+      'attributes' => 'unsigned',
       'precision' => '10',
       'phptype' => 'int',
       'null' => false,
+      'index' => 'pk',
+    ),
+  ),
+  'indexes' => 
+  array (
+    'PRIMARY' => 
+    array (
+      'alias' => 'PRIMARY',
+      'primary' => true,
+      'unique' => true,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'tag' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+        'resource' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
     ),
   ),
   'aggregates' => 

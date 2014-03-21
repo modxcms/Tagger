@@ -2,5 +2,5 @@
 /**
  * @package tagger
  */
-class TaggerTagResource extends xPDOSimpleObject {}
+class TaggerTagResource extends xPDOObject {}
 ?>

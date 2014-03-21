@@ -5,6 +5,9 @@ $xpdo_meta_map = array (
   array (
     0 => 'TaggerGroup',
     1 => 'TaggerTag',
-    2 => 'TaggerTagResource',
+  ),
+  'xPDOObject' => 
+  array (
+    0 => 'TaggerTagResource',
   ),
 );

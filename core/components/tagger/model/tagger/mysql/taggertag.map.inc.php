@@ -24,9 +24,67 @@ $xpdo_meta_map['TaggerTag']= array (
     'group' => 
     array (
       'dbtype' => 'integer',
+      'attributes' => 'unsigned',
       'precision' => '10',
       'phptype' => 'int',
       'null' => false,
+    ),
+  ),
+  'indexes' => 
+  array (
+    'iTagGroup' => 
+    array (
+      'alias' => 'iTagGroup',
+      'primary' => false,
+      'unique' => true,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'tag' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+        'group' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'iTag' => 
+    array (
+      'alias' => 'iTag',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'tag' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'iGroup' => 
+    array (
+      'alias' => 'iGroup',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'group' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
     ),
   ),
   'composites' => 

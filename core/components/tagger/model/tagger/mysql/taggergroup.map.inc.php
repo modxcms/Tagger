@@ -35,24 +35,27 @@ $xpdo_meta_map['TaggerGroup']= array (
     'allow_new' => 
     array (
       'dbtype' => 'tinyint',
+      'attributes' => 'unsigned',
       'precision' => '1',
-      'phptype' => 'integer',
+      'phptype' => 'boolean',
       'null' => false,
       'default' => 0,
     ),
     'remove_unused' => 
     array (
       'dbtype' => 'tinyint',
+      'attributes' => 'unsigned',
       'precision' => '1',
-      'phptype' => 'integer',
+      'phptype' => 'boolean',
       'null' => false,
       'default' => 0,
     ),
     'allow_blank' => 
     array (
       'dbtype' => 'tinyint',
+      'attributes' => 'unsigned',
       'precision' => '1',
-      'phptype' => 'integer',
+      'phptype' => 'boolean',
       'null' => false,
       'default' => 0,
     ),
