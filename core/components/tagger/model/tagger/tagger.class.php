@@ -189,12 +189,11 @@ class Tagger {
             if ($group->remove_unused) {
                 $c = $this->modx->newQuery('TaggerTagResource');
                 $c->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', array('tag')));
-                $c->where(array(
-                    'resource' => $resource->id
-                ));
                 $c->prepare();
                 $c->stmt->execute();
                 $IDs = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+                $IDs = array_keys(array_flip($IDs));
 
                 if (count($IDs) > 0) {
                     $this->modx->removeCollection('TaggerTag', array('id:NOT IN' => $IDs, 'group' => $group->id));
