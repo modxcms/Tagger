@@ -1,5 +1,13 @@
 Changelog for Tagger.
 
+Tagger 0.2.0
+==============
+- Fixed removing tags after quick save
+- Fixed removing old tag - resource relations
+- Fixed removing unused tags
+- Added snippet for listing resources by tags
+- Added snippet for listing tags
+
 Tagger 0.1.0
 ==============
 - Updated schema - added indexes, removed ID from TaggerTagResource

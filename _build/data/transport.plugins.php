@@ -1,4 +1,10 @@
 <?php
+/**
+ * Loads plugins into build
+ *
+ * @package tagger
+ * @subpackage build
+ */
 $plugins = array();
 
 /* create the plugin object */

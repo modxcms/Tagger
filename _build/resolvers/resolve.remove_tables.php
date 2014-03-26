@@ -1,7 +1,7 @@
 <?php
 if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
-        case xPDOTransport::ACTION_INSTALL:
+        case xPDOTransport::ACTION_UNINSTALL:
             /** @var modX $modx */
             $modx =& $object->xpdo;
 
@@ -9,12 +9,10 @@ if ($object->xpdo) {
             $modx->addPackage('tagger',$modelPath);
 
             $manager = $modx->getManager();
-            $manager->createObjectContainer('TaggerGroup');
-            $manager->createObjectContainer('TaggerTag');
-            $manager->createObjectContainer('TaggerTagResource');
 
-            break;
-        case xPDOTransport::ACTION_UPGRADE:
+            $manager->removeObjectContainer('TaggerGroup');
+            $manager->removeObjectContainer('TaggerTag');
+            $manager->removeObjectContainer('TaggerTagResource');
             break;
     }
 }
