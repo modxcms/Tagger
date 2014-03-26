@@ -178,11 +178,13 @@ class Tagger {
                 }
             }
 
-            $oldTags = array_keys($oldTags);
-            $this->modx->removeCollection('TaggerTagResource', array(
-                'tag:IN' => $oldTags,
-                'AND:resource:=' => $resource->id
-            ));
+            if (count($oldTags) > 0) {
+                $oldTags = array_keys($oldTags);
+                $this->modx->removeCollection('TaggerTagResource', array(
+                    'tag:IN' => $oldTags,
+                    'AND:resource:=' => $resource->id
+                ));
+            }
 
             if ($group->remove_unused) {
                 $c = $this->modx->newQuery('TaggerTagResource');
@@ -194,7 +196,9 @@ class Tagger {
                 $c->stmt->execute();
                 $IDs = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
-                $this->modx->removeCollection('TaggerTag', array('id:NOT IN' => $IDs, 'group' => $group->id));
+                if (count($IDs) > 0) {
+                    $this->modx->removeCollection('TaggerTag', array('id:NOT IN' => $IDs, 'group' => $group->id));
+                }
 
             }
         }
