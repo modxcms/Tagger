@@ -21,6 +21,8 @@
             }],
             "snippets": [{
                 "name": "TaggerGetTags"
+            },{
+                "name": "TaggerGetResources"
             }],
             "chunks": []
         },
