@@ -54,6 +54,8 @@ while($resourceId = $c->stmt->fetch(PDO::FETCH_COLUMN, 0)) {
     $out[] = $prefix . $resourceId . $suffix;
 }
 
+$out = array_keys(array_flip($out));
+
 return implode($separator, $out);
 
  

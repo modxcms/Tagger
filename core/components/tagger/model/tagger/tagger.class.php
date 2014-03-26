@@ -142,6 +142,10 @@ class Tagger {
             $oldTags = array_flip($oldTags);
 
             $tags = $resource->get('tagger-' . $group->id);
+            if ($tags === null) {
+                continue;
+            }
+
             if (isset($tags)) {
                 $tags = $this->explodeAndClean($tags);
 
