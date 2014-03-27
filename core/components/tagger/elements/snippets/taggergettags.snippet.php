@@ -14,6 +14,7 @@
  * &outTpl string optional
  * &separator string optional
  * &target int optional
+ * &showUnused int optional
  *
  * USAGE:
  *
@@ -29,6 +30,7 @@ if (!($tagger instanceof Tagger)) return '';
 $resources = $modx->getOption('resources', $scriptProperties, '');
 $groups = $modx->getOption('groups', $scriptProperties, '');
 $target = (int) $modx->getOption('target', $scriptProperties, $modx->resource->id);
+$showUnused = (int) $modx->getOption('showUnused', $scriptProperties, '0');
 
 $rowTpl = $modx->getOption('rowTpl', $scriptProperties, '');
 $outTpl = $modx->getOption('outTpl', $scriptProperties, '');
@@ -67,6 +69,13 @@ $friendlyURL = $modx->getOption('friendly_urls', null, 0);
 $tagKey = $modx->getOption('tagger.tag_key', null, 'tags');
 
 foreach ($tags as $tag) {
+    $phs = $tag->toArray();
+    $phs['cnt'] = $modx->getCount('TaggerTagResource', array('tag' => $tag->id));
+
+    if (($showUnused == 0) && ($phs['cnt'] == 0)) {
+        continue;
+    }
+
     if ($friendlyURL == 1) {
         $uri = $modx->makeUrl($target, '', '') . '/' . $tagKey . '/' . $tag->tag;
         $uri = str_replace('//', '/', $uri);
@@ -74,9 +83,7 @@ foreach ($tags as $tag) {
         $uri = $modx->makeUrl($target, '', 'tags=' . $tag->tag);
     }
 
-    $phs = $tag->toArray();
     $phs['uri'] = $uri;
-    $phs['cnt'] = $modx->getCount('TaggerTagResource', array('tag' => $tag->id));
 
     if ($rowTpl == '') {
         $out[] = '<pre>' . print_r($phs, true) . '</pre>';

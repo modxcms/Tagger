@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Added an option to show only used tags in TaggerGetTags
 - Added Allow type option to groups
 - Added trigger button to the tagger field
 
