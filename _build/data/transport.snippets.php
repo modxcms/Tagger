@@ -23,9 +23,9 @@ $snippets[0]->fromArray(array(
 $snippets[1]= $modx->newObject('modSnippet');
 $snippets[1]->fromArray(array(
     'id' => 1,
-    'name' => 'TaggerGetResources',
-    'description' => 'This snippet allows you to list IDs of resources for specific tags',
-    'snippet' => getSnippetContent($sources['snippets'].'/taggergetresources.snippet.php'),
+    'name' => 'TaggerGetResourcesWhere',
+    'description' => 'This snippet generate SQL Query that can be used in WHERE condition in getResources snippet',
+    'snippet' => getSnippetContent($sources['snippets'].'/taggergetresourceswhere.snippet.php'),
 ),'',true,true);
 
 //$properties = include $sources['data'].'properties.profiler.php';
