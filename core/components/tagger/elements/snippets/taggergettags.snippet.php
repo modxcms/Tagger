@@ -41,16 +41,13 @@ $c = $modx->newQuery('TaggerTag');
 
 $c->select($modx->getSelectColumns('TaggerTag', 'TaggerTag'));
 $c->select($modx->getSelectColumns('TaggerGroup', 'Group', 'group_'));
-$c->select(array(
-    'cnt' => 'count(TaggerTag.id)'
-));
 
 $c->leftJoin('TaggerTagResource', 'Resources');
 $c->leftJoin('TaggerGroup', 'Group');
 
 if ($resources) {
     $c->where(array(
-        'Resource.resource:IN' => $resources
+        'Resources.resource:IN' => $resources
     ));
 }
 
@@ -61,7 +58,7 @@ if ($groups) {
 }
 
 $c->groupby('TaggerTag.id');
-
+$c->prepare();
 $tags = $modx->getIterator('TaggerTag', $c);
 
 $out = [];
@@ -71,14 +68,15 @@ $tagKey = $modx->getOption('tagger.tag_key', null, 'tags');
 
 foreach ($tags as $tag) {
     if ($friendlyURL == 1) {
-        $url = $modx->makeUrl($target, '', '') . '/' . $tagKey . '/' . $tag->tag;
-        $url = str_replace('//', '/', $url);
+        $uri = $modx->makeUrl($target, '', '') . '/' . $tagKey . '/' . $tag->tag;
+        $uri = str_replace('//', '/', $uri);
     } else {
-        $url = $modx->makeUrl($target, '', 'tags=' . $tag->tag);
+        $uri = $modx->makeUrl($target, '', 'tags=' . $tag->tag);
     }
 
     $phs = $tag->toArray();
-    $phs['url'] = $url;
+    $phs['uri'] = $uri;
+    $phs['cnt'] = $modx->getCount('TaggerTagResource', array('tag' => $tag->id));
 
     if ($rowTpl == '') {
         $out[] = '<pre>' . print_r($phs, true) . '</pre>';
