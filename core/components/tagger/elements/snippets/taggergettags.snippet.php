@@ -13,10 +13,11 @@
  * &rowTpl string optional
  * &outTpl string optional
  * &separator string optional
+ * &target int optional
  *
  * USAGE:
  *
- * [[!TaggerGetTags? ]]
+ * [[!TaggerGetTags]]
  *
  *
  * @package tagger
@@ -27,6 +28,7 @@ if (!($tagger instanceof Tagger)) return '';
 
 $resources = $modx->getOption('resources', $scriptProperties, '');
 $groups = $modx->getOption('groups', $scriptProperties, '');
+$target = (int) $modx->getOption('target', $scriptProperties, $modx->resource->id);
 
 $rowTpl = $modx->getOption('rowTpl', $scriptProperties, '');
 $outTpl = $modx->getOption('outTpl', $scriptProperties, '');
@@ -64,11 +66,24 @@ $tags = $modx->getIterator('TaggerTag', $c);
 
 $out = [];
 
+$friendlyURL = $modx->getOption('friendly_urls', null, 0);
+$tagKey = $modx->getOption('tagger.tag_key', null, 'tags');
+
 foreach ($tags as $tag) {
-    if ($rowTpl == '') {
-        $out[] = print_r($tag->toArray(), true);
+    if ($friendlyURL == 1) {
+        $url = $modx->makeUrl($target, '', '') . '/' . $tagKey . '/' . $tag->tag;
+        $url = str_replace('//', '/', $url);
     } else {
-        $out[] = $modx->getChunk($rowTpl, $tag->toArray());
+        $url = $modx->makeUrl($target, '', 'tags=' . $tag->tag);
+    }
+
+    $phs = $tag->toArray();
+    $phs['url'] = $url;
+
+    if ($rowTpl == '') {
+        $out[] = '<pre>' . print_r($phs, true) . '</pre>';
+    } else {
+        $out[] = $modx->getChunk($rowTpl, $phs);
     }
 }
 
