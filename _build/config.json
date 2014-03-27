@@ -22,7 +22,7 @@
             "snippets": [{
                 "name": "TaggerGetTags"
             },{
-                "name": "TaggerGetResources"
+                "name": "TaggerGetResourcesWhere"
             }],
             "chunks": []
         },
