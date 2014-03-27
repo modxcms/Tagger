@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+Tagger 0.3.0
+==============
 - Added url placeholder into TaggerGetTags row tpl
 - Added gateway for handling friendly URL with tags
 - Added snippet for creating WHERE query that can be used in getResources
