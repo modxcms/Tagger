@@ -11,10 +11,11 @@ class TaggerGetTagsProcessor extends modObjectGetListProcessor {
 
     public function process() {
         $group = $this->getProperty('group');
+        $limit = $this->getProperty('limit', 20);
+        $start = $this->getProperty('start', 0);
 
 
         $c = $this->modx->newQuery('TaggerTag');
-        $c->select($this->modx->getSelectColumns('TaggerTag', 'TaggerTag', '', array('tag')));
         $c->where(array('group' => $group));
 
         $query = $this->getProperty('query');
@@ -25,7 +26,10 @@ class TaggerGetTagsProcessor extends modObjectGetListProcessor {
             ));
         }
 
-        $c->limit(20);
+        $cnt = $this->modx->getCount('TaggerTag', $c);
+
+        $c->select($this->modx->getSelectColumns('TaggerTag', 'TaggerTag', '', array('tag')));
+        $c->limit($limit, $start);
 
         $c->prepare();
         $c->stmt->execute();
@@ -36,7 +40,7 @@ class TaggerGetTagsProcessor extends modObjectGetListProcessor {
             $returnArray[] = ['tag' => $tag['tag']];
         }
 
-        return $this->outputArray($returnArray, count($returnArray));
+        return $this->outputArray($returnArray, $cnt);
     }
 
 }

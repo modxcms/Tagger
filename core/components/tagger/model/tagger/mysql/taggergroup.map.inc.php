@@ -14,6 +14,7 @@ $xpdo_meta_map['TaggerGroup']= array (
     'allow_new' => 0,
     'remove_unused' => 0,
     'allow_blank' => 0,
+    'allow_type' => 0,
     'show_for_templates' => '',
   ),
   'fieldMeta' => 
@@ -51,6 +52,15 @@ $xpdo_meta_map['TaggerGroup']= array (
       'default' => 0,
     ),
     'allow_blank' => 
+    array (
+      'dbtype' => 'tinyint',
+      'attributes' => 'unsigned',
+      'precision' => '1',
+      'phptype' => 'boolean',
+      'null' => false,
+      'default' => 0,
+    ),
+    'allow_type' => 
     array (
       'dbtype' => 'tinyint',
       'attributes' => 'unsigned',

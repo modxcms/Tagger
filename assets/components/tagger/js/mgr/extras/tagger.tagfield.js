@@ -6,6 +6,8 @@ Tagger.fields.Tags = function(config) {
         ,displayField: 'tag'
         ,minChars: 1
         ,allowAdd: true
+        ,editable: true
+        ,hideTrigger: false
     });
     Tagger.fields.Tags.superclass.constructor.call(this,config);
 
@@ -16,26 +18,12 @@ Tagger.fields.Tags = function(config) {
         data: []
     });
 
-    this.store = new Ext.data.JsonStore({
-        url: config.connector || config.url
-        ,root: 'results'
-        ,totalProperty: 'total'
-        ,fields: config.fields
-        ,errorReader: MODx.util.JSONReader
-        ,baseParams: config.baseParams || {}
-        ,remoteSort: config.remoteSort || false
-        ,autoDestroy: true
-    });
-
-    this.store.load();
-
     this.config = config;
 
     this.addEvents('additem', 'removeitem');
 };
-Ext.extend(Tagger.fields.Tags,Ext.form.ComboBox,{
+Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
     mode: 'remote'
-    ,hideTrigger: true
 
     ,defaultAutoCreate : {tag: "input", type: "text", size: "24", autocomplete: "on"}
 
@@ -287,7 +275,7 @@ Ext.extend(Tagger.fields.Tags,Ext.form.ComboBox,{
             values.push(record.data[this.valueField || this.displayField]);
             values.push('');
             this.setFieldValue(values.join(', '));
-            this.collapse();
+//            this.collapse();
             this.fireEvent('select', this, record, index);
         }
     }

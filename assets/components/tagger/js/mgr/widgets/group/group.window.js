@@ -48,6 +48,11 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,name: 'allow_blank'
             ,anchor: '100%'
         },{
+            xtype: 'xcheckbox'
+            ,fieldLabel: _('tagger.group.allow_type')
+            ,name: 'allow_type'
+            ,anchor: '100%'
+        },{
             xtype: 'textfield'
             ,fieldLabel: _('tagger.group.show_for_templates')
             ,name: 'show_for_templates'

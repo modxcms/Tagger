@@ -1,5 +1,8 @@
 Changelog for Tagger.
 
+- Added Allow type option to groups
+- Added trigger button to the tagger field
+
 Tagger 0.3.0
 ==============
 - Added url placeholder into TaggerGetTags row tpl

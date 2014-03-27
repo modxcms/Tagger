@@ -73,7 +73,8 @@ Ext.override(MODx.panel.Resource, {
                    ,url: Tagger.config.connectorUrl
                    ,allowAdd: group.allow_new
                    ,allowBlank: group.allow_blank
-                   ,pageSize: 0
+                   ,pageSize: 20
+                   ,editable: group.allow_type
                    ,baseParams: {
                        action: 'mgr/extra/gettags'
                        ,group: group.id
