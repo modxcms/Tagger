@@ -10,22 +10,31 @@
  *
  * &tags string optional
  * &groups string optional
+ * &where string optional
  *
  * USAGE:
  *
- * [[!getResources? &where=`["[[!TaggerGetResourcesWhere? &tags=`Books,Vehicles`]]"]`]]
+ * [[!getResources? &where=`[[!TaggerGetResourcesWhere? &tags=`Books,Vehicles` &where=`{"isfolder": 0}`]]`]]
  *
  */
 
 $tagger = $modx->getService('tagger','Tagger',$modx->getOption('tagger.core_path',null,$modx->getOption('core_path').'components/tagger/').'model/tagger/',$scriptProperties);
 if (!($tagger instanceof Tagger)) return '';
+
 $tagKey = $modx->getOption('tagger.tag_key', null, 'tags');
 $tags = $modx->getOption('tags', $scriptProperties, '');
+$where = $modx->getOption('where', $scriptProperties, '');
+
+$where = $modx->fromJSON($where);
+if ($where == false) {
+    $where = array();
+}
+
 if ($tags == '') {
     if (isset($_GET[$tagKey])) {
         $tags = $_GET[$tagKey];
     } else {
-        return '';
+        return $modx->toJSON($where);
     }
 }
 
@@ -56,4 +65,6 @@ if (count($tagIDs) == 0) {
     $tagIDs[] = 0;
 }
 
-return "EXISTS (SELECT 1 FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource.id)";
+$where[] = "EXISTS (SELECT 1 FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource.id)";
+
+return $modx->toJSON($where);
