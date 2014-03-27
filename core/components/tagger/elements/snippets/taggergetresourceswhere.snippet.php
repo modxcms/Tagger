@@ -19,8 +19,9 @@
 
 $tagger = $modx->getService('tagger','Tagger',$modx->getOption('tagger.core_path',null,$modx->getOption('core_path').'components/tagger/').'model/tagger/',$scriptProperties);
 if (!($tagger instanceof Tagger)) return '';
+$tagKey = $modx->getOption('tagger.tag_key', null, 'tags');
 
-$tags = $modx->getOption('tags', $scriptProperties, '');
+$tags = $modx->getOption('tags', $scriptProperties, $_GET[$tagKey]);
 $groups = $modx->getOption('groups', $scriptProperties, '');
 
 $tags = $tagger->explodeAndClean($tags);

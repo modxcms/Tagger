@@ -206,4 +206,23 @@ class Tagger {
             }
         }
     }
+
+    public function onHandleRequest($scriptProperties) {
+        if ($this->modx->context->get('key') == 'mgr') {
+            return;
+        }
+
+        $friendlyURL = $this->modx->getOption('friendly_urls', null, 0);
+        if ($friendlyURL == 0) {
+            return;
+        }
+
+        if (!class_exists('TaggerGateway')) {
+            require_once dirname(__FILE__) . '/taggergateway.class.php';
+        }
+
+        $gateway = new TaggerGateway($this->modx);
+        $gateway->init($scriptProperties);
+        $gateway->handleRequest();
+    }
 }

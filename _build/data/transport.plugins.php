@@ -20,6 +20,7 @@ $events = array();
 $e = array(
     'OnDocFormSave',
     'OnDocFormPrerender',
+    'OnHandleRequest',
 );
 
 foreach ($e as $ev) {

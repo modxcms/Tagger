@@ -3,7 +3,7 @@
     "lowCaseName": "tagger",
     "description": "Tag management component",
     "author": "Jan Peca",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "package":{
         "actions": [{
             "id": 1
@@ -17,7 +17,7 @@
         "elements": {
             "plugins": [{
                 "name": "Tagger"
-                ,"events": ["OnDocFormSave", "OnDocFormPrerender"]
+                ,"events": ["OnDocFormSave", "OnDocFormPrerender", "OnHandleRequest"]
             }],
             "snippets": [{
                 "name": "TaggerGetTags"
@@ -26,7 +26,10 @@
             }],
             "chunks": []
         },
-        "systemSettings": []
+        "systemSettings": [{
+            "key": "tag_key"
+            ,"value": "tags"
+        }]
     },
     "database": {
         "tables": ["TaggerGroup", "TaggerTag", "TaggerTagResource"]

@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Added gateway for handling friendly URL with tags
 - Added snippet for creating WHERE query that can be used in getResources
 - Removed snippet for listing resources by tags
 
