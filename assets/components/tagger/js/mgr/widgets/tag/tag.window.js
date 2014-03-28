@@ -33,7 +33,8 @@ Ext.extend(Tagger.window.Tag,MODx.Window, {
             ,hiddenName: 'group'
             ,anchor: '100%'
             ,allowBlank: false
-            ,disabled: config.isUpdate
+            ,readOnly: config.isUpdate
+            ,cls: (config.isUpdate == true) ? 'x-item-disabled' : ''
         }];
 
         return fields;

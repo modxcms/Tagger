@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Fixed updating tags from manager
 - Added PHP documentation to xPDO classes
 - Added an option to show only used tags in TaggerGetTags
 - Added Allow type option to groups
