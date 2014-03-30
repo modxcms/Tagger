@@ -59,8 +59,7 @@ if ($groups) {
     ));
 }
 
-$c->groupby('TaggerTag.id');
-$c->prepare();
+$c->groupby($modx->getSelectColumns('TaggerTag', 'TaggerTag') . ',' . $modx->getSelectColumns('TaggerGroup', 'Group'));
 $tags = $modx->getIterator('TaggerTag', $c);
 
 $out = [];
