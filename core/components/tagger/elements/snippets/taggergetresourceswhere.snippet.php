@@ -8,9 +8,9 @@
  *
  * PROPERTIES:
  *
- * &tags string optional
- * &groups string optional
- * &where string optional
+ * &tags    string  optional    Comma separated list of Tags for which will be generated a Resource query. By default Tags from GET param will be loaded
+ * &groups  string  optional    Comma separated list of Tagger Groups. Only from those groups will Tags be allowed
+ * &where   string  optional    Original getResources where property. If you used where property in your current getResources call, move it here
  *
  * USAGE:
  *

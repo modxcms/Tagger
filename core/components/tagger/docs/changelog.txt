@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Improved Snippets documentation
 - Added autotag option for groups that have field type set to Tag field
 - Fixed updating tags from manager
 - Added PHP documentation to xPDO classes

@@ -8,17 +8,17 @@
  *
  * PROPERTIES:
  *
- * &resources string optional
- * &groups string optional
- * &rowTpl string optional
- * &outTpl string optional
- * &separator string optional
- * &target int optional
- * &showUnused int optional
+ * &resources   string  optional    Comma separated list of resources for which will be listed Tags
+ * &groups      string  optional    Comma separated list of Tagger Groups for which will be listed Tags
+ * &rowTpl      string  optional    Name of a chunk that will be used for each Tag. If no chunk is given, array with available placeholders will be rendered
+ * &outTpl      string  optional    Name of a chunk that will be used for wrapping all tags. If no chunk is given, tags will be rendered without a wrapper
+ * &separator   string  optional    String separator, that will be used for separating Tags
+ * &target      int     optional    An ID of a resource that will be used for generating URI for a Tag. If no ID is given, current Resource ID will be used
+ * &showUnused  int     optional    If 1 is set, Tags that are not assigned to any Resource will be included to the output as well
  *
  * USAGE:
  *
- * [[!TaggerGetTags]]
+ * [[!TaggerGetTags? &showUnused=`1`]]
  *
  *
  * @package tagger
