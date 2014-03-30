@@ -7,6 +7,7 @@
  * @property boolean $remove_unused
  * @property boolean $allow_blank
  * @property boolean $allow_type
+ * @property boolean &show_autotag
  * @property string $show_for_templates
  *
  * @property TaggerTag $Tags

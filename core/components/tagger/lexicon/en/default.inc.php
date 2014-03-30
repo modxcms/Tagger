@@ -25,6 +25,7 @@ $_lang['tagger.group.remove_unused'] = 'Remove unused tags';
 $_lang['tagger.group.allow_new'] = 'Allow new tags from field';
 $_lang['tagger.group.allow_blank'] = 'Allow blank';
 $_lang['tagger.group.allow_type'] = 'Allow type';
+$_lang['tagger.group.show_autotag'] = 'Show autotag';
 $_lang['tagger.group.show_for_templates'] = 'Show for Templates';
 $_lang['tagger.group.all'] = 'All groups';
 $_lang['tagger.group.create'] = 'Create a new Group';

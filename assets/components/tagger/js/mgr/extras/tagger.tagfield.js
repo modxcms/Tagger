@@ -8,7 +8,7 @@ Tagger.fields.Tags = function(config) {
         ,allowAdd: true
         ,editable: true
         ,hideTrigger: false
-        ,autoTag: true
+        ,autoTag: false
     });
     Tagger.fields.Tags.superclass.constructor.call(this,config);
 

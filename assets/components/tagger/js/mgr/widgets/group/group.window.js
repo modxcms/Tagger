@@ -32,6 +32,18 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,hiddenName: 'field_type'
             ,anchor: '100%'
             ,allowBlank: false
+            ,listeners: {
+                select: {fn: function(t, rec) {
+                    var els = this.find('name', 'show_autotag');
+                    if (els.length == 1) {
+                        if (rec.data.v == 'tagger-field-tags') {
+                            els[0].show();
+                        } else {
+                            els[0].hide();
+                        }
+                    }
+                }, scope: this}
+            }
         },{
             xtype: 'xcheckbox'
             ,fieldLabel: _('tagger.group.remove_unused')
@@ -52,6 +64,12 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,fieldLabel: _('tagger.group.allow_type')
             ,name: 'allow_type'
             ,anchor: '100%'
+        },{
+            xtype: 'xcheckbox'
+            ,fieldLabel: _('tagger.group.show_autotag')
+            ,name: 'show_autotag'
+            ,anchor: '100%'
+            ,hidden: config.record.field_type != 'tagger-field-tags'
         },{
             xtype: 'textfield'
             ,fieldLabel: _('tagger.group.show_for_templates')

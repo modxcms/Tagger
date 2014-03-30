@@ -75,6 +75,7 @@ Ext.override(MODx.panel.Resource, {
                    ,allowBlank: group.allow_blank
                    ,pageSize: 20
                    ,editable: group.allow_type
+                   ,autoTag: group.show_autotag
                    ,baseParams: {
                        action: 'mgr/extra/gettags'
                        ,group: group.id

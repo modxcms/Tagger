@@ -20,6 +20,13 @@ class TaggerGroupUpdateProcessor extends modObjectUpdateProcessor {
         } else if ($this->modx->getCount($this->classKey, array('name' => $name)) && ($this->object->name != $name)) {
             $this->addFieldError('name',$this->modx->lexicon('tagger.err.group_name_ae'));
         }
+
+        $fieldType = $this->getProperty('field_type');
+
+        if ($fieldType != 'tagger-field-tags') {
+            $this->setProperty('show_autotag', 0);
+        }
+
         return parent::beforeSet();
     }
 

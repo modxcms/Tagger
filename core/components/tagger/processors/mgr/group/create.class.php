@@ -10,6 +10,16 @@ class TaggerGroupCreateProcessor extends modObjectCreateProcessor {
     public $languageTopics = array('tagger:default');
     public $objectType = 'tagger.group';
 
+    public function beforeSet() {
+        $fieldType = $this->getProperty('field_type');
+
+        if ($fieldType != 'tagger-field-tags') {
+            $this->setProperty('show_autotag', 0);
+        }
+
+        return parent::beforeSet();
+    }
+
     public function beforeSave() {
         $name = $this->getProperty('name');
 
