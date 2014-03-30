@@ -65,3 +65,15 @@
 .tagger-field-tags .inserted-tags li:last-of-type {
     margin-right:0;
 }
+
+.tagger-autotag-item {
+    position: relative;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    o-border-radius: 6px;
+    khtml-border-radius: 6px;
+    border: 1px solid #CAD8F3;
+    padding: 1px 5px 1px 5px !important;
+    cursor: pointer;
+}

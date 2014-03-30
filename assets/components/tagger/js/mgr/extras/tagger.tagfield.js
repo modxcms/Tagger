@@ -8,6 +8,7 @@ Tagger.fields.Tags = function(config) {
         ,allowAdd: true
         ,editable: true
         ,hideTrigger: false
+        ,autoTag: true
     });
     Tagger.fields.Tags.superclass.constructor.call(this,config);
 
@@ -17,6 +18,20 @@ Tagger.fields.Tags = function(config) {
         fields: ['tag'],
         data: []
     });
+
+    if (this.config.autoTag == true) {
+        this.autoTagStore = new Ext.data.ArrayStore({
+            autoDestroy: true,
+            idIndex: 0,
+            fields: ['tag', 'active', 'el'],
+            data: []
+        });
+    }
+
+    this.store.loaded = false;
+    this.store.on('load', function() {
+        this.store.loaded = true;
+    }, this);
 
     this.config = config;
 
@@ -29,6 +44,8 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
 
     ,myStore: null
 
+    ,autoTagStore: null
+
     ,store: null
 
     ,initValue : function(){
@@ -37,14 +54,31 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
         }else if(!Ext.isEmpty(this.el.dom.value) && this.el.dom.value != this.emptyText){
             this.setValue(this.el.dom.value);
         }
-        /**
-         * The original value of the field as configured in the {@link #value} configuration, or
-         * as loaded by the last form load operation if the form's {@link Ext.form.BasicForm#trackResetOnLoad trackResetOnLoad}
-         * setting is <code>true</code>.
-         * @type mixed
-         * @property originalValue
-         */
+
         this.originalValue = this.getFieldValue();
+
+        if (this.config.autoTag) {
+            this.store.baseParams[this.store.paramNames.start] = 0;
+            this.store.baseParams[this.store.paramNames.limit] = 0;
+            this.store.load();
+            this.store.on('load', this.loadAutoTags, this, {single: true});
+        }
+    }
+
+    ,loadAutoTags: function() {
+        Ext.each(this.store.data.items, function(item) {
+            new Tagger.fields.Tag({
+                owner: this,
+                renderTo: this.insertedTagsEl,
+                value: item.data.tag,
+                active: false,
+                listeners: {
+                    remove: function(item){
+                        this.fireEvent('removeitem',this,item);
+                    },scope: this
+                }
+            });
+        }, this);
     }
 
     ,onFocus : function(){
@@ -92,8 +126,15 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
     }
 
     ,setValue: function(v){
-        while(this.insertedTagsEl.dom.firstChild != null){
-            this.insertedTagsEl.dom.firstChild.remove();
+        if (this.store.loaded == false && this.config.autoTag == true) {
+            this.store.on('load', this.setValueOnLoad.createDelegate(this, [v], false), this, {single: true});
+            return;
+        }
+
+        if (this.config.autoTag == false) {
+            while(this.insertedTagsEl.dom.firstChild != null){
+                this.insertedTagsEl.dom.firstChild.remove();
+            }
         }
 
         this.myStore.clearData();
@@ -102,6 +143,20 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
             v = v.join();
         }
 
+        this.addItems(v);
+    }
+
+    ,setValueOnLoad: function(v){
+        if (this.config.autoTag == false) {
+            while(this.insertedTagsEl.dom.firstChild != null){
+                this.insertedTagsEl.dom.firstChild.remove();
+            }
+        }
+
+        this.myStore.clearData();
+        if(v instanceof Array){
+            v = v.join();
+        }
         this.addItems(v);
     }
 
@@ -190,6 +245,7 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
     ,addItems: function(items){
         items = Ext.isEmpty(items) ? '' : items;
         var values = items.split(/\s*[,]\s*/);
+
         Ext.each(values, function (value) {
             if(this.ignoreCase){
                 value = value.toLowerCase();
@@ -206,19 +262,35 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
                 }
             }
 
-            var item = new Tagger.fields.Tag({
-                owner: this,
-                renderTo: this.insertedTagsEl,
-                value: value,
-                listeners: {
-                    remove: function(item){
-                        this.fireEvent('removeitem',this,item);
-                    },scope: this
+            var valueIndex = -1;
+            if (this.config.autoTag == true) {
+                valueIndex = this.autoTagStore.find('tag', value);
+                if (valueIndex != -1) {
+                    var rec = this.autoTagStore.getAt(valueIndex);
+                    if (rec.data.el.el && !rec.data.el.el.hasClass('x-superboxselect-item')) {
+                        rec.data.el.click();
+                    }
                 }
-            });
-            item.render();
-            this.fireEvent('additem',this,value);
+            }
+
+            if (this.config.autoTag == false || valueIndex == -1) {
+                var item = new Tagger.fields.Tag({
+                    owner: this,
+                    renderTo: this.insertedTagsEl,
+                    value: value,
+                    active: true,
+                    listeners: {
+                        remove: function(item){
+                            this.fireEvent('removeitem',this,item);
+                        },scope: this
+                    }
+                });
+                item.render();
+                this.fireEvent('additem',this,value);
+            }
         }, this);
+
+
         this.setFieldValue();
     }
 
@@ -339,12 +411,42 @@ Ext.extend(Tagger.fields.Tag,Ext.Component, {
         Tagger.fields.Tag.superclass.initComponent.call(this);
         this.renderCurrentItem = true;
 
-        var itemsCount = this.owner.myStore.getCount();
-        var record = new Ext.data.Record({tag: this.value}, this.value);
-        this.owner.myStore.add([record]);
+        var itemsCount,record;
 
-        if(itemsCount == this.owner.myStore.getCount()) this.renderCurrentItem = false;
+        if (this.owner.config.autoTag == false) {
+            itemsCount = this.owner.myStore.getCount();
+            record = new Ext.data.Record({tag: this.value}, this.value);
+            this.owner.myStore.add([record]);
+
+            if(itemsCount == this.owner.myStore.getCount()) this.renderCurrentItem = false;
+        } else {
+            itemsCount = this.owner.autoTagStore.getCount();
+
+            record = new Ext.data.Record({tag: this.value, active: this.active, el: this}, this.value);
+            this.owner.autoTagStore.add([record]);
+
+            if(itemsCount == this.owner.autoTagStore.getCount()) this.renderCurrentItem = false;
+        }
     },
+
+    click: function() {
+        if (this.el.hasClass('x-superboxselect-item')) {
+//            var record = new Ext.data.Record({tag: this.value}, this.value);
+            this.el.removeClass('x-superboxselect-item');
+            this.owner.myStore.remove(this.owner.myStore.getById(this.value));
+            if(this.owner.hiddenField){
+                this.owner.hiddenField.value = this.owner.myStore.collect('tag').join();
+            }
+
+            this.fireEvent('remove',this,this.value);
+        } else {
+            var record = new Ext.data.Record({tag: this.value}, this.value);
+            this.owner.myStore.add([record]);
+
+            this.el.addClass('x-superboxselect-item');
+        }
+    },
+
     onRender : function(ct, position){
         if(!this.renderCurrentItem) return true;
         Tagger.fields.Tag.superclass.onRender.call(this, ct, position);
@@ -355,7 +457,14 @@ Ext.extend(Tagger.fields.Tag,Ext.Component, {
         }
 
         this.el = el = ct.createChild({ tag: 'li' }, ct.last());
-        el.addClass('x-superboxselect-item');
+
+        if (this.owner.config.autoTag == true) {
+            el.on('click', this.click, this);
+        }
+
+        if (this.active == true) {
+            this.el.dom.click();
+        }
 
         var btnEl = this.owner.navigateItemsWithTab ? ( Ext.isSafari ? 'button' : 'a') : 'span';
 
@@ -373,26 +482,34 @@ Ext.extend(Tagger.fields.Tag,Ext.Component, {
 
         el.update(this.value);
 
-        var cfg = {
-            tag: btnEl,
-            'class': 'x-superboxselect-item-close',
-            tabIndex : this.owner.navigateItemsWithTab ? '0' : '-1'
-        };
-        if(btnEl === 'a'){
-            cfg.href = '#';
-        }
+        if (this.owner.config.autoTag == false) {
+            el.addClass('x-superboxselect-item');
 
-        this.lnk = el.createChild(cfg);
-        this.lnk.on('click', function(){
-            var record = new Ext.data.Record({tag: this.value}, this.value);
-            this.el.remove();
-            this.owner.myStore.remove(this.owner.myStore.getById(this.value));
-            if(this.owner.hiddenField){
-                this.owner.hiddenField.value = this.owner.myStore.collect('tag').join();
+            var cfg = {
+                tag: btnEl,
+                'class': 'x-superboxselect-item-close',
+                tabIndex : this.owner.navigateItemsWithTab ? '0' : '-1'
+            };
+            if(btnEl === 'a'){
+                cfg.href = '#';
             }
 
-            this.fireEvent('remove',this,this.value);
-        }, this);
+            this.lnk = el.createChild(cfg);
+            this.lnk.on('click', function(){
+                var record = new Ext.data.Record({tag: this.value}, this.value);
+                this.el.remove();
+                this.owner.myStore.remove(this.owner.myStore.getById(this.value));
+                if(this.owner.hiddenField){
+                    this.owner.hiddenField.value = this.owner.myStore.collect('tag').join();
+                }
+
+                this.fireEvent('remove',this,this.value);
+            }, this);
+        } else {
+            el.addClass('tagger-autotag-item');
+        }
+
+        return true;
     },
     onDestroy : function() {
         Ext.destroy(
