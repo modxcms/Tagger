@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Added snippets properties
 - Translated system settings
 - Improved Snippets documentation
 - Added autotag option for groups that have field type set to Tag field

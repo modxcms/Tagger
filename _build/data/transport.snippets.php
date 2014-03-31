@@ -16,9 +16,67 @@ $snippets[0]->fromArray(array(
     'snippet' => getSnippetContent($sources['snippets'].'/taggergettags.snippet.php'),
 ),'',true,true);
 
-//$properties = include $sources['data'].'properties.profiler.php';
-//$snippets[0]->setProperties($properties);
-//unset($properties);
+$properties = array(
+    array(
+        'name' => 'resources',
+        'desc' => 'tagger.gettags.resources_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'tagger:properties',
+    ),
+    array(
+        'name' => 'groups',
+        'desc' => 'tagger.gettags.groups_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'tagger:properties',
+    ),
+    array(
+        'name' => 'rowTpl',
+        'desc' => 'tagger.gettags.rowTpl_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'tagger:properties',
+    ),
+    array(
+        'name' => 'outTpl',
+        'desc' => 'tagger.gettags.outTpl_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'tagger:properties',
+    ),
+    array(
+        'name' => 'separator',
+        'desc' => 'tagger.gettags.separator_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'tagger:properties',
+    ),
+    array(
+        'name' => 'target',
+        'desc' => 'tagger.gettags.target_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'tagger:properties',
+    ),
+    array(
+        'name' => 'showUnused',
+        'desc' => 'tagger.gettags.showUnused_desc',
+        'type' => 'numberfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'tagger:properties',
+    ),
+
+);
+$snippets[0]->setProperties($properties);
+unset($properties);
 
 $snippets[1]= $modx->newObject('modSnippet');
 $snippets[1]->fromArray(array(
@@ -28,8 +86,34 @@ $snippets[1]->fromArray(array(
     'snippet' => getSnippetContent($sources['snippets'].'/taggergetresourceswhere.snippet.php'),
 ),'',true,true);
 
-//$properties = include $sources['data'].'properties.profiler.php';
-//$snippets[0]->setProperties($properties);
-//unset($properties);
+$properties = array(
+    array(
+        'name' => 'tags',
+        'desc' => 'tagger.getresourceswhere.tags_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'tagger:properties',
+    ),
+    array(
+        'name' => 'groups',
+        'desc' => 'tagger.getresourceswhere.groups_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'tagger:properties',
+    ),
+    array(
+        'name' => 'where',
+        'desc' => 'tagger.getresourceswhere.where_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'tagger:properties',
+    ),
+
+);
+$snippets[1]->setProperties($properties);
+unset($properties);
 
 return $snippets;
