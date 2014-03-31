@@ -1,5 +1,9 @@
 Changelog for Tagger.
 
+Tagger 0.4.1
+==============
+- Fixed group add dialog
+
 Tagger 0.4.0
 ==============
 - Added snippets properties

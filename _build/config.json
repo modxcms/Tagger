@@ -2,8 +2,8 @@
     "name": "Tagger",
     "lowCaseName": "tagger",
     "description": "Tag management component",
-    "author": "Jan Peca",
-    "version": "0.4.0",
+    "author": "John Peca",
+    "version": "0.4.1",
     "package":{
         "actions": [{
             "id": 1
