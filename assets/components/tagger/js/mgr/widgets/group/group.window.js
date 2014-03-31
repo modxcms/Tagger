@@ -69,7 +69,7 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,fieldLabel: _('tagger.group.show_autotag')
             ,name: 'show_autotag'
             ,anchor: '100%'
-            ,hidden: config.record.field_type != 'tagger-field-tags'
+            ,hidden: config.record && config.record.field_type != 'tagger-field-tags'
         },{
             xtype: 'textfield'
             ,fieldLabel: _('tagger.group.show_for_templates')
