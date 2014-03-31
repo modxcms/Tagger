@@ -42,6 +42,9 @@ $_lang['tagger.tag.update'] = 'Update Tag';
 $_lang['tagger.tag.remove'] = 'Remove Tag';
 $_lang['tagger.tag.remove_confirm'] = 'Are you sure, you want to remove this Tag?';
 
+$_lang['setting_tagger.tag_key'] = 'Tag key';
+$_lang['setting_tagger.tag_key_desc'] = 'Name of GET variable that stores tags. Default: tags';
+
 $_lang['tagger.err.group_name_ns'] = 'Group name is not specified. Please fill Group name.';
 $_lang['tagger.err.group_name_ae'] = 'Group with this name already exists. Please choose a different name.';
 $_lang['tagger.err.tag_name_ns'] = 'Tag name is not specified. Please fill Tag name.';
