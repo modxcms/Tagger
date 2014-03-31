@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+Tagger 0.4.0
+==============
 - Added snippets properties
 - Translated system settings
 - Improved Snippets documentation

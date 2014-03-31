@@ -1,6 +1,6 @@
 ---------------------------------------
 Tagger
 ---------------------------------------
-Version: 0.3.0
-Author: Jan Peca <pecajan@gmail.com>
+Version: 0.4.0
+Author: John Peca <john@modx.com>
 ---------------------------------------
