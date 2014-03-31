@@ -15,6 +15,7 @@ class TaggerHomeManagerController extends TaggerBaseManagerController {
 
         $this->addJavascript($this->tagger->getOption('jsUrl').'mgr/extras/tagger.combo.js');
         $this->addJavascript($this->tagger->getOption('jsUrl').'mgr/extras/tagger.tagfield.js');
+        $this->addJavascript($this->tagger->getOption('jsUrl').'mgr/extras/griddraganddrop.js');
 
         $this->addJavascript($this->tagger->getOption('jsUrl').'mgr/widgets/tag/tag.grid.js');
         $this->addJavascript($this->tagger->getOption('jsUrl').'mgr/widgets/tag/tag.window.js');

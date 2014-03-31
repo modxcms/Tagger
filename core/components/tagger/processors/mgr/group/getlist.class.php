@@ -8,7 +8,7 @@
 class TaggerGroupGetListProcessor extends modObjectGetListProcessor {
     public $classKey = 'TaggerGroup';
     public $languageTopics = array('tagger:default');
-    public $defaultSortField = 'name';
+    public $defaultSortField = 'position';
     public $defaultSortDirection = 'ASC';
     public $objectType = 'tagger.group';
 

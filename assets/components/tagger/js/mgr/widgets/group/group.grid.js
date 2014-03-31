@@ -8,10 +8,11 @@ Tagger.grid.Group = function(config) {
         }
         ,save_action: 'mgr/group/updatefromgrid'
         ,autosave: true
-        ,fields: ['id','name', 'field_type', 'remove_unused', 'allow_new', 'allow_blank', 'allow_type', 'show_autotag', 'show_for_templates']
+        ,fields: ['id','name', 'field_type', 'remove_unused', 'allow_new', 'allow_blank', 'allow_type', 'show_autotag', 'show_for_templates', 'position']
         ,autoHeight: true
         ,paging: true
         ,remoteSort: true
+        ,ddGroup: 'TaggerDDGroup'
         ,enableDragDrop: true
         ,columns: [{
             header: _('id')
@@ -69,6 +70,12 @@ Tagger.grid.Group = function(config) {
             header: _('tagger.group.show_for_templates')
             ,dataIndex: 'show_for_templates'
             ,width: 200
+        },{
+            header: _('tagger.group.position')
+            ,dataIndex: 'position'
+            ,width: 200
+            ,hidden: true
+            ,editor: {xtype: 'numberfield', allowDecimal: false, allowNegative: false}
         }]
         ,tbar: [{
             text: _('tagger.group.create')
@@ -94,6 +101,8 @@ Tagger.grid.Group = function(config) {
         }]
     });
     Tagger.grid.Group.superclass.constructor.call(this,config);
+
+    this.on('render', this.registerGridDropTarget, this);
 };
 Ext.extend(Tagger.grid.Group,MODx.grid.Grid,{
     windows: {}
@@ -164,6 +173,62 @@ Ext.extend(Tagger.grid.Group,MODx.grid.Grid,{
         s.baseParams.query = tf.getValue();
         this.getBottomToolbar().changePage(1);
         this.refresh();
+    }
+
+    ,getDragDropText: function(){
+        if (this.store.sortInfo && this.store.sortInfo.field != 'position') {
+            return _('tagger.err.bad_sort_column', {column: 'position'});
+        }
+
+        var search = this.getStore().baseParams.query;
+        if (search && search != '') {
+            return _('tagger.err.clear_filter');
+        }
+
+        return _('tagger.global.change_order', {name: this.selModel.selections.items[0].data.name});
+    }
+
+    ,registerGridDropTarget: function() {
+
+        var ddrow = new Ext.ux.dd.GridReorderDropTarget(this, {
+            copy: false
+            ,sortCol: 'position'
+            ,listeners: {
+                'beforerowmove': function(objThis, oldIndex, newIndex, records) {
+                }
+
+                ,'afterrowmove': function(objThis, oldIndex, newIndex, records) {
+                    MODx.Ajax.request({
+                        url: Tagger.config.connectorUrl
+                        ,params: {
+                            action: 'mgr/group/ddreorder'
+                            ,idGroup: records.pop().id
+                            ,oldIndex: oldIndex
+                            ,newIndex: newIndex
+                        }
+                        ,listeners: {
+                            'success': {
+                                fn: function(r) {
+                                    this.target.grid.refresh();
+                                },scope: this
+                            }
+                        }
+                    });
+                }
+
+                ,'beforerowcopy': function(objThis, oldIndex, newIndex, records) {
+                }
+
+                ,'afterrowcopy': function(objThis, oldIndex, newIndex, records) {
+                }
+            }
+        });
+
+        Ext.dd.ScrollManager.register(this.getView().getEditorParent());
+    }
+
+    ,destroyScrollManager: function() {
+        Ext.dd.ScrollManager.unregister(this.getView().getEditorParent());
     }
 });
 Ext.reg('tagger-grid-group',Tagger.grid.Group);

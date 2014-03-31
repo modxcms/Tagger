@@ -1,5 +1,8 @@
 Changelog for Tagger.
 
+- Added drag & drop groups reorder
+- Added position to Tagger group
+
 Tagger 0.4.1
 ==============
 - Fixed group add dialog

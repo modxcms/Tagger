@@ -17,6 +17,19 @@ class TaggerGroupCreateProcessor extends modObjectCreateProcessor {
             $this->setProperty('show_autotag', 0);
         }
 
+        $c = $this->modx->newQuery('TaggerGroup');
+        $c->sortby('position', 'DESC');
+        $c->limit(1);
+
+        /** @var TaggerGroup $group */
+        $group = $this->modx->getObject('TaggerGroup', $c);
+
+        if ($group) {
+            $this->setProperty('position', $group->position + 1);
+        } else {
+            $this->setProperty('position', 0);
+        }
+
         return parent::beforeSet();
     }
 

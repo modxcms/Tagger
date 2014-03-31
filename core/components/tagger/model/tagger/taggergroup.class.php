@@ -9,6 +9,7 @@
  * @property boolean $allow_type
  * @property boolean &show_autotag
  * @property string $show_for_templates
+ * @property int $position
  *
  * @property TaggerTag $Tags
  *

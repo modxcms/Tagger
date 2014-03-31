@@ -10,6 +10,7 @@ $_lang['tagger'] = 'Tagger';
 
 $_lang['tagger.global.search'] = 'Search';
 $_lang['tagger.global.loading'] = 'Loading';
+$_lang['tagger.global.change_order'] = 'Change order of: [[+name]]';
 
 $_lang['tagger.menu.tagger'] = 'Tagger';
 $_lang['tagger.menu.tagger_desc'] = 'Manage your groups and tags';
@@ -27,6 +28,7 @@ $_lang['tagger.group.allow_blank'] = 'Allow blank';
 $_lang['tagger.group.allow_type'] = 'Allow type';
 $_lang['tagger.group.show_autotag'] = 'Show autotag';
 $_lang['tagger.group.show_for_templates'] = 'Show for Templates';
+$_lang['tagger.group.position'] = 'Position';
 $_lang['tagger.group.all'] = 'All groups';
 $_lang['tagger.group.create'] = 'Create a new Group';
 $_lang['tagger.group.update'] = 'Update Group';
@@ -50,4 +52,6 @@ $_lang['tagger.err.group_name_ae'] = 'Group with this name already exists. Pleas
 $_lang['tagger.err.tag_name_ns'] = 'Tag name is not specified. Please fill Tag name.';
 $_lang['tagger.err.tag_name_ae'] = 'Tag with this name already exists in given group. Please choose a different name or group.';
 $_lang['tagger.err.tag_group_changed'] = 'Tag group can not be changed.';
+$_lang['tagger.err.bad_sort_column'] = 'Sort grid by <strong>[[+column]]</strong> to use drag & drop sorting.';
+$_lang['tagger.err.clear_filter'] = 'Please clear <strong>search</strong> to use drag & drop sorting.';
 

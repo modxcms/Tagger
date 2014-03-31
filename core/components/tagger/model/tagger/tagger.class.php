@@ -81,7 +81,10 @@ class Tagger {
         $this->modx->regClientStartupScript($this->getOption('jsUrl').'mgr/extras/tagger.tagfield.js');
         $this->modx->regClientStartupScript($this->getOption('jsUrl').'mgr/extras/tagger.combo.js');
 
-        $groups = $this->modx->getIterator('TaggerGroup');
+        $c = $this->modx->newQuery('TaggerGroup');
+        $c->sortby('position');
+
+        $groups = $this->modx->getIterator('TaggerGroup', $c);
         $groupsArray = [];
         foreach ($groups as $group) {
             $showForTemplates = $group->show_for_templates;
