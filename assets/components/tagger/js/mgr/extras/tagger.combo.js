@@ -105,3 +105,21 @@ Tagger.combo.Templates = function(config, getStore) {
 Ext.extend(Tagger.combo.Templates,Ext.ux.form.SuperBoxSelect);
 Ext.reg('tagger-combo-templates',Tagger.combo.Templates);
 
+Tagger.combo.TV = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        name: 'tv'
+        ,hiddenName: 'tv'
+        ,displayField: 'name'
+        ,valueField: 'id'
+        ,fields: ['name','id']
+        ,pageSize: 20
+        ,url: Tagger.config.connectorUrl
+        ,baseParams:{
+            action: 'mgr/extra/gettvs'
+        }
+    });
+    Tagger.combo.TV.superclass.constructor.call(this,config);
+};
+Ext.extend(Tagger.combo.TV,MODx.combo.ComboBox);
+Ext.reg('tagger-combo-tv',Tagger.combo.TV);

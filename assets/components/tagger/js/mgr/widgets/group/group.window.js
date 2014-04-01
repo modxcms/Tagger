@@ -83,3 +83,45 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
 });
 Ext.reg('tagger-window-group',Tagger.window.Group);
 
+Tagger.window.GroupImport = function(config) {
+    Ext.applyIf(config,{
+        title: _('tagger.group.import')
+        ,height: 150
+        ,width: 475
+        ,closeAction: 'close'
+        ,fileUpload: true
+        ,url: Tagger.config.connectorUrl
+        ,grid: null
+        ,action: 'mgr/group/import'
+        ,fields: this.getFields(config)
+    });
+    Tagger.window.GroupImport.superclass.constructor.call(this,config);
+};
+Ext.extend(Tagger.window.GroupImport,MODx.Window, {
+    getFields: function(config) {
+        var fields = [{
+            xtype: 'tagger-combo-tv'
+            ,fieldLabel: _('tagger.group.import_from')
+            ,name: 'tv'
+            ,hiddenName: 'tv'
+            ,anchor: '100%'
+            ,allowBlank: false
+        },{
+            xtype: 'tagger-combo-group'
+            ,fieldLabel: _('tagger.group.import_to')
+            ,baseParams: {
+                action: 'mgr/group/getlist'
+                ,fieldType: 'tagger-field-tags'
+            }
+            ,name: 'group'
+            ,hiddenName: 'group'
+            ,anchor: '100%'
+            ,allowBlank: false
+        }];
+
+        return fields;
+    }
+
+});
+Ext.reg('tagger-window-group-import',Tagger.window.GroupImport);
+

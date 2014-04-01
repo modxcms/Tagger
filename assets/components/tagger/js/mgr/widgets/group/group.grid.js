@@ -81,6 +81,10 @@ Tagger.grid.Group = function(config) {
             text: _('tagger.group.create')
             ,handler: this.createGroup
             ,scope: this
+        },'-',{
+            text: _('tagger.group.import')
+            ,handler: this.importToGroup
+            ,scope: this
         },'->',{
             xtype: 'textfield'
             ,emptyText: _('tagger.global.search') + '...'
@@ -121,6 +125,18 @@ Ext.extend(Tagger.grid.Group,MODx.grid.Grid,{
         this.addContextMenuItem(m);
     }
     
+    ,importToGroup: function(btn,e) {
+        var importToGroup = MODx.load({
+            xtype: 'tagger-window-group-import'
+            ,grid: this
+            ,listeners: {
+                'success': {fn:function() { this.refresh(); },scope:this}
+            }
+        });
+
+        importToGroup.show(e.target);
+    }
+
     ,createGroup: function(btn,e) {
         var createGroup = MODx.load({
             xtype: 'tagger-window-group'

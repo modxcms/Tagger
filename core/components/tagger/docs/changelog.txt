@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Added import button to Tagger Group grid
 - Added drag & drop groups reorder
 - Added position to Tagger group
 

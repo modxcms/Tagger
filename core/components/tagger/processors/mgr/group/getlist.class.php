@@ -32,11 +32,21 @@ class TaggerGroupGetListProcessor extends modObjectGetListProcessor {
     public function prepareQueryBeforeCount(xPDOQuery $c) {
         $query = $this->getProperty('query');
 
+
         if (!empty($query)) {
             $c->where(array(
                     'name:LIKE' => '%'.$query.'%'
             ));
         }
+
+        $fieldType = $this->getProperty('fieldType');
+        if ($fieldType) {
+            $c->where(array(
+                'field_type' => $fieldType
+            ));
+        }
+
+
         return $c;
     }
 

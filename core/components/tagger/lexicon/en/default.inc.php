@@ -34,6 +34,10 @@ $_lang['tagger.group.create'] = 'Create a new Group';
 $_lang['tagger.group.update'] = 'Update Group';
 $_lang['tagger.group.remove'] = 'Remove Group';
 $_lang['tagger.group.remove_confirm'] = 'Are you sure, you want to remove this Group? All tags in this group will be also removed.';
+$_lang['tagger.group.import'] = 'Import';
+$_lang['tagger.group.auto_import'] = 'Automatic import';
+$_lang['tagger.group.import_from'] = 'Import from TV';
+$_lang['tagger.group.import_to'] = 'Import to Group';
 
 $_lang['tagger.tag.tags'] = 'Tags';
 $_lang['tagger.tag.intro_msg'] = 'In this section you can manage Tags.';
@@ -54,4 +58,5 @@ $_lang['tagger.err.tag_name_ae'] = 'Tag with this name already exists in given g
 $_lang['tagger.err.tag_group_changed'] = 'Tag group can not be changed.';
 $_lang['tagger.err.bad_sort_column'] = 'Sort grid by <strong>[[+column]]</strong> to use drag & drop sorting.';
 $_lang['tagger.err.clear_filter'] = 'Please clear <strong>search</strong> to use drag & drop sorting.';
-
+$_lang['tagger.err.import_group_ns'] = 'Group is not specified. Please select a Group.';
+$_lang['tagger.err.import_tv_ns'] = 'Template Variable is not specified. Please select a TV.';
