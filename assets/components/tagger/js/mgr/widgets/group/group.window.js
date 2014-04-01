@@ -45,6 +45,13 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
                 }, scope: this}
             }
         },{
+            xtype: 'tagger-combo-group-place'
+            ,fieldLabel: _('tagger.group.place')
+            ,name: 'place'
+            ,hiddenName: 'place'
+            ,anchor: '100%'
+            ,allowBlank: false
+        },{
             xtype: 'xcheckbox'
             ,fieldLabel: _('tagger.group.remove_unused')
             ,name: 'remove_unused'

@@ -51,6 +51,7 @@ Tagger.combo.FieldType = function(config) {
         ,displayField: 'd'
         ,valueField: 'v'
         ,mode: 'local'
+        ,value: 'tagger-field-tags'
         ,triggerAction: 'all'
         ,editable: false
         ,selectOnFocus: false
@@ -123,3 +124,31 @@ Tagger.combo.TV = function(config) {
 };
 Ext.extend(Tagger.combo.TV,MODx.combo.ComboBox);
 Ext.reg('tagger-combo-tv',Tagger.combo.TV);
+
+Tagger.combo.GroupPlace = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        store: new Ext.data.SimpleStore({
+            fields: ['d','v']
+            ,data: [
+                [_('tagger.group.place_in_tab') ,'in-tab'],
+                [_('tagger.group.place_above_content') ,'above-content'],
+                [_('tagger.group.place_below_content') ,'below-content'],
+                [_('tagger.group.place_bottom_page') ,'bottom-page']
+            ]
+        })
+        ,displayField: 'd'
+        ,valueField: 'v'
+        ,mode: 'local'
+        ,value: 'in-tab'
+        ,triggerAction: 'all'
+        ,editable: false
+        ,selectOnFocus: false
+        ,preventRender: true
+        ,forceSelection: true
+        ,enableKeyEvents: true
+    });
+    Tagger.combo.GroupPlace.superclass.constructor.call(this,config);
+};
+Ext.extend(Tagger.combo.GroupPlace,MODx.combo.ComboBox);
+Ext.reg('tagger-combo-group-place',Tagger.combo.GroupPlace);

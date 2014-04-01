@@ -17,6 +17,7 @@ $xpdo_meta_map['TaggerGroup']= array (
     'allow_type' => 0,
     'show_autotag' => 0,
     'show_for_templates' => '',
+    'place' => 'in-tab',
     'position' => 0,
   ),
   'fieldMeta' => 
@@ -86,6 +87,14 @@ $xpdo_meta_map['TaggerGroup']= array (
       'phptype' => 'string',
       'null' => false,
       'default' => '',
+    ),
+    'place' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '100',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => 'in-tab',
     ),
     'position' => 
     array (

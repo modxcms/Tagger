@@ -8,7 +8,7 @@ Tagger.grid.Group = function(config) {
         }
         ,save_action: 'mgr/group/updatefromgrid'
         ,autosave: true
-        ,fields: ['id','name', 'field_type', 'remove_unused', 'allow_new', 'allow_blank', 'allow_type', 'show_autotag', 'show_for_templates', 'position']
+        ,fields: ['id','name', 'field_type', 'remove_unused', 'allow_new', 'allow_blank', 'allow_type', 'show_autotag', 'show_for_templates', 'position', 'place']
         ,autoHeight: true
         ,paging: true
         ,remoteSort: true
@@ -41,27 +41,6 @@ Tagger.grid.Group = function(config) {
         },{
             header: _('tagger.group.allow_new')
             ,dataIndex: 'allow_new'
-            ,width: 200
-            ,sortable: true
-            ,renderer: this.rendYesNo
-            ,editor: { xtype: 'modx-combo-boolean' }
-        },{
-            header: _('tagger.group.allow_blank')
-            ,dataIndex: 'allow_blank'
-            ,width: 200
-            ,sortable: true
-            ,renderer: this.rendYesNo
-            ,editor: { xtype: 'modx-combo-boolean' }
-        },{
-            header: _('tagger.group.allow_type')
-            ,dataIndex: 'allow_type'
-            ,width: 200
-            ,sortable: true
-            ,renderer: this.rendYesNo
-            ,editor: { xtype: 'modx-combo-boolean' }
-        },{
-            header: _('tagger.group.show_autotag')
-            ,dataIndex: 'show_autotag'
             ,width: 200
             ,sortable: true
             ,renderer: this.rendYesNo

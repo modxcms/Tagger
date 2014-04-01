@@ -38,6 +38,11 @@ $_lang['tagger.group.import'] = 'Import';
 $_lang['tagger.group.auto_import'] = 'Automatic import';
 $_lang['tagger.group.import_from'] = 'Import from TV';
 $_lang['tagger.group.import_to'] = 'Import to Group';
+$_lang['tagger.group.place'] = 'Place';
+$_lang['tagger.group.place_in_tab'] = 'In tab';
+$_lang['tagger.group.place_above_content'] = 'Above content';
+$_lang['tagger.group.place_below_content'] = 'Below content';
+$_lang['tagger.group.place_bottom_page'] = 'Bottom page';
 
 $_lang['tagger.tag.tags'] = 'Tags';
 $_lang['tagger.tag.intro_msg'] = 'In this section you can manage Tags.';
