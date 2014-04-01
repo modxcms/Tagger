@@ -46,6 +46,37 @@ Tagger.grid.Group = function(config) {
             ,renderer: this.rendYesNo
             ,editor: { xtype: 'modx-combo-boolean' }
         },{
+            header: _('tagger.group.allow_blank')
+            ,dataIndex: 'allow_blank'
+            ,width: 200
+            ,sortable: true
+            ,renderer: this.rendYesNo
+            ,editor: { xtype: 'modx-combo-boolean' }
+            ,hidden: true
+        },{
+            header: _('tagger.group.allow_type')
+            ,dataIndex: 'allow_type'
+            ,width: 200
+            ,sortable: true
+            ,renderer: this.rendYesNo
+            ,editor: { xtype: 'modx-combo-boolean' }
+            ,hidden: true
+        },{
+            header: _('tagger.group.show_autotag')
+            ,dataIndex: 'show_autotag'
+            ,width: 200
+            ,sortable: true
+            ,renderer: this.rendYesNo
+            ,editor: { xtype: 'modx-combo-boolean' }
+            ,hidden: true
+        },{
+            header: _('tagger.group.place')
+            ,dataIndex: 'place'
+            ,width: 200
+            ,sortable: true
+            ,editor: { xtype: 'tagger-combo-group-place', renderer: true }
+            ,hidden: true
+        },{
             header: _('tagger.group.show_for_templates')
             ,dataIndex: 'show_for_templates'
             ,width: 200
