@@ -49,7 +49,7 @@ Ext.override(MODx.panel.Resource, {
 
             if (taggerFields['above-content'].length > 0) {
                 fields.splice(indexOfContent, 0, {
-                    title: 'Tagger'
+                    title: _('tagger')
                     ,layout: 'form'
                     ,bodyCssClass: 'main-wrapper'
                     ,autoHeight: true
@@ -65,7 +65,7 @@ Ext.override(MODx.panel.Resource, {
 
             if (taggerFields['below-content'].length > 0) {
                 fields.splice(indexOfContent + 1, 0, {
-                    title: 'Tagger'
+                    title: _('tagger')
                     ,layout: 'form'
                     ,bodyCssClass: 'main-wrapper'
                     ,autoHeight: true
@@ -80,7 +80,7 @@ Ext.override(MODx.panel.Resource, {
 
         if (taggerFields['bottom-page'].length > 0) {
             fields.push({
-                title: 'Tagger'
+                title: _('tagger')
                 ,layout: 'form'
                 ,bodyCssClass: 'main-wrapper'
                 ,autoHeight: true
