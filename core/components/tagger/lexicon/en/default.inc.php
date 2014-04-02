@@ -74,3 +74,5 @@ $_lang['tagger.err.bad_sort_column'] = 'Sort grid by <strong>[[+column]]</strong
 $_lang['tagger.err.clear_filter'] = 'Please clear <strong>search</strong> to use drag & drop sorting.';
 $_lang['tagger.err.import_group_ns'] = 'Group is not specified. Please select a Group.';
 $_lang['tagger.err.import_tv_ns'] = 'Template Variable is not specified. Please select a TV.';
+$_lang['tagger.err.import_tv_ne'] = 'Template Variable was not found. Please try to repeat your action.';
+$_lang['tagger.err.import_tv_nsp'] = 'Type of selected Template Variable is not supported. Supported types are: [[+supported]]';
