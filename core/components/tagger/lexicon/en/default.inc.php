@@ -55,6 +55,15 @@ $_lang['tagger.tag.remove_confirm'] = 'Are you sure, you want to remove this Tag
 
 $_lang['setting_tagger.tag_key'] = 'Tag key';
 $_lang['setting_tagger.tag_key_desc'] = 'Name of GET variable that stores tags. Default: tags';
+$_lang['setting_tagger.place_above_content_header'] = 'Above content header';
+$_lang['setting_tagger.place_above_content_header_desc'] = 'Show or hide header of the Tagger block, that shows above the content block.';
+$_lang['setting_tagger.place_below_content_header'] = 'Below content header';
+$_lang['setting_tagger.place_below_content_header_desc'] = 'Show or hide header of the Tagger block, that shows below the content block.';
+$_lang['setting_tagger.place_bottom_page_header'] = 'Bottom page header';
+$_lang['setting_tagger.place_bottom_page_header_desc'] = 'Show or hide header of the Tagger block, that shows at the bottom of the page.';
+
+$_lang['area_places'] = 'Places';
+$_lang['area_default'] = 'Default';
 
 $_lang['tagger.err.group_name_ns'] = 'Group name is not specified. Please fill Group name.';
 $_lang['tagger.err.group_name_ae'] = 'Group with this name already exists. Please choose a different name.';

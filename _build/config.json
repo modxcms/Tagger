@@ -29,6 +29,21 @@
         "systemSettings": [{
             "key": "tag_key"
             ,"value": "tags"
+        },{
+            "key": "place_above_content_header"
+            ,"value": 1
+            ,"type": "combo-boolean"
+            ,"area": "places"
+        },{
+            "key": "place_below_content_header"
+            ,"value": 1
+            ,"type": "combo-boolean"
+            ,"area": "places"
+        },{
+            "key": "place_bottom_page_header"
+            ,"value": 1
+            ,"type": "combo-boolean"
+            ,"area": "places"
         }]
     },
     "database": {

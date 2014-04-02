@@ -49,11 +49,11 @@ Ext.override(MODx.panel.Resource, {
 
             if (taggerFields['above-content'].length > 0) {
                 fields.splice(indexOfContent, 0, {
-                    title: _('tagger')
+                    title: (MODx.config['tagger.place_above_content_header'] == 1) ? _('tagger') : ''
                     ,layout: 'form'
                     ,bodyCssClass: 'main-wrapper'
                     ,autoHeight: true
-                    ,collapsible: true
+                    ,collapsible: MODx.config['tagger.place_above_content_header'] == 1
                     ,animCollapse: false
                     ,hideMode: 'offsets'
                     ,items: taggerFields['above-content']
@@ -65,11 +65,11 @@ Ext.override(MODx.panel.Resource, {
 
             if (taggerFields['below-content'].length > 0) {
                 fields.splice(indexOfContent + 1, 0, {
-                    title: _('tagger')
+                    title: (MODx.config['tagger.place_below_content_header'] == 1) ? _('tagger') : ''
                     ,layout: 'form'
                     ,bodyCssClass: 'main-wrapper'
                     ,autoHeight: true
-                    ,collapsible: true
+                    ,collapsible: MODx.config['tagger.place_below_content_header'] == 1
                     ,animCollapse: false
                     ,hideMode: 'offsets'
                     ,items: taggerFields['below-content']
@@ -80,11 +80,11 @@ Ext.override(MODx.panel.Resource, {
 
         if (taggerFields['bottom-page'].length > 0) {
             fields.push({
-                title: _('tagger')
+                title: (MODx.config['tagger.place_bottom_page_header'] == 1) ? _('tagger') : ''
                 ,layout: 'form'
                 ,bodyCssClass: 'main-wrapper'
                 ,autoHeight: true
-                ,collapsible: true
+                ,collapsible: MODx.config['tagger.place_bottom_page_header'] == 1
                 ,animCollapse: false
                 ,hideMode: 'offsets'
                 ,items: taggerFields['bottom-page']
