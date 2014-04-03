@@ -32,11 +32,38 @@ PROPERTIES:
 &target       An ID of a resource that will be used for generating URI for a Tag. If no ID is given, current Resource ID will be used
 &showUnused   If set to 1, Tags that are not assigned to any Resource will be included to the output as well
 
+OUTPUT PLACEHOLDERS AND EXAMPLE VALUES:
+[id] => 1
+[tag] => News
+[group] => 3
+[group_id] => 3
+[group_name] => Media Type
+[group_field_type] => tagger-combo-tag
+[group_allow_new] => 0
+[group_remove_unused] => 0
+[group_allow_blank] => 1
+[group_allow_type] => 0
+[group_show_autotag] => 0
+[group_show_for_templates] => 21
+[cnt] => 1
+[uri]
+
 EXAMPLE USAGE:
 
 ```[[TaggerGetTags? &showUnused=`1`]]```
+```[[TaggerGetTags? &groups=`1,3` &rowTpl=`tag_links_tpl`]]```
 
+### TaggerGetResourcesWhere
 
+This snippet generate SQL Query that can be used in WHERE condition in getResources snippet
+
+PROPERTIES:
+&tags       Comma separated list of Tags for which will be generated a Resource query. By default Tags from GET param will be loaded
+&groups     Comma separated list of Tagger Groups. Only from those groups will Tags be allowed
+&where      Original getResources where property. If you used where property in your current getResources call, move it here
+
+EXAMPLE USAGE:
+```[[!getResources? &where=`[[!TaggerGetResourcesWhere? &tags=`Books,Vehicles` &where=`{"isfolder": 0}`]]`]]```
 
 ## Documentation
 
