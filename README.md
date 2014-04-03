@@ -41,33 +41,33 @@ This Snippet allows you to list tags for resource(s), group(s) and all tags
 
 **OUTPUT PLACEHOLDERS AND EXAMPLE VALUES:**
 
-[id] => 1
+[[+id]] => 1
 
-[tag] => News
+[[+tag]] => News
 
-[group] => 3
+[[+group]] => 3
 
-[group_id] => 3
+[[+group_id]] => 3
 
-[group_name] => Media Type
+[[+group_name]] => Media Type
 
-[group_field_type] => tagger-combo-tag
+[[+group_field_type]] => tagger-combo-tag
 
-[group_allow_new] => 0
+[[+group_allow_new]] => 0
 
-[group_remove_unused] => 0
+[[+group_remove_unused]] => 0
 
-[group_allow_blank] => 1
+[[+group_allow_blank]] => 1
 
-[group_allow_type] => 0
+[[+group_allow_type]] => 0
 
-[group_show_autotag] => 0
+[[+group_show_autotag]] => 0
 
-[group_show_for_templates] => 21
+[[+group_show_for_templates]] => 21
 
-[cnt] => 1
+[[+cnt]] => 1
 
-[uri]
+[[+uri]]
 
 **EXAMPLE USAGE:**
 
