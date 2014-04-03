@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+Tagger 1.0.0
+==============
 - Added ability to show assigned resources for selected tag from Tag grid
 - Added system settings to show/hide header of group places
 - Added option to select place where to render Tagger Group
