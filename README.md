@@ -72,6 +72,7 @@ This Snippet allows you to list tags for resource(s), group(s) and all tags
 **EXAMPLE USAGE:**
 
 ```[[TaggerGetTags? &showUnused=`1`]]```
+
 ```[[TaggerGetTags? &groups=`1,3` &rowTpl=`tag_links_tpl`]]```
 
 ### TaggerGetResourcesWhere
