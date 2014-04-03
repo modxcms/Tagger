@@ -26,11 +26,17 @@ This Snippet allows you to list tags for resource(s), group(s) and all tags
 **PROPERTIES:**
 
 &resources    Comma separated list of resources for which will be listed Tags
+
 &groups       Comma separated list of Tagger Groups for which will be listed Tags
+
 &rowTpl       Name of a chunk that will be used for each Tag. If no chunk is given, array with available placeholders will be rendered
+
 &outTpl       Name of a chunk that will be used for wrapping all tags. If no chunk is given, tags will be rendered without a wrapper
+
 &separator    String separator, that will be used for separating Tags
+
 &target       An ID of a resource that will be used for generating URI for a Tag. If no ID is given, current Resource ID will be used
+
 &showUnused   If set to 1, Tags that are not assigned to any Resource will be included to the output as well
 
 **OUTPUT PLACEHOLDERS AND EXAMPLE VALUES:**
