@@ -55,7 +55,8 @@ if ($resources) {
 
 if ($groups) {
     $c->where(array(
-        'Group.id' => $groups
+        'Group.id' => $groups,
+        'OR:Group.name' => $groups
     ));
 }
 
