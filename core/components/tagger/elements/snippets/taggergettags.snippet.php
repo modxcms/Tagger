@@ -29,7 +29,7 @@ if (!($tagger instanceof Tagger)) return '';
 
 $resources = $modx->getOption('resources', $scriptProperties, '');
 $groups = $modx->getOption('groups', $scriptProperties, '');
-$target = (int) $modx->getOption('target', $scriptProperties, $modx->resource->id);
+$target = (int) $modx->getOption('target', $scriptProperties, $modx->resource->id, true);
 $showUnused = (int) $modx->getOption('showUnused', $scriptProperties, '0');
 
 $rowTpl = $modx->getOption('rowTpl', $scriptProperties, '');
@@ -55,8 +55,8 @@ if ($resources) {
 
 if ($groups) {
     $c->where(array(
-        'Group.id' => $groups,
-        'OR:Group.name' => $groups
+        'Group.id:IN' => $groups,
+        'OR:Group.name:IN' => $groups
     ));
 }
 

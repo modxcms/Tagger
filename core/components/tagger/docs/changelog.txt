@@ -1,5 +1,9 @@
 Changelog for Tagger.
 
+- Fixed default value for &target in TaggerGetTags
+- Added descriptions to add/update group window
+- Fixed &group property in TaggerGetTags snippet
+
 Tagger 1.0.0
 ==============
 - Added ability to show assigned resources for selected tag from Tag grid

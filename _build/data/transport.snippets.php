@@ -70,7 +70,7 @@ $properties = array(
         'desc' => 'tagger.gettags.showUnused_desc',
         'type' => 'numberfield',
         'options' => '',
-        'value' => '',
+        'value' => '0',
         'lexicon' => 'tagger:properties',
     ),
 
