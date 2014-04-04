@@ -63,7 +63,7 @@ if ($groups) {
 $c->groupby($modx->getSelectColumns('TaggerTag', 'TaggerTag') . ',' . $modx->getSelectColumns('TaggerGroup', 'Group'));
 $tags = $modx->getIterator('TaggerTag', $c);
 
-$out = [];
+$out = array();
 
 $friendlyURL = $modx->getOption('friendly_urls', null, 0);
 $tagKey = $modx->getOption('tagger.tag_key', null, 'tags');
@@ -95,7 +95,7 @@ foreach ($tags as $tag) {
 $out = implode($separator, $out);
 
 if ($outTpl != '') {
-    $out = $modx->getChunk($outTpl, ['tags' => $out]);
+    $out = $modx->getChunk($outTpl, array('tags' => $out));
 }
 
 return $out;

@@ -7,11 +7,11 @@
  */
 class TaggerImportProcessor extends modProcessor {
 
-    private $tags = [];
-    private $resources = [];
+    private $tags = array();
+    private $resources = array();
     private $tv;
     private $group;
-    private $supportedTypes = [];
+    private $supportedTypes = array();
     private $separator;
 
     public function process() {
@@ -32,10 +32,10 @@ class TaggerImportProcessor extends modProcessor {
     }
 
     public function setSupportedTypes() {
-        $this->supportedTypes = [
+        $this->supportedTypes = array(
             'listbox-multiple'  => '||',
             'autotag'           => ','
-        ];
+        );
     }
 
     public function checkRequired() {
@@ -67,9 +67,9 @@ class TaggerImportProcessor extends modProcessor {
 
     public function loadTags() {
         $c = $this->modx->newQuery('modTemplateVarResource');
-        $c->where([
+        $c->where(array(
             'tmplvarid' => $this->tv
-        ]);
+        ));
 
         $c->prepare();
         $c->stmt->execute();
@@ -87,14 +87,14 @@ class TaggerImportProcessor extends modProcessor {
 
     public function saveTags() {
         $tags = $this->tags;
-        $this->tags = [];
+        $this->tags = array();
 
         foreach ($tags as $tag) {
             /** @var TaggerTag $tagObject */
-            $tagObject = $this->modx->getObject('TaggerTag', [
+            $tagObject = $this->modx->getObject('TaggerTag', array(
                 'tag' => $tag,
                 'group' => $this->group
-            ]);
+            ));
 
             if (!$tagObject) {
                 $tagObject = $this->modx->newObject('TaggerTag');
@@ -110,7 +110,7 @@ class TaggerImportProcessor extends modProcessor {
     public function assignTagsToResources() {
         foreach ($this->resources as $resource => $tags) {
             foreach ($tags as $tag) {
-                $relationExists = $this->modx->getObject('TaggerTagResource', ['tag' => (int)$this->tags[$tag], 'resource' => $resource]);
+                $relationExists = $this->modx->getObject('TaggerTagResource', array('tag' => (int)$this->tags[$tag], 'resource' => $resource));
                 if ($relationExists) {
                     continue;
                 }

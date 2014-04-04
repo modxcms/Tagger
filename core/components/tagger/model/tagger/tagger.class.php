@@ -85,14 +85,14 @@ class Tagger {
         $c->sortby('position');
 
         $groups = $this->modx->getIterator('TaggerGroup', $c);
-        $groupsArray = [];
+        $groupsArray = array();
         foreach ($groups as $group) {
             $showForTemplates = $group->show_for_templates;
             $showForTemplates = $this->explodeAndClean($showForTemplates);
             $groupsArray[] = array_merge($group->toArray(), array('show_for_templates' => $showForTemplates));
         }
 
-        $tagsArray = [];
+        $tagsArray = array();
 
         if ($mode == 'upd') {
             $c = $this->modx->newQuery('TaggerTagResource');

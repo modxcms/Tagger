@@ -34,10 +34,10 @@ class TaggerGetTagsProcessor extends modObjectGetListProcessor {
         $c->prepare();
         $c->stmt->execute();
 
-        $returnArray = [];
+        $returnArray = array();
 
         while ($tag = $c->stmt->fetch(PDO::FETCH_ASSOC)) {
-            $returnArray[] = ['tag' => $tag['tag']];
+            $returnArray[] = array('tag' => $tag['tag']);
         }
 
         return $this->outputArray($returnArray, $cnt);
