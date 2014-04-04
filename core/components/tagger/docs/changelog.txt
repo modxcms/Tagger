@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+Tagger 1.0.2
+==============
 - Replaced calling shorthand PHP array [] with default array()
 
 Tagger 1.0.1
