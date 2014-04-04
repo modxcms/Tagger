@@ -3,7 +3,7 @@
     "lowCaseName": "tagger",
     "description": "Tag management component",
     "author": "John Peca",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "package":{
         "actions": [{
             "id": 1

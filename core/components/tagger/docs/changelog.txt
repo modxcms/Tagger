@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+Tagger 1.0.1
+==============
 - Fixed default value for &target in TaggerGetTags
 - Added descriptions to add/update group window
 - Fixed &group property in TaggerGetTags snippet
