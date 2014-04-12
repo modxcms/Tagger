@@ -17,7 +17,7 @@
         "elements": {
             "plugins": [{
                 "name": "Tagger"
-                ,"events": ["OnDocFormSave", "OnDocFormPrerender", "OnHandleRequest"]
+                ,"events": ["OnDocFormSave", "OnDocFormPrerender", "OnHandleRequest", "OnResourceDuplicate"]
             }],
             "snippets": [{
                 "name": "TaggerGetTags"

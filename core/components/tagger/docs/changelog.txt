@@ -1,5 +1,8 @@
 Changelog for Tagger.
 
+- Added handler for onResourceDuplicate event, that copies Tags (only for the Resource, not for children)
+- Added contexts property to TaggerGetTags snippet
+
 Tagger 1.0.2
 ==============
 - Replaced calling shorthand PHP array [] with default array()

@@ -21,6 +21,7 @@ $e = array(
     'OnDocFormSave',
     'OnDocFormPrerender',
     'OnHandleRequest',
+    'OnResourceDuplicate',
 );
 
 foreach ($e as $ev) {

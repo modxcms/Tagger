@@ -228,4 +228,21 @@ class Tagger {
         $gateway->init($scriptProperties);
         $gateway->handleRequest();
     }
+
+    public function onResourceDuplicate($scriptProperties) {
+        /** @var modResource $oldResource */
+        $oldResource = $scriptProperties['oldResource'];
+
+        /** @var modResource $newResource */
+        $newResource = $scriptProperties['newResource'];
+
+        $oldRelations = $this->modx->getIterator('TaggerTagResource', array('resource' => $oldResource->id));
+        /** @var TaggerTagResource $oldRelation */
+        foreach ($oldRelations as $oldRelation) {
+            $newRelation = $this->modx->newObject('TaggerTagResource');
+            $newRelation->set('resource', $newResource->id);
+            $newRelation->set('tag', $oldRelation->tag);
+            $newRelation->save();
+        }
+    }
 }
