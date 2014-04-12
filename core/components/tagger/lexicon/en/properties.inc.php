@@ -17,3 +17,4 @@ $_lang['tagger.gettags.outTpl_desc'] = 'Name of a chunk that will be used for wr
 $_lang['tagger.gettags.separator_desc'] = 'String separator, that will be used for separating Tags';
 $_lang['tagger.gettags.target_desc'] = 'An ID of a resource that will be used for generating URI for a Tag. If no ID is given, current Resource ID will be used';
 $_lang['tagger.gettags.showUnused_desc'] = 'If 1 is set, Tags that are not assigned to any Resource will be included to the output as well';
+$_lang['tagger.gettags.contexts_desc'] = 'If set, will display only tags for resources in given contexts. Contexts can be separated by a comma';

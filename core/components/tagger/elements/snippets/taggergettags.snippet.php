@@ -15,6 +15,7 @@
  * &separator   string  optional    String separator, that will be used for separating Tags
  * &target      int     optional    An ID of a resource that will be used for generating URI for a Tag. If no ID is given, current Resource ID will be used
  * &showUnused  int     optional    If 1 is set, Tags that are not assigned to any Resource will be included to the output as well
+ * &contexts    string  optional    If set, will display only tags for resources in given contexts. Contexts can be separated by a comma
  *
  * USAGE:
  *
@@ -31,6 +32,7 @@ $resources = $modx->getOption('resources', $scriptProperties, '');
 $groups = $modx->getOption('groups', $scriptProperties, '');
 $target = (int) $modx->getOption('target', $scriptProperties, $modx->resource->id, true);
 $showUnused = (int) $modx->getOption('showUnused', $scriptProperties, '0');
+$contexts = $modx->getOption('contexts', $scriptProperties, '');
 
 $rowTpl = $modx->getOption('rowTpl', $scriptProperties, '');
 $outTpl = $modx->getOption('outTpl', $scriptProperties, '');
@@ -38,6 +40,7 @@ $separator = $modx->getOption('separator', $scriptProperties, '');
 
 $resources = $tagger->explodeAndClean($resources);
 $groups = $tagger->explodeAndClean($groups);
+$contexts = $tagger->explodeAndClean($contexts);
 
 $c = $modx->newQuery('TaggerTag');
 
@@ -46,6 +49,14 @@ $c->select($modx->getSelectColumns('TaggerGroup', 'Group', 'group_'));
 
 $c->leftJoin('TaggerTagResource', 'Resources');
 $c->leftJoin('TaggerGroup', 'Group');
+
+if (!empty($contexts)) {
+    $c->leftJoin('modResource', 'Resource', array('Resources.resource = Resource.id'));
+
+    $c->where(array(
+        'Resource.context_key:IN' => $contexts
+    ));
+}
 
 if ($resources) {
     $c->where(array(

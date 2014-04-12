@@ -73,6 +73,14 @@ $properties = array(
         'value' => '0',
         'lexicon' => 'tagger:properties',
     ),
+    array(
+        'name' => 'contexts',
+        'desc' => 'tagger.gettags.contexts_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'tagger:properties',
+    ),
 
 );
 $snippets[0]->setProperties($properties);
