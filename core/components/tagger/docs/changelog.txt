@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Duplicate Tags also for children
 - Improved gateway
 - Added handler for onResourceDuplicate event, that copies Tags (only for the Resource, not for children)
 - Added contexts property to TaggerGetTags snippet
