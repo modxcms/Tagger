@@ -41,6 +41,7 @@ $separator = $modx->getOption('separator', $scriptProperties, '');
 $resources = $tagger->explodeAndClean($resources);
 $groups = $tagger->explodeAndClean($groups);
 $contexts = $tagger->explodeAndClean($contexts);
+$toPlaceholder = $modx->getOption('toPlaceholder', $scriptProperties, false);
 
 $c = $modx->newQuery('TaggerTag');
 
@@ -107,6 +108,11 @@ $out = implode($separator, $out);
 
 if ($outTpl != '') {
     $out = $modx->getChunk($outTpl, array('tags' => $out));
+}
+
+if (!empty($toPlaceholder)) {
+    $modx->setPlaceholder($toPlaceholder, $out);
+    return '';
 }
 
 return $out;
