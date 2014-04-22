@@ -81,6 +81,14 @@ $properties = array(
         'value' => '',
         'lexicon' => 'tagger:properties',
     ),
+    array(
+        'name' => 'toPlaceholder',
+        'desc' => 'tagger.gettags.toPlaceholder_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'tagger:properties',
+    ),
 
 );
 $snippets[0]->setProperties($properties);

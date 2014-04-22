@@ -8,14 +8,15 @@
  *
  * PROPERTIES:
  *
- * &resources   string  optional    Comma separated list of resources for which will be listed Tags
- * &groups      string  optional    Comma separated list of Tagger Groups for which will be listed Tags
- * &rowTpl      string  optional    Name of a chunk that will be used for each Tag. If no chunk is given, array with available placeholders will be rendered
- * &outTpl      string  optional    Name of a chunk that will be used for wrapping all tags. If no chunk is given, tags will be rendered without a wrapper
- * &separator   string  optional    String separator, that will be used for separating Tags
- * &target      int     optional    An ID of a resource that will be used for generating URI for a Tag. If no ID is given, current Resource ID will be used
- * &showUnused  int     optional    If 1 is set, Tags that are not assigned to any Resource will be included to the output as well
- * &contexts    string  optional    If set, will display only tags for resources in given contexts. Contexts can be separated by a comma
+ * &resources       string  optional    Comma separated list of resources for which will be listed Tags
+ * &groups          string  optional    Comma separated list of Tagger Groups for which will be listed Tags
+ * &rowTpl          string  optional    Name of a chunk that will be used for each Tag. If no chunk is given, array with available placeholders will be rendered
+ * &outTpl          string  optional    Name of a chunk that will be used for wrapping all tags. If no chunk is given, tags will be rendered without a wrapper
+ * &separator       string  optional    String separator, that will be used for separating Tags
+ * &target          int     optional    An ID of a resource that will be used for generating URI for a Tag. If no ID is given, current Resource ID will be used
+ * &showUnused      int     optional    If 1 is set, Tags that are not assigned to any Resource will be included to the output as well
+ * &contexts        string  optional    If set, will display only tags for resources in given contexts. Contexts can be separated by a comma
+ * &toPlaceholder   string  optional    If set, output will return in placeholder with given name
  *
  * USAGE:
  *
@@ -41,6 +42,7 @@ $separator = $modx->getOption('separator', $scriptProperties, '');
 $resources = $tagger->explodeAndClean($resources);
 $groups = $tagger->explodeAndClean($groups);
 $contexts = $tagger->explodeAndClean($contexts);
+$toPlaceholder = $modx->getOption('toPlaceholder', $scriptProperties, '');
 
 $c = $modx->newQuery('TaggerTag');
 
@@ -107,6 +109,11 @@ $out = implode($separator, $out);
 
 if ($outTpl != '') {
     $out = $modx->getChunk($outTpl, array('tags' => $out));
+}
+
+if (!empty($toPlaceholder)) {
+    $modx->setPlaceholder($toPlaceholder, $out);
+    return '';
 }
 
 return $out;
