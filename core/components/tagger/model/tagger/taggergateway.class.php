@@ -19,6 +19,10 @@ class TaggerGateway {
     public function handleRequest() {
         $this->pieces = explode('/', trim($_REQUEST[$this->modx->getOption('request_param_alias', null, 'q')], ' '));
 
+        $pieces = array_flip($this->pieces);
+        $tagKey = $this->modx->getOption('tagger.tag_key', null, 'tags');
+        if (!isset($pieces[$tagKey])) return false;
+
         if ($this->pieces[count($this->pieces) - 1] != '') {
             $this->modx->sendRedirect(MODX_SITE_URL . implode('/', $this->pieces) . '/', array('responseCode' => 'HTTP/1.1 301 Moved Permanently'));
         }
