@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+- Fixed getResourcesWhere to not return null when no tags are provided
+
 Tagger 1.1.0
 ==============
 - Added toPlaceholder property to getTags snippet

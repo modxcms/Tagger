@@ -41,6 +41,11 @@ if ($tags == '') {
 $groups = $modx->getOption('groups', $scriptProperties, '');
 
 $tags = $tagger->explodeAndClean($tags);
+
+if (empty($tags)) {
+    return $modx->toJSON($where);
+}
+
 $groups = $tagger->explodeAndClean($groups);
 
 $c = $modx->newQuery('TaggerTag');
