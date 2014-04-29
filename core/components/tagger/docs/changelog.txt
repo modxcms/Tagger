@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Added options showDeleted and showUnpublished to snippet getTags
 - Fixed getResourcesWhere to not return null when no tags are provided
 
 Tagger 1.1.0

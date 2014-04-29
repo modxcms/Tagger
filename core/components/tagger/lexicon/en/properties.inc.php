@@ -19,3 +19,5 @@ $_lang['tagger.gettags.target_desc'] = 'An ID of a resource that will be used fo
 $_lang['tagger.gettags.showUnused_desc'] = 'If 1 is set, Tags that are not assigned to any Resource will be included to the output as well';
 $_lang['tagger.gettags.contexts_desc'] = 'If set, will display only tags for resources in given contexts. Contexts can be separated by a comma';
 $_lang['tagger.gettags.toPlaceholder_desc'] = 'If set, output will return in placeholder with given name';
+$_lang['tagger.gettags.showUnpublished_desc'] = 'If 1 is set, Tags that are assigned only to unpublished Resources will be included to the output as well';
+$_lang['tagger.gettags.showDeleted_desc'] = 'If 1 is set, Tags that are assigned only to deleted Resources will be included to the output as well';

@@ -74,6 +74,22 @@ $properties = array(
         'lexicon' => 'tagger:properties',
     ),
     array(
+        'name' => 'showUnpublished',
+        'desc' => 'tagger.gettags.showUnpublished_desc',
+        'type' => 'numberfield',
+        'options' => '',
+        'value' => '0',
+        'lexicon' => 'tagger:properties',
+    ),
+    array(
+        'name' => 'showDeleted',
+        'desc' => 'tagger.gettags.showDeleted_desc',
+        'type' => 'numberfield',
+        'options' => '',
+        'value' => '0',
+        'lexicon' => 'tagger:properties',
+    ),
+    array(
         'name' => 'contexts',
         'desc' => 'tagger.gettags.contexts_desc',
         'type' => 'textfield',

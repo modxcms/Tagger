@@ -15,6 +15,8 @@
  * &separator       string  optional    String separator, that will be used for separating Tags
  * &target          int     optional    An ID of a resource that will be used for generating URI for a Tag. If no ID is given, current Resource ID will be used
  * &showUnused      int     optional    If 1 is set, Tags that are not assigned to any Resource will be included to the output as well
+ * &showUnpublished int     optional    If 1 is set, Tags that are assigned only to unpublished Resources will be included to the output as well
+ * &showDeleted     int     optional    If 1 is set, Tags that are assigned only to deleted Resources will be included to the output as well
  * &contexts        string  optional    If set, will display only tags for resources in given contexts. Contexts can be separated by a comma
  * &toPlaceholder   string  optional    If set, output will return in placeholder with given name
  *
@@ -33,6 +35,8 @@ $resources = $modx->getOption('resources', $scriptProperties, '');
 $groups = $modx->getOption('groups', $scriptProperties, '');
 $target = (int) $modx->getOption('target', $scriptProperties, $modx->resource->id, true);
 $showUnused = (int) $modx->getOption('showUnused', $scriptProperties, '0');
+$showUnpublished = (int) $modx->getOption('showUnpublished', $scriptProperties, '0');
+$showDeleted = (int) $modx->getOption('showDeleted', $scriptProperties, '0');
 $contexts = $modx->getOption('contexts', $scriptProperties, '');
 
 $rowTpl = $modx->getOption('rowTpl', $scriptProperties, '');
@@ -51,12 +55,23 @@ $c->select($modx->getSelectColumns('TaggerGroup', 'Group', 'group_'));
 
 $c->leftJoin('TaggerTagResource', 'Resources');
 $c->leftJoin('TaggerGroup', 'Group');
+$c->leftJoin('modResource', 'Resource', array('Resources.resource = Resource.id'));
 
 if (!empty($contexts)) {
-    $c->leftJoin('modResource', 'Resource', array('Resources.resource = Resource.id'));
-
     $c->where(array(
         'Resource.context_key:IN' => $contexts
+    ));
+}
+
+if ($showUnpublished == 0) {
+    $c->where(array(
+        'Resource.published' => 1
+    ));
+}
+
+if ($showDeleted == 0) {
+    $c->where(array(
+        'Resource.deleted' => 0
     ));
 }
 
