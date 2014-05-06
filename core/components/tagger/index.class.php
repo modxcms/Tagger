@@ -3,9 +3,6 @@ require_once dirname(__FILE__) . '/model/tagger/tagger.class.php';
 /**
  * @package tagger
  */
-class IndexManagerController extends TaggerBaseManagerController {
-    public static function getDefaultController() { return 'home'; }
-}
 
 abstract class TaggerBaseManagerController extends modExtraManagerController {
     /** @var Tagger $tagger */
@@ -27,4 +24,8 @@ abstract class TaggerBaseManagerController extends modExtraManagerController {
         return array('tagger:default');
     }
     public function checkPermissions() { return true;}
+}
+
+class IndexManagerController extends TaggerBaseManagerController {
+    public static function getDefaultController() { return 'home'; }
 }
