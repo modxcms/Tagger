@@ -2,3 +2,12 @@
     content: "* ";
     color: red;
 }
+
+.tagger-window-desc {
+    background-color: #f7f7f7 !important;
+    margin-bottom: 15px !important;
+}
+
+.tagger-window-desc p:not(:first-child) {
+    margin-top: 5px;
+}

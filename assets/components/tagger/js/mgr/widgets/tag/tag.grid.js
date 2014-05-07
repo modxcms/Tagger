@@ -1,23 +1,40 @@
 Tagger.grid.Tag = function(config) {
     config = config || {};
+
+    this.sm = new Ext.grid.CheckboxSelectionModel({
+        listeners: {
+            rowselect: {
+                fn: function (sm, rowIndex, record) {
+                    this.rememberRow(record);
+                }, scope: this
+            },
+            rowdeselect: {
+                fn: function (sm, rowIndex, record) {
+                    this.forgotRow(record);
+                }
+                ,scope: this
+            }
+        }
+    });
+
     Ext.applyIf(config,{
-        id: 'tagger-grid-tag'
-        ,url: Tagger.config.connectorUrl
+        url: Tagger.config.connectorUrl
         ,baseParams: {
             action: 'mgr/tag/getlist'
         }
         ,save_action: 'mgr/tag/updatefromgrid'
         ,autosave: true
-        ,fields: ['id','tag', 'group']
+        ,fields: ['id', 'tag', 'group']
         ,autoHeight: true
         ,paging: true
         ,remoteSort: true
-        ,enableDragDrop: true
-        ,columns: [{
+        ,sm: this.sm
+        ,columns: [this.sm, {
             header: _('id')
             ,dataIndex: 'id'
             ,width: 70
             ,sortable: true
+            ,hidden: false
         },{
             header: _('tagger.tag.name')
             ,dataIndex: 'tag'
@@ -35,6 +52,19 @@ Tagger.grid.Tag = function(config) {
             text: _('tagger.tag.create')
             ,handler: this.createTag
             ,scope: this
+        },'',{
+            text: _('tagger.tag.bulk_actions')
+            ,id: 'tagger-grid-tag-bulk-actions'
+            ,disabled: true
+            ,menu: [{
+                text: _('tagger.tag.merge_selected')
+                ,handler: this.mergeTags
+                ,scope: this
+            },'-',{
+                text: _('tagger.tag.remove_selected')
+                ,handler: this.removeTags
+                ,scope: this
+            }]
         },'->',{
             xtype: 'tagger-combo-group'
             ,id: 'tagger-tag-filter-group'
@@ -69,9 +99,41 @@ Tagger.grid.Tag = function(config) {
         }]
     });
     Tagger.grid.Tag.superclass.constructor.call(this,config);
+    this.getView().on('refresh', this.refreshSelection, this);
 };
 Ext.extend(Tagger.grid.Tag,MODx.grid.Grid,{
     windows: {}
+
+    ,selectedRecords: []
+
+    ,rememberRow: function(record) {
+        if(this.selectedRecords.indexOf(record.id) == -1){
+            this.selectedRecords.push(record.id);
+        }
+
+        Ext.getCmp('tagger-grid-tag-bulk-actions').enable();
+    }
+
+    ,forgotRow: function(record){
+        this.selectedRecords.remove(record.id);
+
+        if (this.selectedRecords.length == 0) {
+            Ext.getCmp('tagger-grid-tag-bulk-actions').disable();
+        }
+    }
+
+    ,refreshSelection: function() {
+        var rowsToSelect = [];
+        Ext.each(this.selectedRecords, function(item){
+            rowsToSelect.push(this.store.indexOfId(item));
+        },this);
+
+        this.getSelectionModel().selectRows(rowsToSelect);
+    }
+
+    ,getSelectedAsList: function(){
+        return this.selectedRecords.join();
+    }
 
     ,getMenu: function() {
         var m = [];
@@ -91,7 +153,7 @@ Ext.extend(Tagger.grid.Tag,MODx.grid.Grid,{
         });
         this.addContextMenuItem(m);
     }
-    
+
     ,assignedResources: function(btn,e) {
         var assignedResources = MODx.load({
             xtype: 'tagger-window-assigned-resources'
@@ -144,10 +206,10 @@ Ext.extend(Tagger.grid.Tag,MODx.grid.Grid,{
         updateTag.fp.getForm().setValues(this.menu.record);
         updateTag.show(e.target);
     }
-    
+
     ,removeTag: function(btn,e) {
         if (!this.menu.record) return false;
-        
+
         MODx.msg.confirm({
             title: _('tagger.tag.remove')
             ,text: _('tagger.tag.remove_confirm')
@@ -160,15 +222,78 @@ Ext.extend(Tagger.grid.Tag,MODx.grid.Grid,{
                 'success': {fn:function(r) { this.refresh(); },scope:this}
             }
         });
+
+        return true;
     }
 
+    ,removeTags: function(btn,e) {
+        var tags = this.getSelectedAsList();
+        if (tags == '') return false;
+
+        MODx.msg.confirm({
+            title: _('tagger.tag.remove_selected')
+            ,text: _('tagger.tag.remove_selected_confirm')
+            ,url: this.config.url
+            ,params: {
+                action: 'mgr/tag/removemultiple'
+                ,tags: tags
+            }
+            ,listeners: {
+                'success': {fn:function(r) { this.refresh(); },scope:this}
+            }
+        });
+
+        return true;
+    }
+
+    ,mergeTags: function(btn,e) {
+        var tags = this.getSelectionModel().getSelections();
+
+        var record = {
+            tags: this.getSelectedAsList()
+            ,name: tags[0].data.tag
+            ,group: tags[0].data.group
+            ,tagNames: tags.map(function(tag){return tag.data.tag;}).join(', ')
+        };
+
+        if (record.tags == '') return false;
+
+        var groups = tags.map(function(tag){return tag.data.group;});
+        groups = groups.reduce(function(p, c) {
+            if (p.indexOf(c) < 0) p.push(c);
+            return p;
+        }, []);
+
+        if (groups.length > 1) {
+            btn.ownerCt.hide();
+            MODx.msg.alert(_('tagger.err.merge_same_groups'), _('tagger.err.merge_same_groups_desc'));
+            return false;
+        }
+
+        var mergeTags = MODx.load({
+            xtype: 'tagger-window-merge-tags'
+            ,title: _('tagger.tag.merge')
+            ,action: 'mgr/tag/merge'
+            ,record: record
+            ,listeners: {
+                'success': {fn:function() { this.refresh(); },scope:this}
+            }
+        });
+
+        mergeTags.fp.getForm().reset();
+        mergeTags.fp.getForm().setValues(record);
+        mergeTags.show(e.target);
+
+        return true;
+    }
+    
     ,search: function(tf,nv,ov) {
         var s = this.getStore();
         s.baseParams.query = tf.getValue();
         this.getBottomToolbar().changePage(1);
         this.refresh();
     }
-    
+
     ,filterByGroup: function(combo, record) {
         var s = this.getStore();
         s.baseParams.group = record.id;
@@ -220,8 +345,10 @@ Tagger.grid.AssignedResources = function(config) {
         }]
         ,tbar: [{
             text: _('tagger.tag.resource_unasign_selected')
+            ,id: 'tagger-grid-assigned-resources-unasign-selected'
             ,handler: this.unassignSelected
             ,scope: this
+            ,disabled: true
         },'->',{
             xtype: 'textfield'
             ,emptyText: _('tagger.global.search') + '...'
@@ -254,10 +381,16 @@ Ext.extend(Tagger.grid.AssignedResources,MODx.grid.Grid,{
         if(!this.selectedRecords.in_array(record.id)){
             this.selectedRecords.push(record.id);
         }
+
+        Ext.getCmp('tagger-grid-assigned-resources-unasign-selected').enable();
     }
 
     ,forgotRow: function(record){
         this.selectedRecords.remove(record.id);
+
+        if (this.selectedRecords.length == 0) {
+            Ext.getCmp('tagger-grid-assigned-resources-unasign-selected').disable();
+        }
     }
 
     ,refreshSelection: function() {

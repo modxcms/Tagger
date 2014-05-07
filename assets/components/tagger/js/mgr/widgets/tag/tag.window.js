@@ -5,7 +5,6 @@ Tagger.window.Tag = function(config) {
         ,height: 150
         ,width: 475
         ,closeAction: 'close'
-        ,fileUpload: true
         ,isUpdate: false
         ,url: Tagger.config.connectorUrl
         ,action: 'mgr/tag/create'
@@ -15,7 +14,7 @@ Tagger.window.Tag = function(config) {
 };
 Ext.extend(Tagger.window.Tag,MODx.Window, {
     getFields: function(config) {
-        var fields = [{
+        return [{
             xtype: 'textfield'
             ,name: 'id'
             ,anchor: '100%'
@@ -36,8 +35,6 @@ Ext.extend(Tagger.window.Tag,MODx.Window, {
             ,readOnly: config.isUpdate
             ,cls: (config.isUpdate == true) ? 'x-item-disabled' : ''
         }];
-
-        return fields;
     }
 });
 Ext.reg('tagger-window-tag',Tagger.window.Tag);
@@ -76,3 +73,48 @@ Ext.extend(Tagger.window.AssignedResources,MODx.Window, {
     }
 });
 Ext.reg('tagger-window-assigned-resources',Tagger.window.AssignedResources);
+
+Tagger.window.MergeTags = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        title: _('tagger.tag.merge')
+        ,height: 150
+        ,width: 475
+        ,closeAction: 'close'
+        ,url: Tagger.config.connectorUrl
+        ,action: 'mgr/tag/create'
+        ,fields: this.getFields(config)
+    });
+    Tagger.window.MergeTags.superclass.constructor.call(this,config);
+};
+Ext.extend(Tagger.window.MergeTags,MODx.Window, {
+    getFields: function(config) {
+        return [{
+            xtype: 'textfield'
+            ,name: 'tags'
+            ,anchor: '100%'
+            ,hidden: true
+        },{
+            html: '<p><strong>Tags:</strong> ' + config.record.tagNames + '</p><p><strong>Will be merged as</strong></p>'
+            ,border: false
+            ,bodyCssClass: 'panel-desc tagger-window-desc'
+            ,readOnly: true
+        },{
+            xtype: 'textfield'
+            ,fieldLabel: _('tagger.tag.name')
+            ,name: 'name'
+            ,anchor: '100%'
+            ,allowBlank: false
+        },{
+            xtype: 'tagger-combo-group'
+            ,fieldLabel: _('tagger.tag.group')
+            ,name: 'group'
+            ,anchor: '100%'
+            ,allowBlank: false
+            ,readOnly: true
+            ,disable: true
+            ,cls: 'x-item-disabled'
+        }];
+    }
+});
+Ext.reg('tagger-window-merge-tags',Tagger.window.MergeTags);

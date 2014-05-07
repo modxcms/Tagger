@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+- Added merge selected Tags
+- Added remove selected Tags
 - Fixed IndexManagerController
 - Added options showDeleted and showUnpublished to snippet getTags
 - Fixed getResourcesWhere to not return null when no tags are provided
