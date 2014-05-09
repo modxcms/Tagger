@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+Tagger 1.2.0
+==============
 - Added merge selected Tags
 - Added remove selected Tags
 - Fixed IndexManagerController
