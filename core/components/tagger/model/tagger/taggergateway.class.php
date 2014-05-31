@@ -30,6 +30,8 @@ class TaggerGateway {
         if (count($this->pieces) == 0 || (count($this->pieces) == 1 && $this->pieces[0] == '')) return;
 
         $this->processRequest();
+
+        return true;
     }
 
     private function processRequest() {
@@ -38,6 +40,7 @@ class TaggerGateway {
         if (!isset($pieces[$tagKey])) return false;
 
         $tags = array_slice($this->pieces, $pieces[$tagKey] + 1);
+        $tags = array_filter($tags);
         $_GET[$tagKey] = implode(',', $tags);
 
         $this->pieces = array_slice($this->pieces, 0, $pieces[$tagKey]);
