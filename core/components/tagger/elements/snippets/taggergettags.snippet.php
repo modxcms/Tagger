@@ -13,6 +13,9 @@
  * &rowTpl          string  optional    Name of a chunk that will be used for each Tag. If no chunk is given, array with available placeholders will be rendered
  * &outTpl          string  optional    Name of a chunk that will be used for wrapping all tags. If no chunk is given, tags will be rendered without a wrapper
  * &separator       string  optional    String separator, that will be used for separating Tags
+ * &limit           int     optional    Limit number of returned tag Tags
+ * &offset          int     optional    Offset the output by this number of Tags
+ * &totalPh         string  optional    Placeholder to output the total number of Tags regardless of &limit and &offset
  * &target          int     optional    An ID of a resource that will be used for generating URI for a Tag. If no ID is given, current Resource ID will be used
  * &showUnused      int     optional    If 1 is set, Tags that are not assigned to any Resource will be included to the output as well
  * &showUnpublished int     optional    If 1 is set, Tags that are assigned only to unpublished Resources will be included to the output as well
@@ -42,6 +45,9 @@ $contexts = $modx->getOption('contexts', $scriptProperties, '');
 $rowTpl = $modx->getOption('rowTpl', $scriptProperties, '');
 $outTpl = $modx->getOption('outTpl', $scriptProperties, '');
 $separator = $modx->getOption('separator', $scriptProperties, '');
+$limit = intval($modx->getOption('limit', $scriptProperties, ''));
+$offset = intval($modx->getOption('offset', $scriptProperties, ''));
+$totalPh = $modx->getOption('totalPh', $scriptProperties, 'tags_total');
 
 $resources = $tagger->explodeAndClean($resources);
 $groups = $tagger->explodeAndClean($groups);
@@ -91,12 +97,20 @@ if ($groups) {
 $c->groupby($modx->getSelectColumns('TaggerTag', 'TaggerTag') . ',' . $modx->getSelectColumns('TaggerGroup', 'Group'));
 $tags = $modx->getIterator('TaggerTag', $c);
 
+$modx->setPlaceholder($totalPh, iterator_count($tags));
 $out = array();
 
 $friendlyURL = $modx->getOption('friendly_urls', null, 0);
 $tagKey = $modx->getOption('tagger.tag_key', null, 'tags');
 
+$count = 0;
+$idx = 1;
 foreach ($tags as $tag) {
+    if ($offset && $count < $offset) {
+        $count++;
+        continue;
+    }
+    
     $phs = $tag->toArray();
     $phs['cnt'] = $modx->getCount('TaggerTagResource', array('tag' => $tag->id));
 
@@ -112,12 +126,18 @@ foreach ($tags as $tag) {
     }
 
     $phs['uri'] = $uri;
+    $phs['idx'] = $idx;
 
     if ($rowTpl == '') {
         $out[] = '<pre>' . print_r($phs, true) . '</pre>';
     } else {
         $out[] = $modx->getChunk($rowTpl, $phs);
     }
+    
+    if ($limit && $idx === $limit) {
+        break;
+    }
+    $idx++;
 }
 
 $out = implode($separator, $out);
