@@ -45,8 +45,8 @@ $contexts = $modx->getOption('contexts', $scriptProperties, '');
 $rowTpl = $modx->getOption('rowTpl', $scriptProperties, '');
 $outTpl = $modx->getOption('outTpl', $scriptProperties, '');
 $separator = $modx->getOption('separator', $scriptProperties, '');
-$limit = intval($modx->getOption('limit', $scriptProperties, ''));
-$offset = intval($modx->getOption('offset', $scriptProperties, ''));
+$limit = (int) $modx->getOption('limit', $scriptProperties, '');
+$offset = (int) $modx->getOption('offset', $scriptProperties, '');
 $totalPh = $modx->getOption('totalPh', $scriptProperties, 'tags_total');
 
 $resources = $tagger->explodeAndClean($resources);
