@@ -42,11 +42,14 @@ $showUnpublished = (int) $modx->getOption('showUnpublished', $scriptProperties, 
 $showDeleted = (int) $modx->getOption('showDeleted', $scriptProperties, '0');
 $contexts = $modx->getOption('contexts', $scriptProperties, '');
 
+/* called in the tag item loop to initialize value prior to Nth templating
 $rowTpl = $modx->getOption('rowTpl', $scriptProperties, '');
+*/
+
 $outTpl = $modx->getOption('outTpl', $scriptProperties, '');
 $separator = $modx->getOption('separator', $scriptProperties, '');
-$limit = (int) $modx->getOption('limit', $scriptProperties, '');
-$offset = (int) $modx->getOption('offset', $scriptProperties, '');
+$limit = intval($modx->getOption('limit', $scriptProperties, ''));
+$offset = intval($modx->getOption('offset', $scriptProperties, ''));
 $totalPh = $modx->getOption('totalPh', $scriptProperties, 'tags_total');
 
 $resources = $tagger->explodeAndClean($resources);
@@ -103,6 +106,17 @@ $out = array();
 $friendlyURL = $modx->getOption('friendly_urls', null, 0);
 $tagKey = $modx->getOption('tagger.tag_key', null, 'tags');
 
+// prep for &tpl_N
+$keys = array_keys($scriptProperties);
+$intTpls = array();
+foreach($keys as $key) {
+  $keyBits = explode('_', $key);
+  if ($keyBits[0] === 'tpl') {
+    if ($i = (int) $keyBits[1]) $intTpls[$i] = $scriptProperties[$key];
+  }
+}
+ksort($intTpls);
+
 $count = 0;
 $idx = 1;
 foreach ($tags as $tag) {
@@ -128,9 +142,17 @@ foreach ($tags as $tag) {
     $phs['uri'] = $uri;
     $phs['idx'] = $idx;
 
+    $rowTpl = $modx->getOption('rowTpl', $scriptProperties, '');
     if ($rowTpl == '') {
         $out[] = '<pre>' . print_r($phs, true) . '</pre>';
     } else {
+        foreach ($intTpls as $int => $tpl) {
+            if ( $idx === $int ) {
+                $rowTpl = $tpl; 
+                break;
+            }
+            if ( ($idx % $int) === 0 ) $rowTpl = $tpl;
+        }
         $out[] = $modx->getChunk($rowTpl, $phs);
     }
     
