@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Fixed tag count when using showDeleted = 0 or showUnpublished = 0
 - Added an option to hide input field when auto tag is showed
 - Added limit, offset, totalPh, tpl_N properties to TaggerGetTags snippet
 - Fixed gateway redirecting to URL ended with a comma

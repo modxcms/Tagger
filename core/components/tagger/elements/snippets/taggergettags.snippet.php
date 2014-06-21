@@ -125,7 +125,38 @@ foreach ($tags as $tag) {
     /** @var TaggerTag $tag */
 
     $phs = $tag->toArray();
-    $phs['cnt'] = $modx->getCount('TaggerTagResource', array('tag' => $tag->id));
+    $c = $modx->newQuery('TaggerTagResource');
+
+    $c->where(array(
+        'tag' => $tag->id,
+    ));
+
+    if (!empty($contexts)) {
+        $c->where(array(
+            'Resource.context_key:IN' => $contexts
+        ));
+    }
+
+    if ($showUnpublished == 0) {
+        $c->where(array(
+            'Resource.published' => 1
+        ));
+    }
+
+    if ($showDeleted == 0) {
+        $c->where(array(
+            'Resource.deleted' => 0
+        ));
+    }
+
+    if ($resources) {
+        $c->where(array(
+            'Resources.resource:IN' => $resources
+        ));
+    }
+
+    $c->leftJoin('modResource', 'Resource', array('resource = Resource.id'));
+    $phs['cnt'] = $modx->getCount('TaggerTagResource', $c);
 
     if (($showUnused == 0) && ($phs['cnt'] == 0)) {
         continue;
