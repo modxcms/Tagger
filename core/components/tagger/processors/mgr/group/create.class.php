@@ -12,9 +12,14 @@ class TaggerGroupCreateProcessor extends modObjectCreateProcessor {
 
     public function beforeSet() {
         $fieldType = $this->getProperty('field_type');
+        $showAutotag = (int) $this->getProperty('show_autotag', 0);
 
         if ($fieldType != 'tagger-field-tags') {
             $this->setProperty('show_autotag', 0);
+        }
+
+        if ($showAutotag != 1) {
+            $this->setProperty('hide_input', 0);
         }
 
         $c = $this->modx->newQuery('TaggerGroup');

@@ -44,6 +44,17 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
                             els[0].hide();
                         }
                     }
+
+                    var ehi = this.find('name', 'hide_input');
+                    if (ehi.length == 1) {
+                        if (rec.data.v == 'tagger-field-tags') {
+                            if (els.length == 1 && els[0].getValue() == 1) {
+                                ehi[0].show();
+                            }
+                        } else {
+                            ehi[0].hide();
+                        }
+                    }
                 }, scope: this}
             }
         },{
@@ -89,11 +100,10 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
                 check: function(t, checked) {
                     var els = this.find('name', 'hide_input');
                     if (els.length == 1) {
-                        console.log(checked);
                         if (checked) {
-                            els[0].enable();
+                            els[0].show();
                         } else {
-                            els[0].disable();
+                            els[0].hide();
                         }
                     }
                 }
@@ -105,8 +115,7 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,description: _('tagger.group.hide_input_desc')
             ,name: 'hide_input'
             ,anchor: '100%'
-            ,hidden: config.record && config.record.field_type != 'tagger-field-tags'
-            ,disabled: config.record && config.record.show_autotag != 1
+            ,hidden: config.record == undefined || config.record.show_autotag != 1
         },{
             xtype: 'textfield'
             ,fieldLabel: _('tagger.group.show_for_templates')
