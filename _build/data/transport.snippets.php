@@ -167,6 +167,14 @@ $properties = array(
         'value' => '',
         'lexicon' => 'tagger:properties',
     ),
+    array(
+        'name' => 'likeComparison',
+        'desc' => 'tagger.getresourceswhere.likeComparison_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '0',
+        'lexicon' => 'tagger:properties',
+    ),
 
 );
 $snippets[1]->setProperties($properties);

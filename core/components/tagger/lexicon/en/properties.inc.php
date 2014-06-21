@@ -24,3 +24,4 @@ $_lang['tagger.gettags.showDeleted_desc'] = 'If 1 is set, Tags that are assigned
 $_lang['tagger.gettags.limit_desc'] = 'Limit number of returned tag Tags';
 $_lang['tagger.gettags.offset_desc'] = 'Offset the output by this number of Tags';
 $_lang['tagger.gettags.totalPh_desc'] = 'Placeholder to output the total number of Tags regardless of &limit and &offset';
+$_lang['tagger.getresourceswhere.likeComparison_desc'] = 'If set to 1, tags will compare using LIKE';

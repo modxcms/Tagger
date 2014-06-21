@@ -8,9 +8,10 @@
  *
  * PROPERTIES:
  *
- * &tags    string  optional    Comma separated list of Tags for which will be generated a Resource query. By default Tags from GET param will be loaded
- * &groups  string  optional    Comma separated list of Tagger Groups. Only from those groups will Tags be allowed
- * &where   string  optional    Original getResources where property. If you used where property in your current getResources call, move it here
+ * &tags            string  optional    Comma separated list of Tags for which will be generated a Resource query. By default Tags from GET param will be loaded
+ * &groups          string  optional    Comma separated list of Tagger Groups. Only from those groups will Tags be allowed
+ * &where           string  optional    Original getResources where property. If you used where property in your current getResources call, move it here
+ * &likeComparison  int     optional    If set to 1, tags will compare using LIKE
  *
  * USAGE:
  *
@@ -24,6 +25,7 @@ if (!($tagger instanceof Tagger)) return '';
 $tagKey = $modx->getOption('tagger.tag_key', null, 'tags');
 $tags = $modx->getOption('tags', $scriptProperties, '');
 $where = $modx->getOption('where', $scriptProperties, '');
+$likeComparison = (int) $modx->getOption('likeComparison', $scriptProperties, 0);
 
 $where = $modx->fromJSON($where);
 if ($where == false) {
@@ -50,9 +52,18 @@ $groups = $tagger->explodeAndClean($groups);
 
 $c = $modx->newQuery('TaggerTag');
 $c->select($modx->getSelectColumns('TaggerTag', 'TaggerTag', '', array('id')));
-$c->where(array(
+
+$compare = array(
     'tag:IN' => $tags
-));
+);
+
+if ($likeComparison == 1) {
+    foreach ($tags as $tag) {
+        $compare['OR:tag:LIKE'] = '%' . $tag . '%';
+    }
+}
+
+$c->where($compare);
 
 if (count($groups) > 0) {
     $c->leftJoin('TaggerGroup', 'Group');
