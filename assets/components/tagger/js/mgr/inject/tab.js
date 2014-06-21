@@ -138,6 +138,7 @@ Ext.override(MODx.panel.Resource, {
                    ,editable: group.allow_type
                    ,autoTag: group.show_autotag
                    ,hideInput: group.hide_input
+                   ,tagLimit: group.tag_limit
                    ,baseParams: {
                        action: 'mgr/extra/gettags'
                        ,group: group.id

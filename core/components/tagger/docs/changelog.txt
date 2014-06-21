@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Added option to limit number of selected tags
 - Added option to use LIKE in query in TaggerGetResourcesWhere snippet
 - Fixed tag count when using showDeleted = 0 or showUnpublished = 0
 - Added an option to hide input field when auto tag is showed

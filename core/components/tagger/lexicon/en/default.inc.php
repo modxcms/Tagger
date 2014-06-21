@@ -54,6 +54,8 @@ $_lang['tagger.group.place_below_content'] = 'Below content';
 $_lang['tagger.group.place_bottom_page'] = 'Bottom page';
 $_lang['tagger.group.hide_input'] = 'Hide input';
 $_lang['tagger.group.hide_input_desc'] = 'When checked the input field with assign button will be hidden.';
+$_lang['tagger.group.tag_limit'] = 'Tag limit';
+$_lang['tagger.group.tag_limit_desc'] = 'Number of tags that can be assigned to a resource';
 
 $_lang['tagger.tag.tags'] = 'Tags';
 $_lang['tagger.tag.intro_msg'] = 'In this section you can manage Tags.';

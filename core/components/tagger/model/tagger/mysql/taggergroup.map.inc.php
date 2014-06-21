@@ -17,6 +17,7 @@ $xpdo_meta_map['TaggerGroup']= array (
     'allow_type' => 0,
     'show_autotag' => 0,
     'hide_input' => 0,
+    'tag_limit' => 0,
     'show_for_templates' => '',
     'place' => 'in-tab',
     'position' => 0,
@@ -88,6 +89,15 @@ $xpdo_meta_map['TaggerGroup']= array (
       'attributes' => 'unsigned',
       'precision' => '1',
       'phptype' => 'boolean',
+      'null' => false,
+      'default' => 0,
+    ),
+    'tag_limit' => 
+    array (
+      'dbtype' => 'int',
+      'attributes' => 'unsigned',
+      'precision' => '10',
+      'phptype' => 'integer',
       'null' => false,
       'default' => 0,
     ),

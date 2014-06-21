@@ -7,8 +7,9 @@
  * @property boolean $remove_unused
  * @property boolean $allow_blank
  * @property boolean $allow_type
- * @property boolean &show_autotag
- * @property boolean &hide_input
+ * @property boolean $show_autotag
+ * @property boolean $hide_input
+ * @property int $tag_limit
  * @property string $show_for_templates
  * @property string $place
  * @property int $position

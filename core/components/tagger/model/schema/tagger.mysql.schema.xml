@@ -9,6 +9,7 @@
         <field key="allow_type" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
         <field key="show_autotag" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
         <field key="hide_input" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="tag_limit" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
         <field key="show_for_templates" dbtype="text" phptype="string" null="false" default="" />
         <field key="place" dbtype="varchar" precision="100" phptype="string" null="false" default="in-tab" />
         <field key="position" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />

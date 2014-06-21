@@ -10,6 +10,7 @@ Tagger.fields.Tags = function(config) {
         ,hideTrigger: false
         ,autoTag: false
         ,hideInput: false
+        ,tagLimit: 0
     });
     Tagger.fields.Tags.superclass.constructor.call(this,config);
 
@@ -263,6 +264,14 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
                 }
             }
 
+            if (this.config.tagLimit > 0) {
+                if (this.myStore.find('tag', value) == -1) {
+                    if (this.myStore.getCount() >= this.config.tagLimit) {
+                        return;
+                    }
+                }
+            }
+
             var valueIndex = -1;
             if (this.config.autoTag == true) {
                 valueIndex = this.autoTagStore.find('tag', value);
@@ -441,6 +450,13 @@ Ext.extend(Tagger.fields.Tag,Ext.Component, {
 
             this.fireEvent('remove',this,this.value);
         } else {
+            if (this.owner.config.tagLimit > 0) {
+                if (this.owner.myStore.find('tag', this.value) == -1) {
+                    if (this.owner.myStore.getCount() >= this.owner.config.tagLimit) {
+                        return;
+                    }
+                }
+            }
             var record = new Ext.data.Record({tag: this.value}, this.value);
             this.owner.myStore.add([record]);
 
