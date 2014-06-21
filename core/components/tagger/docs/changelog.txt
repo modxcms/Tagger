@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Added limit, offset, totalPh, tpl_N properties to TaggerGetTags snippet
 - Fixed gateway redirecting to URL ended with a comma
 
 Tagger 1.2.0

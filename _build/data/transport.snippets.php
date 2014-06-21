@@ -105,6 +105,30 @@ $properties = array(
         'value' => '',
         'lexicon' => 'tagger:properties',
     ),
+    array(
+        'name' => 'limit',
+        'desc' => 'tagger.gettags.limit_desc',
+        'type' => 'numberfield',
+        'options' => '',
+        'value' => '0',
+        'lexicon' => 'tagger:properties',
+    ),
+    array(
+        'name' => 'offset',
+        'desc' => 'tagger.gettags.offset_desc',
+        'type' => 'numberfield',
+        'options' => '',
+        'value' => '0',
+        'lexicon' => 'tagger:properties',
+    ),
+    array(
+        'name' => 'totalPh',
+        'desc' => 'tagger.gettags.totalPh_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'tags_total',
+        'lexicon' => 'tagger:properties',
+    ),
 
 );
 $snippets[0]->setProperties($properties);

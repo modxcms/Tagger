@@ -21,3 +21,6 @@ $_lang['tagger.gettags.contexts_desc'] = 'If set, will display only tags for res
 $_lang['tagger.gettags.toPlaceholder_desc'] = 'If set, output will return in placeholder with given name';
 $_lang['tagger.gettags.showUnpublished_desc'] = 'If 1 is set, Tags that are assigned only to unpublished Resources will be included to the output as well';
 $_lang['tagger.gettags.showDeleted_desc'] = 'If 1 is set, Tags that are assigned only to deleted Resources will be included to the output as well';
+$_lang['tagger.gettags.limit_desc'] = 'Limit number of returned tag Tags';
+$_lang['tagger.gettags.offset_desc'] = 'Offset the output by this number of Tags';
+$_lang['tagger.gettags.totalPh_desc'] = 'Placeholder to output the total number of Tags regardless of &limit and &offset';
