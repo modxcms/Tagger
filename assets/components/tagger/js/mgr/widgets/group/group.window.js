@@ -85,6 +85,28 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,name: 'show_autotag'
             ,anchor: '100%'
             ,hidden: config.record && config.record.field_type != 'tagger-field-tags'
+            ,listeners: {
+                check: function(t, checked) {
+                    var els = this.find('name', 'hide_input');
+                    if (els.length == 1) {
+                        console.log(checked);
+                        if (checked) {
+                            els[0].enable();
+                        } else {
+                            els[0].disable();
+                        }
+                    }
+                }
+                ,scope: this
+            }
+        },{
+            xtype: 'xcheckbox'
+            ,fieldLabel: _('tagger.group.hide_input')
+            ,description: _('tagger.group.hide_input_desc')
+            ,name: 'hide_input'
+            ,anchor: '100%'
+            ,hidden: config.record && config.record.field_type != 'tagger-field-tags'
+            ,disabled: config.record && config.record.show_autotag != 1
         },{
             xtype: 'textfield'
             ,fieldLabel: _('tagger.group.show_for_templates')

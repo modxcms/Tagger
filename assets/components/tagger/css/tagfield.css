@@ -1,6 +1,6 @@
 .tagger-field-tags .tagger-field-wrapper {
     margin-bottom:8px;
-    padding-right:47px;
+    padding-right: 65px;
     position:relative;
 }
 
@@ -76,4 +76,8 @@
     border: 1px solid #CAD8F3;
     padding: 1px 5px 1px 5px !important;
     cursor: pointer;
+}
+
+.tagger-wrapper-hidden {
+    display: none;
 }

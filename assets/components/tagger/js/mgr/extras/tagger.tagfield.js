@@ -9,6 +9,7 @@ Tagger.fields.Tags = function(config) {
         ,editable: true
         ,hideTrigger: false
         ,autoTag: false
+        ,hideInput: false
     });
     Tagger.fields.Tags.superclass.constructor.call(this,config);
 
@@ -196,13 +197,13 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
 
         this.el.parent().wrap({
             tag: 'div'
-            ,class: 'tagger-field-wrapper'
+            ,class: 'tagger-field-wrapper' + (this.hideInput ? ' tagger-wrapper-hidden' : '')
         });
 
         this.el.parentNode = this.el.parent().parent().parent();
 
         Ext.DomHelper.insertAfter(this.el.parent().parent(), {tag: 'ul'});
-        Ext.DomHelper.insertAfter(this.el.parent(), {tag: 'button', html: 'Add', class: 'x-btn'});
+        Ext.DomHelper.insertAfter(this.el.parent(), {tag: 'button', html: _('tagger.tag.assign'), class: 'x-btn'});
 
         this.addButton = this.el.parentNode.child('button');
         this.insertedTagsEl = this.el.parentNode.child('ul');

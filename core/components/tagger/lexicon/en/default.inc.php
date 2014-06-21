@@ -52,6 +52,8 @@ $_lang['tagger.group.place_in_tab'] = 'In tab';
 $_lang['tagger.group.place_above_content'] = 'Above content';
 $_lang['tagger.group.place_below_content'] = 'Below content';
 $_lang['tagger.group.place_bottom_page'] = 'Bottom page';
+$_lang['tagger.group.hide_input'] = 'Hide input';
+$_lang['tagger.group.hide_input_desc'] = 'When checked the input field with assign button will be hidden.';
 
 $_lang['tagger.tag.tags'] = 'Tags';
 $_lang['tagger.tag.intro_msg'] = 'In this section you can manage Tags.';
@@ -73,6 +75,7 @@ $_lang['tagger.tag.merge_selected'] = 'Merge selected Tags';
 $_lang['tagger.tag.remove_selected'] = 'Remove selected Tags';
 $_lang['tagger.tag.remove_selected_confirm'] = 'Are you sure, you want to remove all selected Tags?';
 $_lang['tagger.tag.merge'] = 'Merge Tags';
+$_lang['tagger.tag.assign'] = 'Assign';
 
 $_lang['setting_tagger.tag_key'] = 'Tag key';
 $_lang['setting_tagger.tag_key_desc'] = 'Name of GET variable that stores tags. Default: tags';
