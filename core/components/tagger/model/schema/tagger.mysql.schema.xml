@@ -19,6 +19,7 @@
 
     <object class="TaggerTag" table="tagger_tags" extends="xPDOSimpleObject">
         <field key="tag" dbtype="varchar" precision="100" phptype="string" null="false" />
+        <field key="alias" dbtype="varchar" precision="100" phptype="string" null="false" />
         <field key="group" dbtype="integer" attributes="unsigned" precision="10" phptype="int" null="false" />
 
         <index alias="iTagGroup" name="iTagGroup" primary="false" unique="true" type="BTREE">

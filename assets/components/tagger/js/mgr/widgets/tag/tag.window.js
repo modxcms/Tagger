@@ -26,6 +26,12 @@ Ext.extend(Tagger.window.Tag,MODx.Window, {
             ,anchor: '100%'
             ,allowBlank: false
         },{
+            xtype: 'textfield'
+            ,fieldLabel: _('tagger.tag.alias')
+            ,name: 'alias'
+            ,anchor: '100%'
+            ,allowBlank: true
+        },{
             xtype: 'tagger-combo-group'
             ,fieldLabel: _('tagger.tag.group')
             ,name: 'group'

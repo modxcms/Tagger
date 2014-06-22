@@ -54,12 +54,12 @@ $c = $modx->newQuery('TaggerTag');
 $c->select($modx->getSelectColumns('TaggerTag', 'TaggerTag', '', array('id')));
 
 $compare = array(
-    'tag:IN' => $tags
+    'alias:IN' => $tags
 );
 
 if ($likeComparison == 1) {
     foreach ($tags as $tag) {
-        $compare['OR:tag:LIKE'] = '%' . $tag . '%';
+        $compare['OR:alias:LIKE'] = '%' . $tag . '%';
     }
 }
 

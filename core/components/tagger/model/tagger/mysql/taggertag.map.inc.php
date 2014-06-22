@@ -10,11 +10,19 @@ $xpdo_meta_map['TaggerTag']= array (
   'fields' => 
   array (
     'tag' => NULL,
+    'alias' => NULL,
     'group' => NULL,
   ),
   'fieldMeta' => 
   array (
     'tag' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '100',
+      'phptype' => 'string',
+      'null' => false,
+    ),
+    'alias' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '100',

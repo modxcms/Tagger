@@ -163,10 +163,10 @@ foreach ($tags as $tag) {
     }
 
     if ($friendlyURL == 1) {
-        $uri = $modx->makeUrl($target, '', '') . '/' . $tagKey . '/' . $tag->tag;
+        $uri = $modx->makeUrl($target, '', '') . '/' . $tagKey . '/' . $tag->alias;
         $uri = str_replace('//', '/', $uri);
     } else {
-        $uri = $modx->makeUrl($target, '', 'tags=' . $tag->tag);
+        $uri = $modx->makeUrl($target, '', $tagKey . '=' . $tag->alias);
     }
 
     $phs['uri'] = $uri;
