@@ -38,7 +38,6 @@ class TaggerTag extends xPDOSimpleObject {
             $this->set('alias', $this->generateUniqueAlias($this->tag));
         }
 
-
         return parent :: save($cacheFlag);
     }
 }

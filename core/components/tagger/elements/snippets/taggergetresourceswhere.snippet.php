@@ -33,44 +33,74 @@ if ($where == false) {
 }
 
 if ($tags == '') {
-    if (isset($_GET[$tagKey])) {
-        $tags = $_GET[$tagKey];
-    } else {
+    $gc = $modx->newQuery('TaggerGroup');
+    $gc->select($modx->getSelectColumns('TaggerGroup', '', '', array('alias')));
+    $gc->prepare();
+    $gc->stmt->execute();
+    $groups = $gc->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+    $conditions = array();
+    foreach ($groups as $group) {
+        if (isset($_GET[$group])) {
+            $groupTags = $tagger->explodeAndClean($_GET[$group]);
+            if (!empty($groupTags)) {
+                $like = array('AND:alias:IN' => $groupTags);
+
+                if ($likeComparison == 1) {
+                    foreach ($groupTags as $tag) {
+                        $like[] = array('OR:alias:LIKE' => '%' . $tag . '%');
+                    }
+                }
+
+                $conditions[] = array(
+                    'OR:Group.alias:=' => $group,
+                    $like
+                );
+            }
+        }
+    }
+
+    if (count($conditions) == 0) {
         return $modx->toJSON($where);
     }
-}
 
-$groups = $modx->getOption('groups', $scriptProperties, '');
-
-$tags = $tagger->explodeAndClean($tags);
-
-if (empty($tags)) {
-    return $modx->toJSON($where);
-}
-
-$groups = $tagger->explodeAndClean($groups);
-
-$c = $modx->newQuery('TaggerTag');
-$c->select($modx->getSelectColumns('TaggerTag', 'TaggerTag', '', array('id')));
-
-$compare = array(
-    'alias:IN' => $tags
-);
-
-if ($likeComparison == 1) {
-    foreach ($tags as $tag) {
-        $compare['OR:alias:LIKE'] = '%' . $tag . '%';
-    }
-}
-
-$c->where($compare);
-
-if (count($groups) > 0) {
+    $c = $modx->newQuery('TaggerTag');
     $c->leftJoin('TaggerGroup', 'Group');
-    $c->where(array(
-        'Group.id:IN' => $groups,
-        'OR:Group.name:IN' => $groups,
-    ));
+
+    $c->where($conditions);
+} else {
+    $tags = $tagger->explodeAndClean($tags);
+
+    if (empty($tags)) {
+        return $modx->toJSON($where);
+    }
+
+    $groups = $modx->getOption('groups', $scriptProperties, '');
+
+    $groups = $tagger->explodeAndClean($groups);
+
+    $c = $modx->newQuery('TaggerTag');
+    $c->select($modx->getSelectColumns('TaggerTag', 'TaggerTag', '', array('id')));
+
+    $compare = array(
+        'alias:IN' => $tags
+    );
+
+    if ($likeComparison == 1) {
+        foreach ($tags as $tag) {
+            $compare[] = array('OR:alias:LIKE' => '%' . $tag . '%');
+        }
+    }
+
+    $c->where($compare);
+
+    if (count($groups) > 0) {
+        $c->leftJoin('TaggerGroup', 'Group');
+        $c->where(array(
+            'Group.id:IN' => $groups,
+            'OR:Group.name:IN' => $groups,
+        ));
+    }
 }
 
 $c->prepare();

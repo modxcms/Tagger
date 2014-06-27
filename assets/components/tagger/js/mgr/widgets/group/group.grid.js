@@ -8,7 +8,7 @@ Tagger.grid.Group = function(config) {
         }
         ,save_action: 'mgr/group/updatefromgrid'
         ,autosave: true
-        ,fields: ['id','name', 'field_type', 'remove_unused', 'allow_new', 'allow_blank', 'allow_type', 'show_autotag', 'hide_input', 'tag_limit', 'show_for_templates', 'position', 'place']
+        ,fields: ['id', 'name', 'alias', 'field_type', 'remove_unused', 'allow_new', 'allow_blank', 'allow_type', 'show_autotag', 'hide_input', 'tag_limit', 'show_for_templates', 'position', 'place']
         ,autoHeight: true
         ,paging: true
         ,remoteSort: true
@@ -17,31 +17,37 @@ Tagger.grid.Group = function(config) {
         ,columns: [{
             header: _('id')
             ,dataIndex: 'id'
-            ,width: 70
+            ,width: 40
             ,sortable: true
         },{
             header: _('tagger.group.name')
             ,dataIndex: 'name'
-            ,width: 200
+            ,width: 150
+            ,sortable: true
+            ,editor: { xtype: 'textfield' }
+        },{
+            header: _('tagger.group.alias')
+            ,dataIndex: 'alias'
+            ,width: 150
             ,sortable: true
             ,editor: { xtype: 'textfield' }
         },{
             header: _('tagger.group.field_type')
             ,dataIndex: 'field_type'
-            ,width: 200
+            ,width: 100
             ,sortable: true
             ,editor: { xtype: 'tagger-combo-field-type', renderer: true }
         },{
             header: _('tagger.group.remove_unused')
             ,dataIndex: 'remove_unused'
-            ,width: 200
+            ,width: 150
             ,sortable: true
             ,renderer: this.rendYesNo
             ,editor: { xtype: 'modx-combo-boolean' }
         },{
             header: _('tagger.group.allow_new')
             ,dataIndex: 'allow_new'
-            ,width: 200
+            ,width: 180
             ,sortable: true
             ,renderer: this.rendYesNo
             ,editor: { xtype: 'modx-combo-boolean' }
@@ -79,7 +85,7 @@ Tagger.grid.Group = function(config) {
         },{
             header: _('tagger.group.show_for_templates')
             ,dataIndex: 'show_for_templates'
-            ,width: 200
+            ,width: 150
         },{
             header: _('tagger.group.position')
             ,dataIndex: 'position'

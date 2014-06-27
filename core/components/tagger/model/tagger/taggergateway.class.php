@@ -8,6 +8,9 @@ class TaggerGateway {
 
     private $pieces;
 
+    private $groups;
+    private $tags = array();
+
     public function __construct(modX &$modx) {
         $this->modx =& $modx;
     }
@@ -18,10 +21,26 @@ class TaggerGateway {
 
     public function handleRequest() {
         $this->pieces = explode('/', trim($_REQUEST[$this->modx->getOption('request_param_alias', null, 'q')], ' '));
-
         $pieces = array_flip($this->pieces);
-        $tagKey = $this->modx->getOption('tagger.tag_key', null, 'tags');
-        if (!isset($pieces[$tagKey])) return false;
+
+        $c = $this->modx->newQuery('TaggerGroup');
+        $c->select($this->modx->getSelectColumns('TaggerGroup', '', '', array('alias')));
+        $c->prepare();
+        $c->stmt->execute();
+        $this->groups = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+        foreach ($this->groups as $group) {
+            if (isset($pieces[$group])) {
+                $this->tags[$group] = $pieces[$group];
+            }
+        }
+
+        if (count($this->tags) == 0) return false;
+
+        asort($this->tags);
+
+//        $tagKey = $this->modx->getOption('tagger.tag_key', null, 'tags');
+//        if (!isset($pieces[$tagKey])) return false;
 
         if ($this->pieces[count($this->pieces) - 1] != '') {
             $this->modx->sendRedirect(MODX_SITE_URL . implode('/', $this->pieces) . '/', array('responseCode' => 'HTTP/1.1 301 Moved Permanently'));
@@ -35,17 +54,35 @@ class TaggerGateway {
     }
 
     private function processRequest() {
-        $pieces = array_flip($this->pieces);
-        $tagKey = $this->modx->getOption('tagger.tag_key', null, 'tags');
-        if (!isset($pieces[$tagKey])) return false;
+//        $pieces = array_flip($this->pieces);
+//        $tagKey = $this->modx->getOption('tagger.tag_key', null, 'tags');
+//        if (!isset($pieces[$tagKey])) return false;
 
-        $tags = array_slice($this->pieces, $pieces[$tagKey] + 1);
-        $tags = array_filter($tags);
-        $_GET[$tagKey] = implode(',', $tags);
+//        $tags = array_slice($this->pieces, $pieces[$tagKey] + 1);
+//        $tags = array_filter($tags);
+//        $_GET[$tagKey] = implode(',', $tags);
 
-        $this->pieces = array_slice($this->pieces, 0, $pieces[$tagKey]);
+//        $this->pieces = array_slice($this->pieces, 0, $pieces[$tagKey]);
 
-        $q = implode('/', $this->pieces);
+
+        $prev = array('group' => '', 'id' => 0);
+        $pieces = array();
+        foreach ($this->tags as $group => $id) {
+            if ($prev['id'] == 0) {
+                $pieces = array_slice($this->pieces, 0, $id);
+                $prev['id'] = $id;
+                $prev['group'] = $group;
+                continue;
+            }
+
+            $_GET[$prev['group']] = $this->modx->tagger->cleanAndImplode(array_slice($this->pieces, $prev['id'] + 1, $id - $prev['id'] - 1));
+            $prev['id'] = $id;
+            $prev['group'] = $group;
+        }
+
+        $_GET[$prev['group']] = $this->modx->tagger->cleanAndImplode(array_slice($this->pieces, $prev['id'] + 1));
+
+        $q = implode('/', $pieces);
 
         if ($q != '') {
             $q .= '/';

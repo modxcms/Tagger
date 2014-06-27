@@ -70,6 +70,15 @@ class Tagger {
         return $array;
     }
 
+    public function cleanAndImplode($array, $delimiter = ',') {
+        $array = array_map('trim', $array);       // Trim array's values
+        $array = array_keys(array_flip($array));  // Remove duplicate fields
+        $array = array_filter($array);            // Remove empty values from array
+        $array = implode($delimiter, $array);
+
+        return $array;
+    }
+
     public function onDocFormPrerender($scriptProperties) {
         $mode = $this->modx->getOption('mode', $scriptProperties, 'upd');
 

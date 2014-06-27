@@ -56,6 +56,8 @@ $_lang['tagger.group.hide_input'] = 'Hide input';
 $_lang['tagger.group.hide_input_desc'] = 'When checked the input field with assign button will be hidden.';
 $_lang['tagger.group.tag_limit'] = 'Tag limit';
 $_lang['tagger.group.tag_limit_desc'] = 'Number of tags that can be assigned to a resource';
+$_lang['tagger.group.alias'] = 'Alias';
+$_lang['tagger.group.alias_desc'] = 'Alias that will be used in URL when FURLs are enabled. Leave field blank to generate alias automatically.';
 
 $_lang['tagger.tag.tags'] = 'Tags';
 $_lang['tagger.tag.intro_msg'] = 'In this section you can manage Tags.';
@@ -108,3 +110,4 @@ $_lang['tagger.err.tags_ns'] = 'Tags are not specified.';
 $_lang['tagger.err.merge_same_groups'] = 'You can\'t merge those Tags';
 $_lang['tagger.err.merge_same_groups_desc'] = 'Selected Tags can not be merged, because they belongs to different groups.';
 $_lang['tagger.err.tag_alias_ae'] = 'Tag with this alias already exists in given group. Please choose a different alias or group.';
+$_lang['tagger.err.group_alias_ae'] = 'Group with this alias already exists. Please choose a different alias.';

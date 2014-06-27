@@ -2,6 +2,7 @@
 <model package="tagger" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="tagger">
     <object class="TaggerGroup" table="tagger_groups" extends="xPDOSimpleObject">
         <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" />
+        <field key="alias" dbtype="varchar" precision="100" phptype="string" null="false" />
         <field key="field_type" dbtype="varchar" precision="100" phptype="string" null="false" />
         <field key="allow_new" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
         <field key="remove_unused" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />

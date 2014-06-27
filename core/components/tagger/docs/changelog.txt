@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Added alias field to groups
 - Added alias field to tags
 - Added option to limit number of selected tags
 - Added option to use LIKE in query in TaggerGetResourcesWhere snippet

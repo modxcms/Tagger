@@ -61,6 +61,13 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,anchor: '100%'
             ,allowBlank: false
         },{
+            xtype: 'textfield'
+            ,fieldLabel: _('tagger.group.alias')
+            ,description: _('tagger.group.alias_desc')
+            ,name: 'alias'
+            ,anchor: '100%'
+            ,allowBlank: true
+        },{
             xtype: 'tagger-combo-field-type'
             ,fieldLabel: _('tagger.group.field_type')
             ,description: _('tagger.group.field_type_desc')
