@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Fixed bug that removed all assigned tags on second resource's save
 - Added alias field to groups
 - Added alias field to tags
 - Added option to limit number of selected tags

@@ -279,6 +279,11 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
                     var rec = this.autoTagStore.getAt(valueIndex);
                     if (rec.data.el.el && !rec.data.el.el.hasClass('x-superboxselect-item')) {
                         rec.data.el.click();
+                    } else {
+                        if (this.myStore.find('tag', value) == -1) {
+                            var record = new Ext.data.Record({tag: value}, value);
+                            this.myStore.add([record]);
+                        }
                     }
                 }
             }
