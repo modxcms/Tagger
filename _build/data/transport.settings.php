@@ -7,14 +7,6 @@
  */
 $settings = array();
 
-$settings['tagger.tag_key'] = $modx->newObject('modSystemSetting');
-$settings['tagger.tag_key']->set('key', 'tagger.tag_key');
-$settings['tagger.tag_key']->fromArray(array(
-    'value' => 'tags',
-    'xtype' => 'textfield',
-    'namespace' => 'tagger',
-));
-
 $settings['tagger.place_above_content_header'] = $modx->newObject('modSystemSetting');
 $settings['tagger.place_above_content_header']->set('key', 'tagger.place_above_content_header');
 $settings['tagger.place_above_content_header']->fromArray(array(

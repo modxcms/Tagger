@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+Tagger 1.3.0
+==============
 - Fixed bug that removed all assigned tags on second resource's save
 - Added alias field to groups
 - Added alias field to tags

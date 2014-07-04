@@ -14,7 +14,7 @@ set_time_limit(0);
 /* define package */
 define('PKG_NAME','Tagger');
 define('PKG_NAME_LOWER',strtolower(PKG_NAME));
-define('PKG_VERSION','1.2.0');
+define('PKG_VERSION','1.3.0');
 define('PKG_RELEASE','pl');
 
 /* define sources */
@@ -121,6 +121,9 @@ $vehicle->resolve('file',array(
 ));
 $vehicle->resolve('php',array(
     'source' => $sources['resolvers'] . 'resolve.tables.php',
+));
+$vehicle->resolve('php',array(
+    'source' => $sources['resolvers'] . 'resolve.settings.php',
 ));
 $builder->putVehicle($vehicle);
 
