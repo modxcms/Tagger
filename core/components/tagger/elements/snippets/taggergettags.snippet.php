@@ -107,7 +107,6 @@ $tags = $modx->getIterator('TaggerTag', $c);
 $out = array();
 
 $friendlyURL = $modx->getOption('friendly_urls', null, 0);
-$tagKey = $modx->getOption('tagger.tag_key', null, 'tags');
 
 // prep for &tpl_N
 $keys = array_keys($scriptProperties);
@@ -162,11 +161,12 @@ foreach ($tags as $tag) {
         continue;
     }
 
+    $group = $tag->Group;
+
     if ($friendlyURL == 1) {
-        $uri = $modx->makeUrl($target, '', '') . '/' . $tagKey . '/' . $tag->alias;
-        $uri = str_replace('//', '/', $uri);
+        $uri = rtrim($modx->makeUrl($target, '', ''), '/') . '/' . $group->alias . '/' . $tag->alias . '/';
     } else {
-        $uri = $modx->makeUrl($target, '', $tagKey . '=' . $tag->alias);
+        $uri = $modx->makeUrl($target, '', $group->alias . '=' . $tag->alias);
     }
 
     $phs['uri'] = $uri;
