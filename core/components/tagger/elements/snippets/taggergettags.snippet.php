@@ -88,7 +88,8 @@ if ($resources) {
 if ($groups) {
     $c->where(array(
         'Group.id:IN' => $groups,
-        'OR:Group.name:IN' => $groups
+        'OR:Group.name:IN' => $groups,
+        'OR:Group.alias:IN' => $groups,
     ));
 }
 
@@ -125,6 +126,7 @@ foreach ($tags as $tag) {
 
     $phs = $tag->toArray();
     $c = $modx->newQuery('TaggerTagResource');
+    $c->leftJoin('modResource', 'Resource', array('resource = Resource.id'));
 
     $c->where(array(
         'tag' => $tag->id,
@@ -150,11 +152,10 @@ foreach ($tags as $tag) {
 
     if ($resources) {
         $c->where(array(
-            'Resources.resource:IN' => $resources
+            'TaggerTagResource.resource:IN' => $resources
         ));
     }
 
-    $c->leftJoin('modResource', 'Resource', array('resource = Resource.id'));
     $phs['cnt'] = $modx->getCount('TaggerTagResource', $c);
 
     if (($showUnused == 0) && ($phs['cnt'] == 0)) {
