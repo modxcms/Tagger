@@ -209,7 +209,7 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
         this.addButton = this.el.parentNode.child('button');
         this.insertedTagsEl = this.el.parentNode.child('ul');
 
-        this.insertedTagsEl.wrap({tag: 'div', class: 'inserted-tags x-superboxselect'});
+        this.insertedTagsEl.wrap({tag: 'div', class: 'inserted-tags modx-tag-list x-superboxselect'});
 
         this.addButton.on('click', this.addItemsFromField, this);
         new Ext.KeyMap(this.getEl(), {
@@ -448,6 +448,7 @@ Ext.extend(Tagger.fields.Tag,Ext.Component, {
         if (this.el.hasClass('x-superboxselect-item')) {
 //            var record = new Ext.data.Record({tag: this.value}, this.value);
             this.el.removeClass('x-superboxselect-item');
+            this.el.removeClass('modx-tag-checked');
             this.owner.myStore.remove(this.owner.myStore.getById(this.value));
             if(this.owner.hiddenField){
                 this.owner.hiddenField.value = this.owner.myStore.collect('tag').join();
@@ -466,6 +467,7 @@ Ext.extend(Tagger.fields.Tag,Ext.Component, {
             this.owner.myStore.add([record]);
 
             this.el.addClass('x-superboxselect-item');
+            this.el.addClass('modx-tag-checked');
         }
     },
 
@@ -529,6 +531,7 @@ Ext.extend(Tagger.fields.Tag,Ext.Component, {
             }, this);
         } else {
             el.addClass('tagger-autotag-item');
+            el.addClass('modx-tag-opt');
         }
 
         return true;
