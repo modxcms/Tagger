@@ -209,7 +209,7 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
         this.addButton = this.el.parentNode.child('button');
         this.insertedTagsEl = this.el.parentNode.child('ul');
 
-        this.insertedTagsEl.wrap({tag: 'div', class: 'inserted-tags'});
+        this.insertedTagsEl.wrap({tag: 'div', class: 'inserted-tags x-superboxselect'});
 
         this.addButton.on('click', this.addItemsFromField, this);
         new Ext.KeyMap(this.getEl(), {
