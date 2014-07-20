@@ -111,6 +111,7 @@ if (count($tagIDs) == 0) {
     $tagIDs[] = 0;
 }
 
-$where[] = "EXISTS (SELECT 1 FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource.id)";
+$where[] = "modResource.id IN(SELECT resource FROM {$modx->getTableName('TaggerTagResource')}"
+    . " WHERE tag IN (" . implode(',', $tagIDs) . ") GROUP BY resource)";
 
 return $modx->toJSON($where);
