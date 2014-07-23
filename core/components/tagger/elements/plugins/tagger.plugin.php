@@ -23,3 +23,5 @@ if (method_exists($tagger, $eventName)) {
     $eventName = lcfirst($eventName);
     $tagger->$eventName($scriptProperties);
 }
+
+return;
