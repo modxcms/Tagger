@@ -22,7 +22,6 @@
 $tagger = $modx->getService('tagger','Tagger',$modx->getOption('tagger.core_path',null,$modx->getOption('core_path').'components/tagger/').'model/tagger/',$scriptProperties);
 if (!($tagger instanceof Tagger)) return '';
 
-$tagKey = $modx->getOption('tagger.tag_key', null, 'tags');
 $tags = $modx->getOption('tags', $scriptProperties, '');
 $where = $modx->getOption('where', $scriptProperties, '');
 $likeComparison = (int) $modx->getOption('likeComparison', $scriptProperties, 0);
