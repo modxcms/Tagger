@@ -32,6 +32,35 @@ if ($where == false) {
 }
 
 if ($tags == '') {
+
+    if (!empty($_GET[$tagKey])) {
+        $tagList = $tagger->explodeAndClean($_GET[$tagKey]);
+
+        if (!empty($tagList)) {
+            $conditions = array('AND:TaggerTag.alias:IN' => $tagList);
+
+            if ($likeComparison == 1) {
+                foreach ($tagList as $tag) {
+                    $conditions[] = array('OR:TaggerTag.alias:LIKE' => '%' . $tag . '%');
+                }
+            }
+        }
+
+        if (!empty($conditions)) {
+            $c = $modx->newQuery('TaggerTagResource');
+            $c->select('TaggerTagResource.resource');
+            $c->innerJoin('TaggerTag', '', array('TaggerTag.id = TaggerTagResource.tag'));
+            $c->where($conditions);
+            $c->groupby('TaggerTagResource.resource');
+            $c->prepare();
+            $where[] = 'modResource.id IN(' . $c->toSQL() . ')';
+            $c = null;
+        }
+
+        // Ignore other GET parameters
+        return $modx->toJSON($where);
+    }
+
     $gc = $modx->newQuery('TaggerGroup');
     $gc->select($modx->getSelectColumns('TaggerGroup', '', '', array('alias')));
     $gc->prepare();
@@ -110,6 +139,7 @@ if (count($tagIDs) == 0) {
     $tagIDs[] = 0;
 }
 
-$where[] = "EXISTS (SELECT 1 FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource.id)";
+$where[] = "modResource.id IN(SELECT resource FROM {$modx->getTableName('TaggerTagResource')}"
+    . " WHERE tag IN (" . implode(',', $tagIDs) . ") GROUP BY resource)";
 
 return $modx->toJSON($where);
