@@ -114,7 +114,7 @@ $keys = array_keys($scriptProperties);
 $nthTpls = array();
 foreach($keys as $key) {
     $keyBits = $tagger->explodeAndClean($key, '_');
-    if ($keyBits[0] === 'tpl') {
+    if (isset($keyBits[0]) && $keyBits[0] === 'tpl') {
         if ($i = (int) $keyBits[1]) $nthTpls[$i] = $scriptProperties[$key];
     }
 }
@@ -187,7 +187,7 @@ foreach ($tags as $tag) {
 
         $out[] = $modx->getChunk($rowTpl, $phs);
     }
-    
+
     $idx++;
 }
 
