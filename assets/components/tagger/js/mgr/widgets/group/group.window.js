@@ -2,7 +2,6 @@ Tagger.window.Group = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         title: _('tagger.group.create')
-        ,height: 150
         ,width: 600
         ,closeAction: 'close'
         ,fileUpload: true

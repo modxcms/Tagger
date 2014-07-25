@@ -2,7 +2,6 @@ Tagger.window.Tag = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         title: _('tagger.tag.create')
-        ,height: 150
         ,width: 475
         ,closeAction: 'close'
         ,isUpdate: false
