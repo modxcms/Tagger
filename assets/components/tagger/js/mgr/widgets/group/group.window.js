@@ -64,7 +64,6 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,fieldLabel: _('tagger.group.description')
             ,description: _('tagger.group.description_desc')
             ,name: 'description'
-            ,allowBlank: false
         },{
             xtype: 'textfield'
             ,fieldLabel: _('tagger.group.alias')
