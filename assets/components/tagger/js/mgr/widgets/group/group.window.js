@@ -234,7 +234,6 @@ Ext.reg('tagger-window-group',Tagger.window.Group);
 Tagger.window.GroupImport = function(config) {
     Ext.applyIf(config,{
         title: _('tagger.group.import')
-        ,height: 150
         ,width: 475
         ,closeAction: 'close'
         ,fileUpload: true
