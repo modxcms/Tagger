@@ -30,6 +30,7 @@ Ext.override(MODx.panel.Resource, {
                     ,defaults: {
                         border: false
                         ,msgTarget: 'under'
+                        ,labelSeparator: ''
                     }
                     ,items: taggerFields['in-tab']
                 });
