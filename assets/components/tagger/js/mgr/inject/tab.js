@@ -127,6 +127,7 @@ Ext.override(MODx.panel.Resource, {
                    xtype: group.field_type
                    ,fieldLabel: group.name
                    ,name: 'tagger-' + group.id
+                   ,description: group.description
                    ,hiddenName: 'tagger-' + group.id
                    ,displayField: 'tag'
                    ,valueField: 'tag'

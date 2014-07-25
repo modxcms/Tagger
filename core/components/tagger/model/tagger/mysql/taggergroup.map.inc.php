@@ -4,7 +4,7 @@
  */
 $xpdo_meta_map['TaggerGroup']= array (
   'package' => 'tagger',
-  'version' => NULL,
+  'version' => '1.1',
   'table' => 'tagger_groups',
   'extends' => 'xPDOSimpleObject',
   'fields' => 
@@ -22,6 +22,7 @@ $xpdo_meta_map['TaggerGroup']= array (
     'show_for_templates' => '',
     'place' => 'in-tab',
     'position' => 0,
+    'description' => '',
   ),
   'fieldMeta' => 
   array (
@@ -132,6 +133,13 @@ $xpdo_meta_map['TaggerGroup']= array (
       'phptype' => 'integer',
       'null' => false,
       'default' => 0,
+    ),
+    'description' => 
+    array (
+      'dbtype' => 'text',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
     ),
   ),
   'composites' => 
