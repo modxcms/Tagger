@@ -61,8 +61,8 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,allowBlank: false
         },{
             xtype: 'textarea'
-            ,fieldLabel: 'Description'
-            ,description: 'Group description'
+            ,fieldLabel: _('tagger.group.description')
+            ,description: _('tagger.group.description_desc')
             ,name: 'description'
             ,allowBlank: false
         },{
