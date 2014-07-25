@@ -8,7 +8,7 @@ Tagger.grid.Group = function(config) {
         }
         ,save_action: 'mgr/group/updatefromgrid'
         ,autosave: true
-        ,fields: ['id', 'name', 'alias', 'field_type', 'remove_unused', 'allow_new', 'allow_blank', 'allow_type', 'show_autotag', 'hide_input', 'tag_limit', 'show_for_templates', 'position', 'place']
+        ,fields: ['id', 'name', 'alias', 'field_type', 'remove_unused', 'allow_new', 'allow_blank', 'allow_type', 'show_autotag', 'hide_input', 'tag_limit', 'show_for_templates', 'position', 'place', 'description']
         ,autoHeight: true
         ,paging: true
         ,remoteSort: true
@@ -140,7 +140,7 @@ Ext.extend(Tagger.grid.Group,MODx.grid.Grid,{
         });
         this.addContextMenuItem(m);
     }
-    
+
     ,importToGroup: function(btn,e) {
         var importToGroup = MODx.load({
             xtype: 'tagger-window-group-import'
@@ -182,10 +182,10 @@ Ext.extend(Tagger.grid.Group,MODx.grid.Grid,{
         updateGroup.fp.getForm().setValues(this.menu.record);
         updateGroup.show(e.target);
     }
-    
+
     ,removeGroup: function(btn,e) {
         if (!this.menu.record) return false;
-        
+
         MODx.msg.confirm({
             title: _('tagger.group.remove')
             ,text: _('tagger.group.remove_confirm')
