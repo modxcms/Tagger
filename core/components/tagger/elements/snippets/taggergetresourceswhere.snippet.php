@@ -24,6 +24,7 @@ if (!($tagger instanceof Tagger)) return '';
 
 $tags = $modx->getOption('tags', $scriptProperties, '');
 $where = $modx->getOption('where', $scriptProperties, '');
+$tagField = $modx->getOption('tagField', $scriptProperties, 'alias');
 $likeComparison = (int) $modx->getOption('likeComparison', $scriptProperties, 0);
 
 $where = $modx->fromJSON($where);
@@ -82,7 +83,7 @@ if ($tags == '') {
     $c->select($modx->getSelectColumns('TaggerTag', 'TaggerTag', '', array('id')));
 
     $compare = array(
-        'alias:IN' => $tags
+        "{$tagField}:IN" => $tags
     );
 
     if ($likeComparison == 1) {
