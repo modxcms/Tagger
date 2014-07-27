@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Changed labelSeparator
 - Fixed notice in GetTags snippet
 - Fixed logging messages from plugin
 - Updated GetResourcesWhere snippet and removed tag_key init

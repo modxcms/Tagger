@@ -30,6 +30,7 @@ Ext.override(MODx.panel.Resource, {
                     ,defaults: {
                         border: false
                         ,msgTarget: 'under'
+                        ,labelSeparator: ''
                     }
                     ,items: taggerFields['in-tab']
                 });
@@ -58,6 +59,7 @@ Ext.override(MODx.panel.Resource, {
                     ,hideMode: 'offsets'
                     ,items: taggerFields['above-content']
                     ,style: 'margin-top: 10px'
+                    ,labelSeparator: ''
                 });
 
                 indexOfContent++;
@@ -74,6 +76,7 @@ Ext.override(MODx.panel.Resource, {
                     ,hideMode: 'offsets'
                     ,items: taggerFields['below-content']
                     ,style: 'margin-top: 10px'
+                    ,labelSeparator: ''
                 });
             }
         }
