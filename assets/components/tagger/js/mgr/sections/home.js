@@ -7,7 +7,6 @@ Tagger.page.Home = function(config) {
     Ext.applyIf(config,{
         components: [{
             xtype: 'tagger-panel-home'
-            ,renderTo: 'tagger-panel-home-div'
         }]
     });
     Tagger.page.Home.superclass.constructor.call(this,config);

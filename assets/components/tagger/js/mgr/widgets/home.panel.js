@@ -10,7 +10,11 @@ Tagger.panel.Home = function(config) {
             ,cls: 'modx-page-header'
         },{
             xtype: 'modx-tabs'
-            ,defaults: { border: false ,autoHeight: true }
+            ,defaults: {
+                border: false
+                ,autoHeight: true
+                ,layout: 'anchor'
+            }
             ,border: true
             ,activeItem: 0
             ,hideMode: 'offsets'
@@ -24,6 +28,7 @@ Tagger.panel.Home = function(config) {
                     xtype: 'tagger-grid-tag'
                     ,preventRender: true
                     ,cls: 'main-wrapper'
+                    ,anchor: '100%'
                 }]
             },{
                 title: _('tagger.group.groups')
@@ -35,6 +40,7 @@ Tagger.panel.Home = function(config) {
                     xtype: 'tagger-grid-group'
                     ,preventRender: true
                     ,cls: 'main-wrapper'
+                    ,anchor: '100%'
                 }]
             }]
         }]

@@ -2,7 +2,7 @@ Tagger.window.Group = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         title: _('tagger.group.create')
-        ,height: 460
+        ,height: 500
         ,width: 600
         ,closeAction: 'close'
         ,fileUpload: true
@@ -58,22 +58,41 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,fieldLabel: _('tagger.group.name')
             ,description: _('tagger.group.name_desc')
             ,name: 'name'
-            ,anchor: '100%'
             ,allowBlank: false
+        },{
+            xtype: 'textarea'
+            ,fieldLabel: _('tagger.group.description')
+            ,description: _('tagger.group.description_desc')
+            ,name: 'description'
         },{
             xtype: 'textfield'
             ,fieldLabel: _('tagger.group.alias')
             ,description: _('tagger.group.alias_desc')
             ,name: 'alias'
-            ,anchor: '100%'
             ,allowBlank: true
         },{
+            xtype: 'tagger-combo-group-place'
+            ,fieldLabel: _('tagger.group.place')
+            ,description: _('tagger.group.place_desc')
+            ,name: 'place'
+            ,hiddenName: 'place'
+            ,allowBlank: false
+        },{
+            xtype: 'textfield'
+            ,fieldLabel: _('tagger.group.show_for_templates')
+            ,description: _('tagger.group.show_for_templates_desc')
+            ,name: 'show_for_templates'
+            ,hiddenName: 'show_for_templates'
+        }];
+    }
+
+    ,getRightColumnFields: function(config) {
+        return [{
             xtype: 'tagger-combo-field-type'
             ,fieldLabel: _('tagger.group.field_type')
             ,description: _('tagger.group.field_type_desc')
             ,name: 'field_type'
             ,hiddenName: 'field_type'
-            ,anchor: '100%'
             ,allowBlank: false
             ,listeners: {
                 select: {fn: function(t, rec) {
@@ -99,36 +118,15 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
                 }, scope: this}
             }
         },{
-            xtype: 'tagger-combo-group-place'
-            ,fieldLabel: _('tagger.group.place')
-            ,description: _('tagger.group.place_desc')
-            ,name: 'place'
-            ,hiddenName: 'place'
-            ,anchor: '100%'
-            ,allowBlank: false
-        },{
-            xtype: 'textfield'
-            ,fieldLabel: _('tagger.group.show_for_templates')
-            ,description: _('tagger.group.show_for_templates_desc')
-            ,name: 'show_for_templates'
-            ,anchor: '100%'
-            ,hiddenName: 'show_for_templates'
-        }];
-    }
-
-    ,getRightColumnFields: function(config) {
-        return [{
             xtype: 'xcheckbox'
             ,fieldLabel: _('tagger.group.remove_unused')
             ,description: _('tagger.group.remove_unused_desc')
             ,name: 'remove_unused'
-            ,anchor: '100%'
         },{
             xtype: 'xcheckbox'
             ,fieldLabel: _('tagger.group.allow_new')
             ,description: _('tagger.group.allow_new_desc')
             ,name: 'allow_new'
-            ,anchor: '100%'
         },{
             layout: 'column'
             ,border: false
@@ -152,7 +150,6 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
                     ,fieldLabel: _('tagger.group.allow_blank')
                     ,description: _('tagger.group.allow_blank_desc')
                     ,name: 'allow_blank'
-                    ,anchor: '100%'
                 }]
             },{
                 columnWidth: .5
@@ -166,7 +163,6 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
                     ,fieldLabel: _('tagger.group.allow_type')
                     ,description: _('tagger.group.allow_type_desc')
                     ,name: 'allow_type'
-                    ,anchor: '100%'
                 }]
             }]
         },{
@@ -192,7 +188,6 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
                     ,fieldLabel: _('tagger.group.show_autotag')
                     ,description: _('tagger.group.show_autotag_desc')
                     ,name: 'show_autotag'
-                    ,anchor: '100%'
                     ,hidden: config.record && config.record.field_type != 'tagger-field-tags'
                     ,listeners: {
                         check: function(t, checked) {
@@ -220,7 +215,6 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
                     ,fieldLabel: _('tagger.group.hide_input')
                     ,description: _('tagger.group.hide_input_desc')
                     ,name: 'hide_input'
-                    ,anchor: '100%'
                     ,hidden: config.record == undefined || config.record.show_autotag != 1
                 }]
             }]
@@ -229,7 +223,6 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,fieldLabel: _('tagger.group.tag_limit')
             ,description: _('tagger.group.tag_limit_desc')
             ,name: 'tag_limit'
-            ,anchor: '100%'
             ,allowNegative: false
             ,allowDecimals: false
             ,hiddenName: 'tag_limit'
@@ -242,7 +235,6 @@ Ext.reg('tagger-window-group',Tagger.window.Group);
 Tagger.window.GroupImport = function(config) {
     Ext.applyIf(config,{
         title: _('tagger.group.import')
-        ,height: 150
         ,width: 475
         ,closeAction: 'close'
         ,fileUpload: true

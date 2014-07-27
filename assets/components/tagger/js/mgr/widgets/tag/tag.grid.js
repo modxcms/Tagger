@@ -292,7 +292,7 @@ Ext.extend(Tagger.grid.Tag,MODx.grid.Grid,{
 
         return true;
     }
-    
+
     ,search: function(tf,nv,ov) {
         var s = this.getStore();
         s.baseParams.query = tf.getValue();

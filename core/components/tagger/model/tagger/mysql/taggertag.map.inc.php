@@ -4,7 +4,7 @@
  */
 $xpdo_meta_map['TaggerTag']= array (
   'package' => 'tagger',
-  'version' => NULL,
+  'version' => '1.1',
   'table' => 'tagger_tags',
   'extends' => 'xPDOSimpleObject',
   'fields' => 

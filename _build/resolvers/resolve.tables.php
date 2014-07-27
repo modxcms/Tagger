@@ -64,6 +64,11 @@ if ($object->xpdo) {
                 }
             }
 
+            if ($oldPackage && $oldPackage->compareVersion('1.4.0-pl', '>')) {
+                $manager = $modx->getManager();
+                $manager->addField('TaggerGroup', 'description');
+            }
+
             break;
     }
 }

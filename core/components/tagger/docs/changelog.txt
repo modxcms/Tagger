@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Added Group description
 - Changed labelSeparator
 - Fixed notice in GetTags snippet
 - Fixed logging messages from plugin
