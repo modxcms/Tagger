@@ -129,6 +129,14 @@ $properties = array(
         'value' => 'tags_total',
         'lexicon' => 'tagger:properties',
     ),
+    array(
+        'name' => 'sort',
+        'desc' => 'tagger.gettags.sort_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '{"tag": "asc"}',
+        'lexicon' => 'tagger:properties',
+    ),
 
 );
 $snippets[0]->setProperties($properties);

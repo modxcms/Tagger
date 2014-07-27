@@ -22,6 +22,7 @@
  * &showDeleted     int     optional    If 1 is set, Tags that are assigned only to deleted Resources will be included to the output as well
  * &contexts        string  optional    If set, will display only tags for resources in given contexts. Contexts can be separated by a comma
  * &toPlaceholder   string  optional    If set, output will return in placeholder with given name
+ * &sort            string  optional    Sort options in JSON. Example {"tag": "ASC"} or multiple sort options {"group_id": "ASC", "tag": "ASC"}
  *
  * USAGE:
  *
@@ -50,6 +51,14 @@ $limit = intval($modx->getOption('limit', $scriptProperties, 0));
 $offset = intval($modx->getOption('offset', $scriptProperties, 0));
 $totalPh = $modx->getOption('totalPh', $scriptProperties, 'tags_total');
 
+$sort = $modx->getOption('sort', $scriptProperties, '{}');
+$sort = $modx->fromJSON($sort);
+if ($sort === null || $sort == '' || count($sort) == 0) {
+    $sort = array(
+        'tag' => 'ASC'
+    );
+}
+
 $resources = $tagger->explodeAndClean($resources);
 $groups = $tagger->explodeAndClean($groups);
 $contexts = $tagger->explodeAndClean($contexts);
@@ -61,21 +70,30 @@ $c->leftJoin('TaggerTagResource', 'Resources');
 $c->leftJoin('TaggerGroup', 'Group');
 $c->leftJoin('modResource', 'Resource', array('Resources.resource = Resource.id'));
 
+
 if (!empty($contexts)) {
     $c->where(array(
-        'Resource.context_key:IN' => $contexts
+        'Resource.context_key:IN' => $contexts,
     ));
 }
 
 if ($showUnpublished == 0) {
     $c->where(array(
-        'Resource.published' => 1
+        'Resource.published' => 1,
+        'OR:Resource.published:IN' => null,
     ));
 }
 
 if ($showDeleted == 0) {
     $c->where(array(
-        'Resource.deleted' => 0
+        'Resource.deleted' => 0,
+        'OR:Resource.deleted:IS' => null,
+    ));
+}
+
+if ($showUnused == 0) {
+    $c->having(array(
+        'cnt > 0',
     ));
 }
 
@@ -92,14 +110,26 @@ if ($groups) {
         'OR:Group.alias:IN' => $groups,
     ));
 }
-
-$c->groupby($modx->getSelectColumns('TaggerTag', 'TaggerTag') . ',' . $modx->getSelectColumns('TaggerGroup', 'Group'));
-
-$total = $modx->getCount('TaggerTag', $c);
-$modx->setPlaceholder($totalPh, $total);
-
 $c->select($modx->getSelectColumns('TaggerTag', 'TaggerTag'));
 $c->select($modx->getSelectColumns('TaggerGroup', 'Group', 'group_'));
+$c->select(array('cnt' => 'COUNT(Resources.tag)'));
+$c->groupby($modx->getSelectColumns('TaggerTag', 'TaggerTag') . ',' . $modx->getSelectColumns('TaggerGroup', 'Group'));
+
+$c->prepare();
+$countQuery = new xPDOCriteria($modx, "SELECT COUNT(*) FROM ({$c->toSQL(false)}) cq", $c->bindings, $c->cacheFlag);
+$stmt = $countQuery->prepare();
+if ($stmt && $stmt->execute()) {
+    $total = intval($stmt->fetchColumn());
+} else {
+    $total = 0;
+}
+
+$modx->setPlaceholder($totalPh, $total);
+
+foreach ($sort as $field => $dir) {
+    $dir = (strtolower($dir) == 'asc') ? 'asc' : 'desc';
+    $c->sortby($field, $dir);
+}
 
 $c->limit($limit, $offset);
 
@@ -123,44 +153,7 @@ ksort($nthTpls);
 $idx = 1;
 foreach ($tags as $tag) {
     /** @var TaggerTag $tag */
-
     $phs = $tag->toArray();
-    $c = $modx->newQuery('TaggerTagResource');
-    $c->leftJoin('modResource', 'Resource', array('resource = Resource.id'));
-
-    $c->where(array(
-        'tag' => $tag->id,
-    ));
-
-    if (!empty($contexts)) {
-        $c->where(array(
-            'Resource.context_key:IN' => $contexts
-        ));
-    }
-
-    if ($showUnpublished == 0) {
-        $c->where(array(
-            'Resource.published' => 1
-        ));
-    }
-
-    if ($showDeleted == 0) {
-        $c->where(array(
-            'Resource.deleted' => 0
-        ));
-    }
-
-    if ($resources) {
-        $c->where(array(
-            'TaggerTagResource.resource:IN' => $resources
-        ));
-    }
-
-    $phs['cnt'] = $modx->getCount('TaggerTagResource', $c);
-
-    if (($showUnused == 0) && ($phs['cnt'] == 0)) {
-        continue;
-    }
 
     $group = $tag->Group;
 
