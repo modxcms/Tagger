@@ -39,14 +39,11 @@ class TaggerGateway {
 
         asort($this->tags);
 
-//        $tagKey = $this->modx->getOption('tagger.tag_key', null, 'tags');
-//        if (!isset($pieces[$tagKey])) return false;
-
         if ($this->pieces[count($this->pieces) - 1] != '') {
             $this->modx->sendRedirect(MODX_SITE_URL . implode('/', $this->pieces) . '/', array('responseCode' => 'HTTP/1.1 301 Moved Permanently'));
         }
 
-        if (count($this->pieces) == 0 || (count($this->pieces) == 1 && $this->pieces[0] == '')) return;
+        if (count($this->pieces) == 0 || (count($this->pieces) == 1 && $this->pieces[0] == '')) return false;
 
         $this->processRequest();
 
@@ -54,17 +51,6 @@ class TaggerGateway {
     }
 
     private function processRequest() {
-//        $pieces = array_flip($this->pieces);
-//        $tagKey = $this->modx->getOption('tagger.tag_key', null, 'tags');
-//        if (!isset($pieces[$tagKey])) return false;
-
-//        $tags = array_slice($this->pieces, $pieces[$tagKey] + 1);
-//        $tags = array_filter($tags);
-//        $_GET[$tagKey] = implode(',', $tags);
-
-//        $this->pieces = array_slice($this->pieces, 0, $pieces[$tagKey]);
-
-
         $prev = array('group' => '', 'id' => 0);
         $pieces = array();
         foreach ($this->tags as $group => $id) {
@@ -83,10 +69,7 @@ class TaggerGateway {
         $_GET[$prev['group']] = $this->modx->tagger->cleanAndImplode(array_slice($this->pieces, $prev['id'] + 1));
 
         $q = implode('/', $pieces);
-
-        if ($q != '') {
-            $q .= '/';
-        } else {
+        if ($q == '') {
             $siteStart = $this->modx->getObject('modResource', $this->modx->getOption('site_start'));
             $q = $siteStart->alias;
         }

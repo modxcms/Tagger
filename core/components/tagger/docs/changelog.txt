@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Fixed gateway to support all file extensions
 - Made combobox for tags 100% width
 - Put form labels to top
 - Added lexicon string for Tagger's tab
