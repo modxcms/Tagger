@@ -12,6 +12,7 @@
  * &groups          string  optional    Comma separated list of Tagger Groups. Only from those groups will Tags be allowed
  * &where           string  optional    Original getResources where property. If you used where property in your current getResources call, move it here
  * &likeComparison  int     optional    If set to 1, tags will compare using LIKE
+ * &tagField        string  optional    Field that will be used to compare with given tags. Default: alias
  *
  * USAGE:
  *
@@ -24,6 +25,7 @@ if (!($tagger instanceof Tagger)) return '';
 
 $tags = $modx->getOption('tags', $scriptProperties, '');
 $where = $modx->getOption('where', $scriptProperties, '');
+$tagField = $modx->getOption('tagField', $scriptProperties, 'alias');
 $likeComparison = (int) $modx->getOption('likeComparison', $scriptProperties, 0);
 
 $where = $modx->fromJSON($where);
@@ -82,12 +84,12 @@ if ($tags == '') {
     $c->select($modx->getSelectColumns('TaggerTag', 'TaggerTag', '', array('id')));
 
     $compare = array(
-        'alias:IN' => $tags
+        $tagField . ':IN' => $tags
     );
 
     if ($likeComparison == 1) {
         foreach ($tags as $tag) {
-            $compare[] = array('OR:alias:LIKE' => '%' . $tag . '%');
+            $compare[] = array('OR:' . $tagField . ':LIKE' => '%' . $tag . '%');
         }
     }
 

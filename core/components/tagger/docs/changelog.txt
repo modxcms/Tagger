@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Added tagField to GetResourcesWhere snippet
 - Added sort param to GetTags snippet
 - Added Group description
 - Changed labelSeparator

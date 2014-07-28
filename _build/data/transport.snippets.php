@@ -183,6 +183,14 @@ $properties = array(
         'value' => '0',
         'lexicon' => 'tagger:properties',
     ),
+    array(
+        'name' => 'tagField',
+        'desc' => 'tagger.getresourceswhere.tagField_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'alias',
+        'lexicon' => 'tagger:properties',
+    ),
 
 );
 $snippets[1]->setProperties($properties);
