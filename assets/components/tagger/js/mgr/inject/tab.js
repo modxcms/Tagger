@@ -4,10 +4,11 @@ Ext.override(MODx.panel.Resource, {
         ,setup: MODx.panel.Resource.prototype.setup
         ,beforeSubmit: MODx.panel.Resource.prototype.beforeSubmit
     }
-    ,getFields: function(config) {
-        var fields = this.taggerOriginals.getFields.call(this, config);
 
-        var taggerFields = this.taggerGetFields(config);
+    ,getFields: function(config) {
+        var fields = this.taggerOriginals.getFields.call(this, config)
+            ,taggerFields = this.taggerGetFields(config)
+            ,tabLabel = _('tagger.tab.label');
 
         if (taggerFields['in-tab'].length > 0) {
             var tabs = fields.filter(function (row) {
@@ -20,13 +21,14 @@ Ext.override(MODx.panel.Resource, {
 
             if (tabs != false && tabs[0]) {
                 tabs[0].items.push({
-                    title: _('tagger')
+                    title: tabLabel
                     ,layout: 'form'
                     ,forceLayout: true
                     ,deferredRender: false
                     ,labelWidth: 200
                     ,bodyCssClass: 'main-wrapper'
                     ,autoHeight: true
+                    ,labelAlign: 'top'
                     ,defaults: {
                         border: false
                         ,msgTarget: 'under'
@@ -50,7 +52,7 @@ Ext.override(MODx.panel.Resource, {
 
             if (taggerFields['above-content'].length > 0) {
                 fields.splice(indexOfContent, 0, {
-                    title: (MODx.config['tagger.place_above_content_header'] == 1) ? _('tagger') : ''
+                    title: (MODx.config['tagger.place_above_content_header'] == 1) ? tabLabel : ''
                     ,layout: 'form'
                     ,bodyCssClass: 'main-wrapper'
                     ,autoHeight: true
@@ -67,7 +69,7 @@ Ext.override(MODx.panel.Resource, {
 
             if (taggerFields['below-content'].length > 0) {
                 fields.splice(indexOfContent + 1, 0, {
-                    title: (MODx.config['tagger.place_below_content_header'] == 1) ? _('tagger') : ''
+                    title: (MODx.config['tagger.place_below_content_header'] == 1) ? tabLabel : ''
                     ,layout: 'form'
                     ,bodyCssClass: 'main-wrapper'
                     ,autoHeight: true
@@ -83,7 +85,7 @@ Ext.override(MODx.panel.Resource, {
 
         if (taggerFields['bottom-page'].length > 0) {
             fields.push({
-                title: (MODx.config['tagger.place_bottom_page_header'] == 1) ? _('tagger') : ''
+                title: (MODx.config['tagger.place_bottom_page_header'] == 1) ? tabLabel : ''
                 ,layout: 'form'
                 ,bodyCssClass: 'main-wrapper'
                 ,autoHeight: true
@@ -107,7 +109,7 @@ Ext.override(MODx.panel.Resource, {
     }
 
     ,beforeSubmit: function(o) {
-        var tagFields = this.find('xtype', 'tagger-field-tags')
+        var tagFields = this.find('xtype', 'tagger-field-tags');
 
         Ext.each(tagFields, function(tagField) {
             tagField.addItemsFromField();
@@ -143,6 +145,7 @@ Ext.override(MODx.panel.Resource, {
                    ,autoTag: group.show_autotag
                    ,hideInput: group.hide_input
                    ,tagLimit: group.tag_limit
+                   ,anchor: '100%'
                    ,baseParams: {
                        action: 'mgr/extra/gettags'
                        ,group: group.id

@@ -78,6 +78,22 @@ $xpdo_meta_map['TaggerTag']= array (
         ),
       ),
     ),
+    'iAlias' => 
+    array (
+      'alias' => 'iAlias',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'alias' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
     'iGroup' => 
     array (
       'alias' => 'iGroup',

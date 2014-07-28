@@ -33,6 +33,10 @@
             <column key="tag" length="" collation="A" null="false" />
         </index>
 
+        <index alias="iAlias" name="iAlias" primary="false" unique="false" type="BTREE">
+            <column key="alias" length="" collation="A" null="false" />
+        </index>
+
         <index alias="iGroup" name="iGroup" primary="false" unique="false" type="BTREE">
             <column key="group" length="" collation="A" null="false" />
         </index>

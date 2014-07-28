@@ -61,6 +61,8 @@ $_lang['tagger.group.tag_limit_desc'] = 'Number of tags that can be assigned to 
 $_lang['tagger.group.alias'] = 'Alias';
 $_lang['tagger.group.alias_desc'] = 'Alias that will be used in URL when FURLs are enabled. Leave field blank to generate alias automatically.';
 
+$_lang['tagger.tab.label'] = 'Tagger';
+
 $_lang['tagger.tag.tags'] = 'Tags';
 $_lang['tagger.tag.intro_msg'] = 'In this section you can manage Tags.';
 $_lang['tagger.tag.name'] = 'Name';
