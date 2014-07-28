@@ -51,53 +51,57 @@ Ext.override(MODx.panel.Resource, {
             }
 
             if (taggerFields['above-content'].length > 0) {
-                fields.splice(indexOfContent, 0, {
-                    title: (MODx.config['tagger.place_above_content_header'] == 1) ? tabLabel : ''
-                    ,layout: 'form'
-                    ,bodyCssClass: 'main-wrapper'
-                    ,autoHeight: true
-                    ,collapsible: MODx.config['tagger.place_above_content_header'] == 1
-                    ,animCollapse: false
-                    ,hideMode: 'offsets'
-                    ,items: taggerFields['above-content']
-                    ,style: 'margin-top: 10px'
-                    ,labelSeparator: ''
-                });
+                fields.splice(
+                    indexOfContent
+                    ,0
+                    ,this.placeFields('above_content', taggerFields['above-content'])
+                );
 
                 indexOfContent++;
             }
 
             if (taggerFields['below-content'].length > 0) {
-                fields.splice(indexOfContent + 1, 0, {
-                    title: (MODx.config['tagger.place_below_content_header'] == 1) ? tabLabel : ''
-                    ,layout: 'form'
-                    ,bodyCssClass: 'main-wrapper'
-                    ,autoHeight: true
-                    ,collapsible: MODx.config['tagger.place_below_content_header'] == 1
-                    ,animCollapse: false
-                    ,hideMode: 'offsets'
-                    ,items: taggerFields['below-content']
-                    ,style: 'margin-top: 10px'
-                    ,labelSeparator: ''
-                });
+                fields.splice(
+                    indexOfContent + 1
+                    ,0
+                    ,this.placeFields('below_content', taggerFields['below-content'])
+                );
             }
         }
 
         if (taggerFields['bottom-page'].length > 0) {
-            fields.push({
-                title: (MODx.config['tagger.place_bottom_page_header'] == 1) ? tabLabel : ''
-                ,layout: 'form'
-                ,bodyCssClass: 'main-wrapper'
-                ,autoHeight: true
-                ,collapsible: MODx.config['tagger.place_bottom_page_header'] == 1
-                ,animCollapse: false
-                ,hideMode: 'offsets'
-                ,items: taggerFields['bottom-page']
-                ,style: 'margin-top: 10px'
-            });
+            fields.push(
+                this.placeFields('bottom_page', taggerFields['bottom-page'])
+            );
         }
 
         return fields;
+    }
+
+    /**
+     * Convenient method to help generate the fields container
+     *
+     * @param {String} position (above_content||below_content||bottom_page)
+     * @param {Object} fields
+     *
+     * @returns {Object}
+     */
+    ,placeFields: function(position, fields) {
+        var key = 'tagger.place_'+ position +'_header';
+
+        return {
+            title: (MODx.config[key] == 1) ? _('tagger.tab.label') : ''
+            ,layout: 'form'
+            ,bodyCssClass: 'main-wrapper'
+            ,autoHeight: true
+            ,collapsible: MODx.config[key] == 1
+            ,animCollapse: false
+            ,hideMode: 'offsets'
+            ,items: fields
+            ,style: 'margin-top: 10px'
+            ,labelSeparator: ''
+            ,labelAlign: 'top'
+        };
     }
 
     ,setup: function() {
