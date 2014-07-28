@@ -84,7 +84,11 @@ class Tagger {
 
         $this->modx->controller->addLexiconTopic('tagger:default');
 
-        $this->modx->regClientCSS($this->getOption('cssUrl') . 'tagfield.css');
+        if ($this->modx->version['major_version'] < 3) {
+            $this->modx->regClientCSS($this->getOption('cssUrl') . 'tagfield_under_2_3.css');
+        } else {
+            $this->modx->regClientCSS($this->getOption('cssUrl') . 'tagfield.css');
+        }
 
         $this->modx->regClientStartupScript($this->getOption('jsUrl').'mgr/tagger.js');
         $this->modx->regClientStartupScript($this->getOption('jsUrl').'mgr/extras/tagger.tagfield.js');

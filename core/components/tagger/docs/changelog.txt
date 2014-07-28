@@ -1,5 +1,9 @@
 Changelog for Tagger.
 
+- Made combobox for tags 100% width
+- Put form labels to top
+- Added lexicon string for Tagger's tab
+- Updated styles to look better in 2.3
 - Added tagField to GetResourcesWhere snippet
 - Added sort param to GetTags snippet
 - Added Group description

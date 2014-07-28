@@ -81,12 +81,3 @@
 .tagger-wrapper-hidden {
     display: none;
 }
-
-.tagger-header {
-    -webkit-box-shadow: 0 0 5px 0 rgba(0,0,0,.1);
-    box-shadow: 0 0 5px 0 rgba(0,0,0,.1);
-}
-
-.tagger-header .x-panel-header {
-    padding: 15px !important;
-}
