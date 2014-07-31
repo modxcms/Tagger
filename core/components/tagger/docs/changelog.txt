@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+Tagger 1.4.0
+==============
 - Updated french translations
 - Fixed gateway to support all file extensions
 - Made combobox for tags 100% width
