@@ -34,4 +34,13 @@ $settings['tagger.place_bottom_page_header']->fromArray(array(
     'area' => 'places'
 ));
 
+$settings['tagger.extend_classes'] = $modx->newObject('modSystemSetting');
+$settings['tagger.extend_classes']->set('key', 'tagger.extend_classes');
+$settings['tagger.extend_classes']->fromArray(array(
+    'value' => '{"GridClassKey":["Container"],"miniShop2":["UpdateCategory","CreateCategory"]}',
+    'xtype' => 'text',
+    'namespace' => 'tagger',
+    'area' => 'places'
+));
+
 return $settings;
