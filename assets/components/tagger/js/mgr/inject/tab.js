@@ -13,7 +13,6 @@ setTimeout(function(){
 			
 		});
 	}
-	console.log(curr_class);
     Ext.override(curr_class, {
         taggerOriginals: {
             getFields: curr_class.prototype.getFields
