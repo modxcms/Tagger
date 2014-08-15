@@ -96,8 +96,11 @@ $_lang['setting_tagger.place_bottom_page_header'] = 'Bottom page header';
 $_lang['setting_tagger.place_bottom_page_header_desc'] = 'Show or hide header of the Tagger block, that shows at the bottom of the page.';
 $_lang['setting_tagger.extend_classes'] = 'Extended classes';
 $_lang['setting_tagger.extend_classes_desc'] = 'Settings in JSON format for Tagger start up with CRC Resources.';
+$_lang['setting_tagger.template_tab_name'] = 'Template Tagger Labels';
+$_lang['setting_tagger.template_tab_name_desc'] = 'Settings in JSON format for Tagger Label. For example {"1":"Options","3":"Attributes"}. If label for template not set shows default tagger label.';
 
 $_lang['area_places'] = 'Places';
+$_lang['area_settings'] = 'Settings';
 $_lang['area_default'] = 'Default';
 
 $_lang['tagger.err.group_name_ns'] = 'Group name is not specified. Please fill Group name.';

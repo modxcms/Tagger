@@ -1,6 +1,7 @@
 setTimeout(function(){
     var curr_class = MODx.panel.Resource,
-		extend_classes = Ext.decode(MODx.config['tagger.extend_classes']);
+		extend_classes = Ext.decode(MODx.config['tagger.extend_classes']),
+		template_tab_names = Ext.decode(MODx.config['tagger.template_tab_name']);
     if(typeof extend_classes == 'object'){
 		Ext.iterate(extend_classes, function(classname, extclass) {
 			if(typeof window[classname] == 'object'){
@@ -23,7 +24,7 @@ setTimeout(function(){
         ,getFields: function(config) {
             var fields = this.taggerOriginals.getFields.call(this, config)
                 ,taggerFields = this.taggerGetFields(config)
-                ,tabLabel = _('tagger.tab.label');
+                ,tabLabel = (typeof template_tab_names[config.record.template] != 'undefined' && template_tab_names[config.record.template] != '') ? template_tab_names[config.record.template] + ' ('+ _('tagger.tab.label') + ')' : _('tagger.tab.label');
                 
             if (taggerFields['in-tab'].length > 0) {
                 var tabs = fields.filter(function (row) {
