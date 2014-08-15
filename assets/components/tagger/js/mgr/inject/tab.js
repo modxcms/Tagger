@@ -1,6 +1,6 @@
 setTimeout(function(){
     var curr_class = MODx.panel.Resource,
-		extend_classes = (typeof Tagger.config.extend_classes !== undefined || '' !== Tagger.config.extend_classes) ? Ext.decode(Tagger.config.extend_classes) : '';
+		extend_classes = Ext.decode(MODx.config['tagger.extend_classes']);
     if(typeof extend_classes == 'object'){
 		Ext.iterate(extend_classes, function(classname, extclass) {
 			if(typeof window[classname] == 'object'){
