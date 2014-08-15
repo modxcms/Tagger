@@ -94,6 +94,8 @@ $_lang['setting_tagger.place_below_content_header'] = 'Below content header';
 $_lang['setting_tagger.place_below_content_header_desc'] = 'Show or hide header of the Tagger block, that shows below the content block.';
 $_lang['setting_tagger.place_bottom_page_header'] = 'Bottom page header';
 $_lang['setting_tagger.place_bottom_page_header_desc'] = 'Show or hide header of the Tagger block, that shows at the bottom of the page.';
+$_lang['setting_tagger.extend_classes'] = 'Extended classes';
+$_lang['setting_tagger.extend_classes_desc'] = 'Settings in JSON format for Tagger start up with CRC Resources.';
 
 $_lang['area_places'] = 'Places';
 $_lang['area_default'] = 'Default';

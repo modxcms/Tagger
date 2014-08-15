@@ -22,6 +22,7 @@ class Tagger {
         /* loads some default paths for easier management */
         $this->options = array_merge(array(
             'namespace' => $this->namespace,
+            'extend_classes' => $this->modx->getOption('extend_classes'),
             'corePath' => $corePath,
             'modelPath' => $corePath . 'model/',
             'chunksPath' => $corePath . 'elements/chunks/',
