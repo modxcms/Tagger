@@ -1,5 +1,10 @@
 Changelog for Tagger.
 
+Tagger 1.4.1 beta
+==============
+- [#42] Added changes for CRC support
+- [#40] Added rename Tagger Label setting
+
 Tagger 1.4.0
 ==============
 - Updated french translations
