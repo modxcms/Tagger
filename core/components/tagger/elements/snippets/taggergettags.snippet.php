@@ -46,6 +46,7 @@ $contexts = $modx->getOption('contexts', $scriptProperties, '');
 
 $defaultRowTpl = $modx->getOption('rowTpl', $scriptProperties, '');
 $outTpl = $modx->getOption('outTpl', $scriptProperties, '');
+$wrapIfEmpty = $modx->getOption('wrapIfEmpty', $scriptProperties, 1);
 $separator = $modx->getOption('separator', $scriptProperties, '');
 $limit = intval($modx->getOption('limit', $scriptProperties, 0));
 $offset = intval($modx->getOption('offset', $scriptProperties, 0));
@@ -187,7 +188,9 @@ foreach ($tags as $tag) {
 $out = implode($separator, $out);
 
 if ($outTpl != '') {
-    $out = $modx->getChunk($outTpl, array('tags' => $out));
+    if (!empty($out) || $wrapIfEmpty) {
+        $out = $modx->getChunk($outTpl, array('tags' => $out));
+    }
 }
 
 if (!empty($toPlaceholder)) {
