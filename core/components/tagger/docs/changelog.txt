@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+- Added option &wrapIfEmpty
+
 Tagger 1.4.0
 ==============
 - Updated french translations
