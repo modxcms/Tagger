@@ -2,7 +2,7 @@ Tagger.window.Group = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         title: _('tagger.group.create')
-        ,height: 500
+        ,height: 550
         ,width: 600
         ,closeAction: 'close'
         ,fileUpload: true
@@ -53,6 +53,7 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
     }
 
     ,getLeftColumnFields: function(config) {
+        debugger;
         return [{
             xtype: 'textfield'
             ,fieldLabel: _('tagger.group.name')
@@ -77,6 +78,27 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,name: 'place'
             ,hiddenName: 'place'
             ,allowBlank: false
+            ,listeners: {
+                select: {fn: function(t, rec) {
+                    var els = this.find('name', 'in_tvs_position');
+                    if (els.length == 1) {
+                        if (rec.data.v == 'in-tvs') {
+                            els[0].show();
+                        } else {
+                            els[0].hide();
+                        }
+                    }
+                }, scope: this}
+            }
+        },{
+            xtype: 'numberfield'
+            ,fieldLabel: _('tagger.group.in_tvs_position')
+            ,description: _('tagger.group.in_tvs_position_desc')
+            ,name: 'in_tvs_position'
+            ,allowDecimals: false
+            ,allowNegative: false
+            ,hidden: config.record == undefined || config.record.place != 'in-tvs'
+            ,value: (config.record && config.record.in_tvs_position) ? config.record.in_tvs_position : 9999
         },{
             xtype: 'textfield'
             ,fieldLabel: _('tagger.group.show_for_templates')

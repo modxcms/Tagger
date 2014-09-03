@@ -23,6 +23,7 @@ $xpdo_meta_map['TaggerGroup']= array (
     'place' => 'in-tab',
     'position' => 0,
     'description' => '',
+    'in_tvs_position' => 9999,
   ),
   'fieldMeta' => 
   array (
@@ -140,6 +141,15 @@ $xpdo_meta_map['TaggerGroup']= array (
       'phptype' => 'string',
       'null' => false,
       'default' => '',
+    ),
+    'in_tvs_position' => 
+    array (
+      'dbtype' => 'int',
+      'attributes' => 'unsigned',
+      'precision' => '10',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 9999,
     ),
   ),
   'composites' => 

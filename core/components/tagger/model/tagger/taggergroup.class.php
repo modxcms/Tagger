@@ -11,6 +11,7 @@
  * @property boolean $show_autotag
  * @property boolean $hide_input
  * @property int $tag_limit
+ * @property int $in_tvs_position
  * @property string $show_for_templates
  * @property string $place
  * @property int $position

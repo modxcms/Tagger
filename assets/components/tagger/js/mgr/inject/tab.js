@@ -5,12 +5,15 @@ Ext.override(MODx.panel.Resource, {
         ,beforeSubmit: MODx.panel.Resource.prototype.beforeSubmit
     }
 
-    ,getFields: function(config) {
-        var fields = this.taggerOriginals.getFields.call(this, config)
-            ,taggerFields = this.taggerGetFields(config)
-            ,tabLabel = _('tagger.tab.label');
+    ,taggerFields : null
 
-        if (taggerFields['in-tab'].length > 0) {
+    ,getFields: function(config) {
+        var fields = this.taggerOriginals.getFields.call(this, config);
+        var tabLabel = _('tagger.tab.label');
+
+        this.taggerFields = this.taggerGetFields(config);
+
+        if (this.taggerFields['in-tab'].length > 0) {
             var tabs = fields.filter(function (row) {
                 if(row.id == 'modx-resource-tabs') {
                     return row;
@@ -34,12 +37,12 @@ Ext.override(MODx.panel.Resource, {
                         ,msgTarget: 'under'
                         ,labelSeparator: ''
                     }
-                    ,items: taggerFields['in-tab']
+                    ,items: this.taggerFields['in-tab']
                 });
             }
         }
 
-        if (taggerFields['above-content'].length > 0 || taggerFields['below-content'].length > 0) {
+        if (this.taggerFields['above-content'].length > 0 || this.taggerFields['below-content'].length > 0) {
             var indexOfContent;
             var found = false;
 
@@ -50,29 +53,63 @@ Ext.override(MODx.panel.Resource, {
                 }
             }
 
-            if (taggerFields['above-content'].length > 0) {
+            if (this.taggerFields['above-content'].length > 0) {
                 fields.splice(
                     indexOfContent
                     ,0
-                    ,this.placeFields('above_content', taggerFields['above-content'])
+                    ,this.placeFields('above_content', this.taggerFields['above-content'])
                 );
 
                 indexOfContent++;
             }
 
-            if (taggerFields['below-content'].length > 0) {
+            if (this.taggerFields['below-content'].length > 0) {
                 fields.splice(
                     indexOfContent + 1
                     ,0
-                    ,this.placeFields('below_content', taggerFields['below-content'])
+                    ,this.placeFields('below_content', this.taggerFields['below-content'])
                 );
             }
         }
 
-        if (taggerFields['bottom-page'].length > 0) {
+        if (this.taggerFields['bottom-page'].length > 0) {
             fields.push(
-                this.placeFields('bottom_page', taggerFields['bottom-page'])
+                this.placeFields('bottom_page', this.taggerFields['bottom-page'])
             );
+        }
+
+        if (this.taggerFields['in-tvs'].length > 0) {
+            Ext.onReady(function() {
+                var tvTab = Ext.getCmp('modx-resource-vtabs');
+
+                tvTab.insert(this.taggerFields['in-tvs'][0].inTVsPosition, {
+                    title: _('tagger.tab.label')
+                    ,layout: 'form'
+                    ,forceLayout: true
+                    ,deferredRender: false
+                    ,labelWidth: 200
+                    ,bodyCssClass: 'main-wrapper'
+                    ,autoHeight: true
+                    ,labelAlign: 'top'
+                    ,defaults: {
+                        border: false
+                        ,msgTarget: 'under'
+                        ,labelSeparator: ''
+                        ,anchor: '100%'
+                    }
+                    ,items: this.taggerFields['in-tvs']
+                });
+
+                if (this.taggerFields['in-tvs'][0].inTVsPosition == 0) {
+                    tvTab.setActiveTab(0);
+
+                    var tvPanel = Ext.getCmp('modx-panel-resource-tv');
+                    tvPanel.on('show', function () {
+                        tvTab.doLayout();
+                    }, this, {single: true});
+                }
+
+            }, this, {delay: 1});
         }
 
         return fields;
@@ -129,12 +166,14 @@ Ext.override(MODx.panel.Resource, {
             ,'below-content': []
             ,'bottom-page': []
             ,'in-tab': []
+            ,'in-tvs': []
         };
 
         Ext.each(Tagger.groups, function(group) {
            if (group.show_for_templates.indexOf(parseInt(config.record.template)) != -1) {
                fields[group.place].push({
                    xtype: group.field_type
+                   ,inTVsPosition: group.in_tvs_position
                    ,fieldLabel: group.name
                    ,name: 'tagger-' + group.id
                    ,description: group.description

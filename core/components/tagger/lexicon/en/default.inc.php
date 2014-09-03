@@ -49,8 +49,9 @@ $_lang['tagger.group.auto_import'] = 'Automatic import';
 $_lang['tagger.group.import_from'] = 'Import from TV';
 $_lang['tagger.group.import_to'] = 'Import to Group';
 $_lang['tagger.group.place'] = 'Place';
-$_lang['tagger.group.place_desc'] = 'Where will be this group rendered. Options are: In tab, Above content, Below content, Bottom page';
+$_lang['tagger.group.place_desc'] = 'Where will be this group rendered. Options are: In tab, In TVs section, Above content, Below content, Bottom page';
 $_lang['tagger.group.place_in_tab'] = 'In tab';
+$_lang['tagger.group.place_tvs_tab'] = 'In TVs section';
 $_lang['tagger.group.place_above_content'] = 'Above content';
 $_lang['tagger.group.place_below_content'] = 'Below content';
 $_lang['tagger.group.place_bottom_page'] = 'Bottom page';
@@ -60,6 +61,8 @@ $_lang['tagger.group.tag_limit'] = 'Tag limit';
 $_lang['tagger.group.tag_limit_desc'] = 'Number of tags that can be assigned to a resource';
 $_lang['tagger.group.alias'] = 'Alias';
 $_lang['tagger.group.alias_desc'] = 'Alias that will be used in URL when FURLs are enabled. Leave field blank to generate alias automatically.';
+$_lang['tagger.group.in_tvs_position'] = 'Position of Tagger tab in TVs section';
+$_lang['tagger.group.in_tvs_position_desc'] = 'Position in TVs section on which will be added Tagger tab';
 
 $_lang['tagger.tab.label'] = 'Tagger';
 

@@ -8,7 +8,7 @@ Tagger.grid.Group = function(config) {
         }
         ,save_action: 'mgr/group/updatefromgrid'
         ,autosave: true
-        ,fields: ['id', 'name', 'alias', 'field_type', 'remove_unused', 'allow_new', 'allow_blank', 'allow_type', 'show_autotag', 'hide_input', 'tag_limit', 'show_for_templates', 'position', 'place', 'description']
+        ,fields: ['id', 'name', 'alias', 'field_type', 'remove_unused', 'allow_new', 'allow_blank', 'allow_type', 'show_autotag', 'hide_input', 'tag_limit', 'show_for_templates', 'position', 'place', 'description', 'in_tvs_position']
         ,autoHeight: true
         ,paging: true
         ,remoteSort: true

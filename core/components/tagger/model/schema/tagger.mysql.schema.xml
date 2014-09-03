@@ -15,6 +15,7 @@
         <field key="place" dbtype="varchar" precision="100" phptype="string" null="false" default="in-tab" />
         <field key="position" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
         <field key="description" dbtype="text" phptype="string" null="false" default="" />
+        <field key="in_tvs_position" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="9999" />
 
         <composite alias="Tags" class="TaggerTag" local="id" foreign="group" cardinality="many" owner="local" />
     </object>

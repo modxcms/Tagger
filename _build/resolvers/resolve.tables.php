@@ -70,6 +70,11 @@ if ($object->xpdo) {
                 $manager->addIndex('TaggerTag', 'iAlias');
             }
 
+            if ($oldPackage && $oldPackage->compareVersion('1.5.0-pl', '>')) {
+                $manager = $modx->getManager();
+                $manager->addField('TaggerGroup', 'in_tvs_position');
+            }
+
             break;
     }
 }

@@ -132,6 +132,7 @@ Tagger.combo.GroupPlace = function(config) {
             fields: ['d','v']
             ,data: [
                 [_('tagger.group.place_in_tab') ,'in-tab'],
+                [_('tagger.group.place_tvs_tab') ,'in-tvs'],
                 [_('tagger.group.place_above_content') ,'above-content'],
                 [_('tagger.group.place_below_content') ,'below-content'],
                 [_('tagger.group.place_bottom_page') ,'bottom-page']
