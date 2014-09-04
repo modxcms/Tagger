@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Added system settings for changing place's labels
 - Added an option to place a group as a tab into TVs section
 - Added option &wrapIfEmpty
 

@@ -5,13 +5,14 @@ Ext.override(MODx.panel.Resource, {
         ,beforeSubmit: MODx.panel.Resource.prototype.beforeSubmit
     }
 
-    ,taggerFields : null
+    ,taggerFields: {}
+    ,taggerLabels: {}
 
     ,getFields: function(config) {
         var fields = this.taggerOriginals.getFields.call(this, config);
-        var tabLabel = _('tagger.tab.label');
 
         this.taggerFields = this.taggerGetFields(config);
+        this.taggerLabels = this.taggerGetLabels(config);
 
         if (this.taggerFields['in-tab'].length > 0) {
             var tabs = fields.filter(function (row) {
@@ -24,7 +25,7 @@ Ext.override(MODx.panel.Resource, {
 
             if (tabs != false && tabs[0]) {
                 tabs[0].items.push({
-                    title: tabLabel
+                    title: this.taggerLabels['in_tab']
                     ,layout: 'form'
                     ,forceLayout: true
                     ,deferredRender: false
@@ -83,7 +84,7 @@ Ext.override(MODx.panel.Resource, {
                 var tvTab = Ext.getCmp('modx-resource-vtabs');
 
                 tvTab.insert(this.taggerFields['in-tvs'][0].inTVsPosition, {
-                    title: _('tagger.tab.label')
+                    title: this.taggerLabels['tvs_tab']
                     ,layout: 'form'
                     ,forceLayout: true
                     ,deferredRender: false
@@ -127,7 +128,7 @@ Ext.override(MODx.panel.Resource, {
         var key = 'tagger.place_'+ position +'_header';
 
         return {
-            title: (MODx.config[key] == 1) ? _('tagger.tab.label') : ''
+            title: (MODx.config[key] == 1) ? this.taggerLabels[position] : ''
             ,layout: 'form'
             ,bodyCssClass: 'main-wrapper'
             ,autoHeight: true
@@ -199,5 +200,50 @@ Ext.override(MODx.panel.Resource, {
         });
 
         return fields;
+    }
+
+    ,taggerGetLabels: function(config) {
+        return {
+            'above_content': this.taggerGetLabel('above_content', config.record.template)
+            ,'below_content': this.taggerGetLabel('below_content', config.record.template)
+            ,'bottom_page': this.taggerGetLabel('bottom_page', config.record.template)
+            ,'in_tab': this.taggerGetLabel('in_tab', config.record.template)
+            ,'tvs_tab': this.taggerGetLabel('tvs_tab', config.record.template)
+        };
+    }
+
+    ,taggerGetLabel: function(place, template) {
+        var labels = MODx.config['tagger.place_' + place + '_label'];
+
+        if (labels == undefined) return _('tagger.tab.label');
+
+        if (labels.indexOf('||') == -1 && labels.indexOf('==') == -1) {
+            if (_(labels) == undefined) {
+                return labels;
+            }
+
+            return _(labels);
+        }
+
+        var placeLabel = _('tagger.tab.label');
+
+        labels = labels.split('||');
+        Ext.each(labels, function (label) {
+            label = label.split('==');
+
+            if (label.length == 2) {
+                if (label[0] == template) {
+                    if (_(label[1]) == undefined) {
+                        placeLabel = label[1];
+                    } else {
+                        placeLabel = _(label[1]);
+                    }
+
+                    return false;
+                }
+            }
+        }, this);
+
+        return placeLabel;
     }
 });

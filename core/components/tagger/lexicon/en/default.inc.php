@@ -89,14 +89,22 @@ $_lang['tagger.tag.remove_selected_confirm'] = 'Are you sure, you want to remove
 $_lang['tagger.tag.merge'] = 'Merge Tags';
 $_lang['tagger.tag.assign'] = 'Assign';
 
-$_lang['setting_tagger.tag_key'] = 'Tag key';
-$_lang['setting_tagger.tag_key_desc'] = 'Name of GET variable that stores tags. Default: tags';
 $_lang['setting_tagger.place_above_content_header'] = 'Above content header';
 $_lang['setting_tagger.place_above_content_header_desc'] = 'Show or hide header of the Tagger block, that shows above the content block.';
 $_lang['setting_tagger.place_below_content_header'] = 'Below content header';
 $_lang['setting_tagger.place_below_content_header_desc'] = 'Show or hide header of the Tagger block, that shows below the content block.';
 $_lang['setting_tagger.place_bottom_page_header'] = 'Bottom page header';
 $_lang['setting_tagger.place_bottom_page_header_desc'] = 'Show or hide header of the Tagger block, that shows at the bottom of the page.';
+$_lang['setting_tagger.place_in_tab_label'] = 'In tab label';
+$_lang['setting_tagger.place_in_tab_label_desc'] = 'Label of the Tagger block, that shows in the tab.';
+$_lang['setting_tagger.place_tvs_tab_label'] = 'In TVs section label';
+$_lang['setting_tagger.place_tvs_tab_label_desc'] = 'Label of the Tagger block, that shows in the TVs section.';
+$_lang['setting_tagger.place_above_content_label'] = 'Above content label';
+$_lang['setting_tagger.place_above_content_label_desc'] = 'Label of the Tagger block, that shows above the content block.';
+$_lang['setting_tagger.place_below_content_label'] = 'Below content label';
+$_lang['setting_tagger.place_below_content_label_desc'] = 'Label of the Tagger block, that shows below the content block.';
+$_lang['setting_tagger.place_bottom_page_label'] = 'Bottom page label';
+$_lang['setting_tagger.place_bottom_page_label_desc'] = 'Label of the Tagger block, that shows at the bottom of the page.';
 
 $_lang['area_places'] = 'Places';
 $_lang['area_default'] = 'Default';

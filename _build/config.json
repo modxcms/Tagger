@@ -27,9 +27,6 @@
             "chunks": []
         },
         "systemSettings": [{
-            "key": "tag_key"
-            ,"value": "tags"
-        },{
             "key": "place_above_content_header"
             ,"value": 1
             ,"type": "combo-boolean"
@@ -43,6 +40,26 @@
             "key": "place_bottom_page_header"
             ,"value": 1
             ,"type": "combo-boolean"
+            ,"area": "places"
+        },{
+            "key": "place_in_tab_label"
+            ,"value": "tagger.tab.label"
+            ,"area": "places"
+        },{
+            "key": "place_tvs_tab_label"
+            ,"value": "tagger.tab.label"
+            ,"area": "places"
+        },{
+            "key": "place_above_content_label"
+            ,"value": "tagger.tab.label"
+            ,"area": "places"
+        },{
+            "key": "place_below_content_label"
+            ,"value": "tagger.tab.label"
+            ,"area": "places"
+        },{
+            "key": "place_bottom_page_label"
+            ,"value": "tagger.tab.label"
             ,"area": "places"
         }]
     },
