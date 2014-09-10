@@ -43,6 +43,7 @@ $showUnused = (int) $modx->getOption('showUnused', $scriptProperties, '0');
 $showUnpublished = (int) $modx->getOption('showUnpublished', $scriptProperties, '0');
 $showDeleted = (int) $modx->getOption('showDeleted', $scriptProperties, '0');
 $contexts = $modx->getOption('contexts', $scriptProperties, '');
+$translate = (int) $modx->getOption('translate', $scriptProperties, '0');
 
 $defaultRowTpl = $modx->getOption('rowTpl', $scriptProperties, '');
 $outTpl = $modx->getOption('outTpl', $scriptProperties, '');
@@ -166,6 +167,14 @@ foreach ($tags as $tag) {
 
     $phs['uri'] = $uri;
     $phs['idx'] = $idx;
+
+    if ($translate == 1) {
+        $groupNameTranslated = $modx->lexicon('tagger.custom.' . $phs['group_alias']);
+        $groupDescriptionTranslated = $modx->lexicon('tagger.custom.' . $phs['group_alias'] . '_desc');
+
+        $phs['group_name_translated'] = ($groupNameTranslated == 'tagger.custom.' . $phs['group_alias']) ? $phs['group_name'] : $groupNameTranslated;
+        $phs['group_description_translated'] = ($groupDescriptionTranslated == 'tagger.custom.' . $phs['group_alias'] . '_desc') ? $phs['group_description'] : $groupDescriptionTranslated;
+    }
 
     $rowTpl = $defaultRowTpl;
     if ($rowTpl == '') {

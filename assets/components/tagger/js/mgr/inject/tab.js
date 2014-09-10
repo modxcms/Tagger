@@ -172,12 +172,14 @@ Ext.override(MODx.panel.Resource, {
 
         Ext.each(Tagger.groups, function(group) {
            if (group.show_for_templates.indexOf(parseInt(config.record.template)) != -1) {
+               var groupName = _('tagger.custom.' + group.alias);
+               var groupDescription = _('tagger.custom.' + group.alias + '_desc');
                fields[group.place].push({
                    xtype: group.field_type
                    ,inTVsPosition: group.in_tvs_position
-                   ,fieldLabel: group.name
+                   ,fieldLabel: groupName ? groupName : group.name
                    ,name: 'tagger-' + group.id
-                   ,description: group.description
+                   ,description: groupDescription ? groupDescription : group.description
                    ,hiddenName: 'tagger-' + group.id
                    ,displayField: 'tag'
                    ,valueField: 'tag'

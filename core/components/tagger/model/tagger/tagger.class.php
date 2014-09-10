@@ -36,6 +36,7 @@ class Tagger {
 
         $this->modx->addPackage('tagger', $this->getOption('modelPath'));
         $this->modx->lexicon->load('tagger:default');
+        $this->modx->lexicon->load('tagger:custom');
     }
 
     /**
