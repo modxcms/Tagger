@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+Tagger 1.5.0
+==============
 - Added option to translate Tagger groups
 - Added system settings for changing place's labels
 - Added an option to place a group as a tab into TVs section
