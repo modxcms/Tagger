@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+Tagger 1.5.1
+==============
 - Fixed compatibility with PHP 5.2
 
 Tagger 1.5.0
