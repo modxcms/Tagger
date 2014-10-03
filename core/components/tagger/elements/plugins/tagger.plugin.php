@@ -20,7 +20,7 @@ $tagger = $modx->getService(
 
 $eventName = $modx->event->name;
 if (method_exists($tagger, $eventName)) {
-    $eventName = lcfirst($eventName);
+    $eventName[0] = strtolower($eventName[0]);
     $tagger->$eventName($scriptProperties);
 }
 

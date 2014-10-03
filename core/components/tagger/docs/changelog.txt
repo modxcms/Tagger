@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+- Fixed compatibility with PHP 5.2
+
 Tagger 1.5.0
 ==============
 - Added option to translate Tagger groups
