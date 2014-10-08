@@ -13,6 +13,7 @@
  * &where           string  optional    Original getResources where property. If you used where property in your current getResources call, move it here
  * &likeComparison  int     optional    If set to 1, tags will compare using LIKE
  * &tagField        string  optional    Field that will be used to compare with given tags. Default: alias
+ * &matchAll        int     optional    If set to 1, resource must have all specified tags. Default: 0
  *
  * USAGE:
  *
@@ -27,6 +28,7 @@ $tags = $modx->getOption('tags', $scriptProperties, '');
 $where = $modx->getOption('where', $scriptProperties, '');
 $tagField = $modx->getOption('tagField', $scriptProperties, 'alias');
 $likeComparison = (int) $modx->getOption('likeComparison', $scriptProperties, 0);
+$matchAll = (int) $modx->getOption('matchAll', $scriptProperties, 0);
 
 $where = $modx->fromJSON($where);
 if ($where == false) {
@@ -112,6 +114,10 @@ if (count($tagIDs) == 0) {
     $tagIDs[] = 0;
 }
 
-$where[] = "EXISTS (SELECT 1 FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource.id)";
+if ($matchAll == 0) {
+    $where[] = "EXISTS (SELECT 1 FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource.id)";
+} else {
+    $where[] = "EXISTS (SELECT 1 as found FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource.id GROUP BY found HAVING count(found) = " . count($tagIDs) . ")";
+}
 
 return $modx->toJSON($where);

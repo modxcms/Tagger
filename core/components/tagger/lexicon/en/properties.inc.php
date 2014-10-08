@@ -27,3 +27,4 @@ $_lang['tagger.gettags.totalPh_desc'] = 'Placeholder to output the total number 
 $_lang['tagger.getresourceswhere.likeComparison_desc'] = 'If set to 1, tags will compare using LIKE';
 $_lang['tagger.gettags.sort_desc'] = 'Sort options in JSON. Example {"tag": "ASC"} or multiple sort options {"group_id": "ASC", "tag": "ASC"}';
 $_lang['tagger.getresourceswhere.tagField_desc'] = 'Field that will be used to compare with given tags. Default: alias';
+$_lang['tagger.getresourceswhere.matchAll_desc'] = 'If set to 1, resource must have all specified tags. Default: 0';

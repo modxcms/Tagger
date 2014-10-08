@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+- Added matchAll option to TaggerGetResourcesWhere
+
 Tagger 1.5.1
 ==============
 - Fixed compatibility with PHP 5.2
