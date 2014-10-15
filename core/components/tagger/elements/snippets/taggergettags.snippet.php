@@ -53,6 +53,8 @@ $limit = intval($modx->getOption('limit', $scriptProperties, 0));
 $offset = intval($modx->getOption('offset', $scriptProperties, 0));
 $totalPh = $modx->getOption('totalPh', $scriptProperties, 'tags_total');
 
+$friendlyURL = $modx->getOption('friendlyTargetUrl', $scriptProperties, $modx->getOption('friendly_urls', null, 0));
+
 $sort = $modx->getOption('sort', $scriptProperties, '{}');
 $sort = $modx->fromJSON($sort);
 if ($sort === null || $sort == '' || count($sort) == 0) {
@@ -139,8 +141,6 @@ $tags = $modx->getIterator('TaggerTag', $c);
 
 $out = array();
 
-$friendlyURL = $modx->getOption('friendly_urls', null, 0);
-
 // prep for &tpl_N
 $keys = array_keys($scriptProperties);
 $nthTpls = array();
@@ -167,6 +167,7 @@ foreach ($tags as $tag) {
 
     $phs['uri'] = $uri;
     $phs['idx'] = $idx;
+    $phs['target'] = $target;
 
     if ($translate == 1) {
         $groupNameTranslated = $modx->lexicon('tagger.custom.' . $phs['group_alias']);
