@@ -14,6 +14,7 @@
  * &likeComparison  int     optional    If set to 1, tags will compare using LIKE
  * &tagField        string  optional    Field that will be used to compare with given tags. Default: alias
  * &matchAll        int     optional    If set to 1, resource must have all specified tags. Default: 0
+ * &ignoreTagValue  string  optional    If set, a tag value set by GET parameter equal to the parameter string is ignored.
  *
  * USAGE:
  *
@@ -29,6 +30,7 @@ $where = $modx->getOption('where', $scriptProperties, '');
 $tagField = $modx->getOption('tagField', $scriptProperties, 'alias');
 $likeComparison = (int) $modx->getOption('likeComparison', $scriptProperties, 0);
 $matchAll = (int) $modx->getOption('matchAll', $scriptProperties, 0);
+$ignoreTagValue = $modx->getOption('ignoreTagValue', $scriptProperties, '');
 
 $where = $modx->fromJSON($where);
 if ($where == false) {
@@ -44,7 +46,7 @@ if ($tags == '') {
 
     $conditions = array();
     foreach ($groups as $group) {
-        if (isset($_GET[$group])) {
+        if (isset($_GET[$group]) && $_GET[$group] != '' && $_GET[$group] != $ignoreTagValue) {
             $groupTags = $tagger->explodeAndClean($_GET[$group]);
             if (!empty($groupTags)) {
                 $like = array('AND:alias:IN' => $groupTags);
