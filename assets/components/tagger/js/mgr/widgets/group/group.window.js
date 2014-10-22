@@ -53,7 +53,6 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
     }
 
     ,getLeftColumnFields: function(config) {
-        debugger;
         return [{
             xtype: 'textfield'
             ,fieldLabel: _('tagger.group.name')
