@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+Tagger 1.6.0
+==============
 - Added friendlyURL option to TaggerGetTags
 - Added matchAll option to TaggerGetResourcesWhere
 
