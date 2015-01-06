@@ -202,7 +202,7 @@ foreach ($tags as $tag) {
             }
         }
 
-        $out[] = $modx->getChunk($rowTpl, $phs);
+        $out[] = $tagger->getChunk($rowTpl, $phs);
     }
 
     $idx++;
@@ -212,7 +212,7 @@ $out = implode($separator, $out);
 
 if ($outTpl != '') {
     if (!empty($out) || $wrapIfEmpty) {
-        $out = $modx->getChunk($outTpl, array('tags' => $out));
+        $out = $tagger->getChunk($outTpl, array('tags' => $out));
     }
 }
 

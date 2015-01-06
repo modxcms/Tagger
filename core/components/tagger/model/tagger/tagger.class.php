@@ -283,4 +283,17 @@ class Tagger {
             $this->duplicateChildren($oldChild->Children, $newChildren[$oldNew[$key]]->Children);
         }
     }
+
+    public function getChunk($tpl, $phs = array()) {
+        if (strpos($tpl, '@INLINE ') !== false) {
+            $content = str_replace('@INLINE', '', $tpl);
+            /** @var modChunk $chunk */
+            $chunk = $this->modx->newObject('modChunk', array('name' => 'inline-' . uniqid()));
+            $chunk->setCacheable(false);
+
+            return $chunk->process($phs, $content);
+        }
+
+        return $this->modx->getChunk($tpl, $phs);
+    }
 }
