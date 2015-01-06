@@ -35,13 +35,15 @@ if ($where == false) {
     $where = array();
 }
 
+$tagsCount = 0;
+
 if ($tags == '') {
     $gc = $modx->newQuery('TaggerGroup');
     $gc->select($modx->getSelectColumns('TaggerGroup', '', '', array('alias')));
     $gc->prepare();
     $gc->stmt->execute();
     $groups = $gc->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-
+    
     $conditions = array();
     foreach ($groups as $group) {
         if (isset($_GET[$group])) {
@@ -59,6 +61,7 @@ if ($tags == '') {
                     'OR:Group.alias:=' => $group,
                     $like
                 );
+                $tagsCount += count($groupTags);
             }
         }
     }
@@ -77,6 +80,8 @@ if ($tags == '') {
     if (empty($tags)) {
         return $modx->toJSON($where);
     }
+
+    $tagsCount = count($tags);
 
     $groups = $modx->getOption('groups', $scriptProperties, '');
 
@@ -117,7 +122,7 @@ if (count($tagIDs) == 0) {
 if ($matchAll == 0) {
     $where[] = "EXISTS (SELECT 1 FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource.id)";
 } else {
-    $where[] = "EXISTS (SELECT 1 as found FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource.id GROUP BY found HAVING count(found) = " . count($tagIDs) . ")";
+    $where[] = "EXISTS (SELECT 1 as found FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource.id GROUP BY found HAVING count(found) = " . $tagsCount . ")";
 }
 
 return $modx->toJSON($where);
