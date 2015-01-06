@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Added &weight parameter to TaggerGetTags
 - Fixed matchAll parameter in TaggerGetResourcesWhere
 
 Tagger 1.6.0

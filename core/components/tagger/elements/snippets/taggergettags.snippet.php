@@ -54,6 +54,8 @@ $limit = intval($modx->getOption('limit', $scriptProperties, 0));
 $offset = intval($modx->getOption('offset', $scriptProperties, 0));
 $totalPh = $modx->getOption('totalPh', $scriptProperties, 'tags_total');
 
+$weight = (int) $modx->getOption('weight', $scriptProperties, '0');
+
 $friendlyURL = $modx->getOption('friendlyURL', $scriptProperties, $modx->getOption('friendly_urls', null, 0));
 
 $sort = $modx->getOption('sort', $scriptProperties, '{}');
@@ -121,12 +123,17 @@ $c->select(array('cnt' => 'COUNT(Resources.tag)'));
 $c->groupby($modx->getSelectColumns('TaggerTag', 'TaggerTag') . ',' . $modx->getSelectColumns('TaggerGroup', 'Group'));
 
 $c->prepare();
-$countQuery = new xPDOCriteria($modx, "SELECT COUNT(*) FROM ({$c->toSQL(false)}) cq", $c->bindings, $c->cacheFlag);
+
+$countQuery = new xPDOCriteria($modx, "SELECT COUNT(*) as total, MAX(cnt) as max_cnt FROM ({$c->toSQL(false)}) cq", $c->bindings, $c->cacheFlag);
 $stmt = $countQuery->prepare();
+
 if ($stmt && $stmt->execute()) {
-    $total = intval($stmt->fetchColumn());
+    $fetchedData = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total = intval($fetchedData['total']);
+    $maxCnt = intval($fetchedData['max_cnt']);
 } else {
     $total = 0;
+    $maxCnt = 0;
 }
 
 $modx->setPlaceholder($totalPh, $total);
@@ -169,6 +176,11 @@ foreach ($tags as $tag) {
     $phs['uri'] = $uri;
     $phs['idx'] = $idx;
     $phs['target'] = $target;
+    $phs['max_cnt'] = $maxCnt;
+
+    if ($weight > 0) {
+        $phs['weight'] = intval(ceil($phs['cnt'] / ($maxCnt / $weight)));
+    }
 
     if ($translate == 1) {
         $groupNameTranslated = $modx->lexicon('tagger.custom.' . $phs['group_alias']);
