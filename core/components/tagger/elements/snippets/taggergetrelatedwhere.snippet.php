@@ -119,7 +119,7 @@ if ($collection = $modx->getIterator('TaggerTag', $c)) {
 
 $wherecondition = array('id:not IN' => $resources);
 
-$scriptProperties['where'] = $modx->fromJson($wherecondition);
+$scriptProperties['where'] = $modx->toJson($wherecondition);
 
 $output = '{"template":"99999999"}';
 
