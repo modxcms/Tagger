@@ -117,7 +117,7 @@ if ($collection = $modx->getIterator('TaggerTag', $c)) {
     }
 }
 
-$wherecondition = array('id:!IN' => $resources);
+$wherecondition = array('id:not IN' => $resources);
 
 $scriptProperties['where'] = $modx->fromJson($wherecondition);
 
