@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Hide tag limit field for combo box input
 - Fix gateway for index page
 - Load values for Tagger fields under TVs properly
 - Add field option to TaggerGetResourcesWhere

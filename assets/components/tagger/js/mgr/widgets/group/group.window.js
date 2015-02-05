@@ -136,6 +136,15 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
                             ehi[0].hide();
                         }
                     }
+
+                    var etl = this.find('name', 'tag_limit');
+                    if (etl.length == 1) {
+                        if (rec.data.v == 'tagger-field-tags') {
+                            etl[0].show();
+                        } else {
+                            etl[0].hide();
+                        }
+                    }
                 }, scope: this}
             }
         },{
@@ -244,6 +253,7 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,fieldLabel: _('tagger.group.tag_limit')
             ,description: _('tagger.group.tag_limit_desc')
             ,name: 'tag_limit'
+            ,hidden: config.record && config.record.field_type != 'tagger-field-tags'
             ,allowNegative: false
             ,allowDecimals: false
             ,hiddenName: 'tag_limit'
