@@ -1,7 +1,6 @@
 Ext.override(MODx.panel.Resource, {
     taggerOriginals: {
         getFields: MODx.panel.Resource.prototype.getFields
-        ,setup: MODx.panel.Resource.prototype.setup
         ,beforeSubmit: MODx.panel.Resource.prototype.beforeSubmit
     }
 
@@ -143,14 +142,6 @@ Ext.override(MODx.panel.Resource, {
         };
     }
 
-    ,setup: function() {
-        if (!this.initialized) {
-            this.getForm().setValues(Tagger.tags);
-        }
-
-        this.taggerOriginals.setup.call(this);
-    }
-
     ,beforeSubmit: function(o) {
         var tagFields = this.find('xtype', 'tagger-field-tags');
 
@@ -193,6 +184,7 @@ Ext.override(MODx.panel.Resource, {
                    ,hideInput: group.hide_input
                    ,tagLimit: group.tag_limit
                    ,anchor: '100%'
+                   ,value: Tagger.tags['tagger-' + group.id] ? Tagger.tags['tagger-' + group.id] : ''
                    ,baseParams: {
                        action: 'mgr/extra/gettags'
                        ,group: group.id
