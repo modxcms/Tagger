@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- New styles for Revolution 2.3
 - Added @INLINE support in TaggerGetTags tpls params
 - Added &weight parameter to TaggerGetTags
 - Fixed matchAll parameter in TaggerGetResourcesWhere

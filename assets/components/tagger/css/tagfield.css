@@ -67,15 +67,7 @@
 }
 
 .tagger-autotag-item {
-    position: relative;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    border-radius: 6px;
-    o-border-radius: 6px;
-    khtml-border-radius: 6px;
-    border: 1px solid #CAD8F3;
-    padding: 1px 5px 1px 5px !important;
-    cursor: pointer;
+
 }
 
 .tagger-wrapper-hidden {
@@ -89,4 +81,72 @@
 
 .tagger-header .x-panel-header {
     padding: 15px !important;
+}
+
+.inserted-tags.modx-tag-list.x-superboxselect li.tagger-autotag-item.modx-tag-opt {
+    background-color: #fff;
+    background-repeat: no-repeat;
+    border: thin solid #e4e4e4;
+    border-radius: 3px;
+    color: #555;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1;
+    padding: 5px 10px !important;
+    position: relative;
+    text-decoration: none;
+    zoom: 1;
+    margin-bottom: 3px;
+    margin-left: 0px;
+    font-size: 12px;
+}
+
+.inserted-tags.modx-tag-list.x-superboxselect li.tagger-autotag-item.modx-tag-opt:hover {
+    background-color: #2d86b7;
+    color: #fff;
+}
+
+.inserted-tags.modx-tag-list.x-superboxselect li.tagger-autotag-item.modx-tag-opt:before {
+    display: none;
+}
+
+.inserted-tags.modx-tag-list.x-superboxselect li.tagger-autotag-item.modx-tag-opt:after {
+    display: none;
+}
+
+.inserted-tags.modx-tag-list.x-superboxselect li.tagger-autotag-item.modx-tag-opt.modx-tag-checked {
+    background-color: #2d86b7;
+    color: #fff;
+    border: thin solid #2d86b7;
+}
+
+.inserted-tags.modx-tag-list.x-superboxselect li.x-superboxselect-item {
+    background-color: #fff;
+    background-repeat: no-repeat;
+    border-radius: 3px;
+    border: thin solid #e4e4e4;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    color: #555;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1;
+    padding: 5px 24px 5px 10px !important;
+    position: relative;
+    text-decoration: none;
+    zoom: 1;
+    margin-bottom: 3px;
+    margin-left: 0px;
+    font-size: 12px;
+}
+
+.inserted-tags.modx-tag-list.x-superboxselect li.x-superboxselect-item span.x-superboxselect-item-close {
+    right: 2px;
+    border-left: thin solid #e4e4e4;
+    padding-left: 1px;
+}
+
+.inserted-tags.modx-tag-list.x-superboxselect li.x-superboxselect-item:hover {
+    background-color: #2d86b7;
+    color: #fff;
 }
