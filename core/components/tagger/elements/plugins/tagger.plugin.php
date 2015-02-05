@@ -18,10 +18,14 @@ $tagger = $modx->getService(
     )
 );
 
-$eventName = $modx->event->name;
-if (method_exists($tagger, $eventName)) {
-    $eventName[0] = strtolower($eventName[0]);
-    $tagger->$eventName($scriptProperties);
+$className = 'Tagger' . $modx->event->name;
+$modx->loadClass('TaggerPlugin', $tagger->getOption('modelPath') . 'tagger/events/', true, true);
+$modx->loadClass($className, $tagger->getOption('modelPath') . 'tagger/events/', true, true);
+
+if (class_exists($className)) {
+    /** @var TaggerPlugin $handler */
+    $handler = new $className($modx, $scriptProperties);
+    $handler->run();
 }
 
 return;
