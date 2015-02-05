@@ -14,6 +14,7 @@
  * &likeComparison  int     optional    If set to 1, tags will compare using LIKE
  * &tagField        string  optional    Field that will be used to compare with given tags. Default: alias
  * &matchAll        int     optional    If set to 1, resource must have all specified tags. Default: 0
+ * &field           string  optional    modResource field that will be used to compare with assigned resource ID
  *
  * USAGE:
  *
@@ -29,7 +30,7 @@ $where = $modx->getOption('where', $scriptProperties, '');
 $tagField = $modx->getOption('tagField', $scriptProperties, 'alias');
 $likeComparison = (int) $modx->getOption('likeComparison', $scriptProperties, 0);
 $matchAll = (int) $modx->getOption('matchAll', $scriptProperties, 0);
-
+$field = $modx->getOption('field', $scriptProperties, 'id');
 $where = $modx->fromJSON($where);
 if ($where == false) {
     $where = array();
@@ -38,12 +39,15 @@ if ($where == false) {
 $tagsCount = 0;
 
 if ($tags == '') {
-    $gc = $modx->newQuery('TaggerGroup');
-    $gc->select($modx->getSelectColumns('TaggerGroup', '', '', array('alias')));
-    $gc->prepare();
-    $gc->stmt->execute();
-    $groups = $gc->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-    
+    $groups = $modx->getOption('groups', $scriptProperties, '');
+    $groups = $tagger->explodeAndClean($groups);
+    if (empty($groups)) {
+        $gc = $modx->newQuery('TaggerGroup');
+        $gc->select($modx->getSelectColumns('TaggerGroup', '', '', array('alias')));
+        $gc->prepare();
+        $gc->stmt->execute();
+        $groups = $gc->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+    }
     $conditions = array();
     foreach ($groups as $group) {
         if (isset($_GET[$group])) {
@@ -120,9 +124,9 @@ if (count($tagIDs) == 0) {
 }
 
 if ($matchAll == 0) {
-    $where[] = "EXISTS (SELECT 1 FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource.id)";
+    $where[] = "EXISTS (SELECT 1 FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource." . $field . ")";
 } else {
-    $where[] = "EXISTS (SELECT 1 as found FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource.id GROUP BY found HAVING count(found) = " . $tagsCount . ")";
+    $where[] = "EXISTS (SELECT 1 as found FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource." . $field . " GROUP BY found HAVING count(found) = " . $tagsCount . ")";
 }
 
 return $modx->toJSON($where);
