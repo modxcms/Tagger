@@ -20,7 +20,10 @@ class TaggerGateway {
     }
 
     public function handleRequest() {
-        $this->pieces = explode('/', trim($_REQUEST[$this->modx->getOption('request_param_alias', null, 'q')], ' '));
+        $requestParamAlias = $this->modx->getOption('request_param_alias', null, 'q');
+        if (!isset($_REQUEST[$requestParamAlias])) return true;
+
+        $this->pieces = explode('/', trim($_REQUEST[$requestParamAlias], ' '));
         $pieces = array_flip($this->pieces);
 
         $c = $this->modx->newQuery('TaggerGroup');
@@ -51,10 +54,10 @@ class TaggerGateway {
     }
 
     private function processRequest() {
-        $prev = array('group' => '', 'id' => 0);
+        $prev = array('group' => '', 'id' => -1);
         $pieces = array();
         foreach ($this->tags as $group => $id) {
-            if ($prev['id'] == 0) {
+            if ($prev['id'] == -1) {
                 $pieces = array_slice($this->pieces, 0, $id);
                 $prev['id'] = $id;
                 $prev['group'] = $group;
