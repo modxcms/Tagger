@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Match group by alias or name in TaggerGetResourcesWhere
 - Add TaggerGetRelatedWhere snippet
 - Class for each plugin event
 - Hide tag limit field for combo box input

@@ -39,15 +39,23 @@ if ($where == false) {
 $tagsCount = 0;
 
 if ($tags == '') {
+    $gc = $modx->newQuery('TaggerGroup');
+    $gc->select($modx->getSelectColumns('TaggerGroup', '', '', array('alias')));
+
     $groups = $modx->getOption('groups', $scriptProperties, '');
     $groups = $tagger->explodeAndClean($groups);
-    if (empty($groups)) {
-        $gc = $modx->newQuery('TaggerGroup');
-        $gc->select($modx->getSelectColumns('TaggerGroup', '', '', array('alias')));
-        $gc->prepare();
-        $gc->stmt->execute();
-        $groups = $gc->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+    if (!empty($groups)) {
+        $gc->where(array(
+            'name:IN' => $groups,
+            'OR:alias:IN' => $groups,
+            'OR:id:IN' => $groups,
+        ));
     }
+
+    $gc->prepare();
+    $gc->stmt->execute();
+    $groups = $gc->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
     $conditions = array();
     foreach ($groups as $group) {
         if (isset($_GET[$group])) {
@@ -106,11 +114,12 @@ if ($tags == '') {
 
     $c->where($compare);
 
-    if (count($groups) > 0) {
+    if (!empty($groups)) {
         $c->leftJoin('TaggerGroup', 'Group');
         $c->where(array(
             'Group.id:IN' => $groups,
             'OR:Group.name:IN' => $groups,
+            'OR:Group.alias:IN' => $groups,
         ));
     }
 }
