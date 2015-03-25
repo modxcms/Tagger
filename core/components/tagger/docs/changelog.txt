@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+Tagger 1.7.0
+==============
 - Match group by alias or name in TaggerGetResourcesWhere
 - Add TaggerGetRelatedWhere snippet
 - Class for each plugin event

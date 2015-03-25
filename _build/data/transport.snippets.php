@@ -204,4 +204,12 @@ $properties = array(
 $snippets[1]->setProperties($properties);
 unset($properties);
 
+$snippets[2]= $modx->newObject('modSnippet');
+$snippets[2]->fromArray(array(
+    'id' => 0,
+    'name' => 'TaggerGetRelatedWhere',
+    'description' => 'This Snippet allows you to list related resources',
+    'snippet' => getSnippetContent($sources['snippets'].'/taggergetrelatedwhere.snippet.php'),
+),'',true,true);
+
 return $snippets;
