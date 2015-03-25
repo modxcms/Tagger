@@ -23,6 +23,8 @@
                 "name": "TaggerGetTags"
             },{
                 "name": "TaggerGetResourcesWhere"
+            },{
+                "name": "TaggerGetRelatedWhere"
             }]
         },
         "systemSettings": [{

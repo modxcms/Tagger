@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Add TaggerGetRelatedWhere snippet
 - Class for each plugin event
 - Hide tag limit field for combo box input
 - Fix gateway for index page
