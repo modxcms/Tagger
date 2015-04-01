@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+- Include script properties to TaggerGetTags chunks
+
 Tagger 1.7.0
 ==============
 - Match group by alias or name in TaggerGetResourcesWhere

@@ -191,6 +191,8 @@ foreach ($tags as $tag) {
     }
 
     $rowTpl = $defaultRowTpl;
+    $phs['sp'] = $scriptProperties;
+
     if ($rowTpl == '') {
         $out[] = '<pre>' . print_r($phs, true) . '</pre>';
     } else {
@@ -212,7 +214,7 @@ $out = implode($separator, $out);
 
 if ($outTpl != '') {
     if (!empty($out) || $wrapIfEmpty) {
-        $out = $tagger->getChunk($outTpl, array('tags' => $out));
+        $out = $tagger->getChunk($outTpl, array('tags' => $out, 'sp' => $scriptProperties));
     }
 }
 
