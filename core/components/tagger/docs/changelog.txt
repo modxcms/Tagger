@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Decode HTML entities when setting value
 - Include script properties to TaggerGetTags chunks
 
 Tagger 1.7.0

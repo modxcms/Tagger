@@ -128,6 +128,8 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
     }
 
     ,setValue: function(v){
+        v = Ext.util.Format.htmlDecode(v);
+
         if (this.store.loaded == false && this.config.autoTag == true) {
             this.store.on('load', this.setValueOnLoad.createDelegate(this, [v], false), this, {single: true});
             return;
@@ -149,6 +151,8 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
     }
 
     ,setValueOnLoad: function(v){
+        v = Ext.util.Format.htmlDecode(v);
+
         if (this.config.autoTag == false) {
             while(this.insertedTagsEl.dom.firstChild != null){
                 this.insertedTagsEl.dom.firstChild.remove();
@@ -162,8 +166,8 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
         this.addItems(v);
     }
 
-    ,setFieldValue : function(v){
-        var text = v;
+    ,setFieldValue: function(v){
+        var text = Ext.util.Format.htmlDecode(v);
         if(this.valueField){
             var r = this.findRecord(this.valueField, v);
             if(r){
