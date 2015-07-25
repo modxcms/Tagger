@@ -16,6 +16,8 @@ class TaggerTagRemoveMultipleProcessor extends modObjectProcessor {
         if (empty($tags)) {
             return $this->failure($this->modx->lexicon('tagger.err.tags_ns'));
         }
+        
+        $tags = explode(",",$tags);
 
         foreach ($tags as $tag) {
             /** @var TaggerTag $tag*/
