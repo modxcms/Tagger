@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Fix deleting multiple tags at once
 - Decode HTML entities when setting value
 - Include script properties to TaggerGetTags chunks
 

@@ -11,12 +11,13 @@ class TaggerTagRemoveMultipleProcessor extends modObjectProcessor {
     public $objectType = 'tagger.tag';
 
     public function process() {
-        $tags = $this->getProperty('tags',null);
-
+        $tags = $this->getProperty('tags', '');
+        $tags = $this->modx->tagger->explodeAndClean($tags);
+        
         if (empty($tags)) {
             return $this->failure($this->modx->lexicon('tagger.err.tags_ns'));
         }
-
+        
         foreach ($tags as $tag) {
             /** @var TaggerTag $tag*/
             $tagObject = $this->modx->getObject($this->classKey, $tag);
