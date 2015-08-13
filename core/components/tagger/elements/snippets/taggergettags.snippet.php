@@ -9,6 +9,7 @@
  * PROPERTIES:
  *
  * &resources       string  optional    Comma separated list of resources for which will be listed Tags
+ * &parents         string  optional    Comma separated list of parents for which will be listed Tags
  * &groups          string  optional    Comma separated list of Tagger Groups for which will be listed Tags
  * &rowTpl          string  optional    Name of a chunk that will be used for each Tag. If no chunk is given, array with available placeholders will be rendered
  * &outTpl          string  optional    Name of a chunk that will be used for wrapping all tags. If no chunk is given, tags will be rendered without a wrapper
@@ -38,6 +39,7 @@ $tagger = $modx->getService('tagger','Tagger',$modx->getOption('tagger.core_path
 if (!($tagger instanceof Tagger)) return '';
 
 $resources = $modx->getOption('resources', $scriptProperties, '');
+$parents = $modx->getOption('parents', $scriptProperties, '');
 $groups = $modx->getOption('groups', $scriptProperties, '');
 $target = (int) $modx->getOption('target', $scriptProperties, $modx->resource->id, true);
 $showUnused = (int) $modx->getOption('showUnused', $scriptProperties, '0');
@@ -67,6 +69,7 @@ if ($sort === null || $sort == '' || count($sort) == 0) {
 }
 
 $resources = $tagger->explodeAndClean($resources);
+$parents = $tagger->explodeAndClean($parents);
 $groups = $tagger->explodeAndClean($groups);
 $contexts = $tagger->explodeAndClean($contexts);
 $toPlaceholder = $modx->getOption('toPlaceholder', $scriptProperties, '');
@@ -77,6 +80,11 @@ $c->leftJoin('TaggerTagResource', 'Resources');
 $c->leftJoin('TaggerGroup', 'Group');
 $c->leftJoin('modResource', 'Resource', array('Resources.resource = Resource.id'));
 
+if (!empty($parents)) {
+    $c->where(array(
+        'Resource.parent:IN' => $parents,
+    ));
+}
 
 if (!empty($contexts)) {
     $c->where(array(
@@ -104,7 +112,7 @@ if ($showUnused == 0) {
     ));
 }
 
-if ($resources) {
+if (!empty($resources)) {
     $c->where(array(
         'Resources.resource:IN' => $resources
     ));
