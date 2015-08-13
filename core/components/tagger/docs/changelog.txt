@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- RU lexicons (credits goes to mvoevodskiy)
 - Fix deleting multiple tags at once
 - Decode HTML entities when setting value
 - Include script properties to TaggerGetTags chunks
