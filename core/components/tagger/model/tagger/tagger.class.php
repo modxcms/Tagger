@@ -92,4 +92,43 @@ class Tagger {
 
         return $this->modx->getChunk($tpl, $phs);
     }
+
+    public function getCurrentTags()
+    {
+        $currentTags = array();
+        
+        /** @var TaggerGroup[] $groups */
+        $groups = $this->modx->getIterator('TaggerGroup');
+        foreach ($groups as $group) {
+            if (isset($_GET[$group->alias])) {
+                $groupTags = $this->explodeAndClean($_GET[$group->alias]);
+                if (!empty($groupTags)) {
+                    $tags = array();
+                    foreach ($groupTags as $groupTag) {
+                        /** @var TaggerTag $tag */
+                        $tag = $this->modx->getObject('TaggerTag', array(array('id' => $groupTag,'OR:alias:=' => $groupTag), 'group' => $group->id));
+                        if ($tag) {
+                            $tags[$tag->alias] = array(
+                                'tag' => $tag->tag,
+                                'alias' => $tag->alias
+                            );
+                        } else {
+                            $tags[$groupTag] = array(
+                                'tag' => $groupTag,
+                                'alias' => $groupTag
+                            );
+                        }
+                    }
+                    
+                    $currentTags[$group->alias] = array(
+                        'group' => $group->name,
+                        'alias' => $group->alias,
+                        'tags' => $tags
+                    );
+                }
+            }
+        }
+        
+        return $currentTags;
+    }
 }

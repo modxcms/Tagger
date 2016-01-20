@@ -169,6 +169,8 @@ foreach($keys as $key) {
 ksort($nthTpls);
 
 $idx = 1;
+$currentTags = $tagger->getCurrentTags();
+
 foreach ($tags as $tag) {
     /** @var TaggerTag $tag */
     $phs = $tag->toArray();
@@ -185,6 +187,12 @@ foreach ($tags as $tag) {
     $phs['idx'] = $idx;
     $phs['target'] = $target;
     $phs['max_cnt'] = $maxCnt;
+    
+    if (isset($currentTags[$group->alias]['tags'][$tag->alias])) {
+        $phs['active'] = 1;    
+    } else {
+        $phs['active'] = 0;
+    }
 
     if ($weight > 0) {
         $phs['weight'] = intval(ceil($phs['cnt'] / ($maxCnt / $weight)));
