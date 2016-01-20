@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Add TaggerGetCurrentTag snippet
 - Add active placeholder to TaggerGetTags rowTpl to identify currently active tag
 - Add parent option to TaggerGetTags
 - RU lexicons (credits goes to mvoevodskiy)
