@@ -20,8 +20,7 @@
  * @package tagger
  */
 
-/**
- @var Tagger $tagger */
+/** @var Tagger $tagger */
 $tagger = $modx->getService('tagger', 'Tagger', $modx->getOption('tagger.core_path', null, $modx->getOption('core_path') . 'components/tagger/') . 'model/tagger/', $scriptProperties);
 if (!($tagger instanceof Tagger))
     return '';
