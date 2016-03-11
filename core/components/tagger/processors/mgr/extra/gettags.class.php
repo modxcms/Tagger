@@ -30,6 +30,7 @@ class TaggerGetTagsProcessor extends modObjectGetListProcessor {
 
         $c->select($this->modx->getSelectColumns('TaggerTag', 'TaggerTag', '', array('tag')));
         $c->limit($limit, $start);
+        $c->sortby('tag','ASC');
 
         $c->prepare();
         $c->stmt->execute();
