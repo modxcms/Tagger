@@ -6,10 +6,14 @@ Ext.override(MODx.panel.Resource, {
 
     ,taggerFields: {}
     ,taggerLabels: {}
+    ,taggerInitDone: false
 
     ,getFields: function(config) {
         var fields = this.taggerOriginals.getFields.call(this, config);
-
+        
+        if (this.taggerInitDone == true) return fields;
+        this.taggerInitDone = true;
+        
         this.taggerFields = this.taggerGetFields(config);
         this.taggerLabels = this.taggerGetLabels(config);
 
