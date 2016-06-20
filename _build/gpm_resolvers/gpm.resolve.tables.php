@@ -2,7 +2,7 @@
 /**
  * Resolve creating db tables
  *
- * THIS RESOLVER IS AUTOMATICALY GENERATED, NO CHANGES WILL APPLY
+ * THIS RESOLVER IS AUTOMATICALLY GENERATED, NO CHANGES WILL APPLY
  *
  * @package tagger
  * @subpackage build
@@ -14,7 +14,9 @@ if ($object->xpdo) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
             $modelPath = $modx->getOption('tagger.core_path', null, $modx->getOption('core_path') . 'components/tagger/') . 'model/';
-            $modx->addPackage('tagger', $modelPath);
+            
+            $modx->addPackage('tagger', $modelPath, null);
+
 
             $manager = $modx->getManager();
 
