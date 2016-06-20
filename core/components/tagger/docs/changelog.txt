@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Sort tags by tag asc when suggesting them
 - Fix TaggerGetRelatedWhere to pass alias instead of tag
 - Add TaggerGetCurrentTag snippet
 - Add active placeholder to TaggerGetTags rowTpl to identify currently active tag
