@@ -68,6 +68,8 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
     }
 
     ,loadAutoTags: function() {
+        this.store.sort([{field : 'tag', direction: 'ASC'}]);
+        
         Ext.each(this.store.data.items, function(item) {
             new Tagger.fields.Tag({
                 owner: this,
