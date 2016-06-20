@@ -111,7 +111,7 @@ $tags = array();
 
 if ($collection = $modx->getIterator('TaggerTag', $c)) {
     foreach ($collection as $tag) {
-        $tags[] = $tag->get('tag');
+        $tags[] = $tag->get('alias');
     }
 }
 
