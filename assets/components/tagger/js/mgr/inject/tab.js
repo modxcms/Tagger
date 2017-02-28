@@ -187,6 +187,7 @@ Ext.override(MODx.panel.Resource, {
                    ,autoTag: group.show_autotag
                    ,hideInput: group.hide_input
                    ,tagLimit: group.tag_limit
+                   ,asRadio: group.as_radio
                    ,anchor: '100%'
                    ,value: Tagger.tags['tagger-' + group.id] ? Tagger.tags['tagger-' + group.id] : ''
                    ,baseParams: {

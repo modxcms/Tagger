@@ -217,7 +217,7 @@
   "build": {
     "resolver": {
       "before": ["resolve.remove_tables.php"],
-      "after": ["resolve.tables.php", "resolve.settings.php"]
+      "after": ["resolve.synctables.php", "resolve.tables.php", "resolve.settings.php"]
     }
   }
 }

@@ -33,13 +33,6 @@ if ($object->xpdo) {
             $modx->addPackage('tagger',$modelPath);
 
             if ($oldPackage && $oldPackage->compareVersion('1.3.0-pl', '>')) {
-                $manager = $modx->getManager();
-                $manager->addField('TaggerGroup', 'alias');
-                $manager->addField('TaggerGroup', 'hide_input');
-                $manager->addField('TaggerGroup', 'tag_limit');
-
-                $manager->addField('TaggerTag', 'alias');
-
                 $tags = $modx->getCollection('TaggerTag', array('alias' => ''));
                 foreach ($tags as $tag) {
                     $tag->save();
@@ -49,17 +42,6 @@ if ($object->xpdo) {
                 foreach ($groups as $group) {
                     $group->save();
                 }
-            }
-
-            if ($oldPackage && $oldPackage->compareVersion('1.4.0-pl', '>')) {
-                $manager = $modx->getManager();
-                $manager->addField('TaggerGroup', 'description');
-                $manager->addIndex('TaggerTag', 'iAlias');
-            }
-
-            if ($oldPackage && $oldPackage->compareVersion('1.5.0-pl', '>')) {
-                $manager = $modx->getManager();
-                $manager->addField('TaggerGroup', 'in_tvs_position');
             }
 
             break;

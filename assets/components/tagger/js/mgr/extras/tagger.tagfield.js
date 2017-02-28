@@ -464,11 +464,18 @@ Ext.extend(Tagger.fields.Tag,Ext.Component, {
         } else {
             if (this.owner.config.tagLimit > 0) {
                 if (this.owner.myStore.find('tag', this.value) == -1) {
-                    if (this.owner.myStore.getCount() >= this.owner.config.tagLimit) {
-                        return;
+                    if ((this.owner.config.asRadio == 1) && (this.owner.config.tagLimit == 1) && (this.owner.myStore.getCount() == 1)) {
+                        this.owner.insertedTagsEl.dom.querySelectorAll('li.modx-tag-checked').forEach(function(item) {
+                            item.click();
+                        });
+                    } else {
+                        if (this.owner.myStore.getCount() >= this.owner.config.tagLimit) {
+                            return;
+                        }
                     }
                 }
             }
+            
             var record = new Ext.data.Record({tag: this.value}, this.value);
             this.owner.myStore.add([record]);
 

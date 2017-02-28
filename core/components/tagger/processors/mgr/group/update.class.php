@@ -44,6 +44,10 @@ class TaggerGroupUpdateProcessor extends modObjectUpdateProcessor {
             }
         }
 
+        if (!(($this->object->show_autotag == 1) && ($this->object->hide_input == 1) && ($this->object->tag_limit == 1))) {
+            $this->object->set('as_radio', 0);
+        }
+        
         return parent::beforeSave();
     }
 

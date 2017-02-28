@@ -63,6 +63,8 @@ $_lang['tagger.group.alias'] = 'Alias';
 $_lang['tagger.group.alias_desc'] = 'Alias that will be used in URL when FURLs are enabled. Leave field blank to generate alias automatically.';
 $_lang['tagger.group.in_tvs_position'] = 'Position of Tagger tab in TVs section';
 $_lang['tagger.group.in_tvs_position_desc'] = 'Position in TVs section on which will be added Tagger tab';
+$_lang['tagger.group.as_radio'] = 'As Radio';
+$_lang['tagger.group.as_radio_desc'] = 'Auto tag will act like radio button.';
 
 $_lang['tagger.tab.label'] = 'Tagger';
 

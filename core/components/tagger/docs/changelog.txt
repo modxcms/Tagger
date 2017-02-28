@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Add As Radio option to the Tagger Group
 - Fix updating hidden textfield
 
 Tagger 1.8.0

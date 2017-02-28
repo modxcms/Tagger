@@ -229,6 +229,9 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
                                     els[0].hide();
                                 }
                             }
+                            try {
+                                this.checkAsRadio(this.fp.form.getValues());
+                            } catch (err) {}
                         }
                         ,scope: this
                     }
@@ -246,19 +249,83 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
                     ,description: _('tagger.group.hide_input_desc')
                     ,name: 'hide_input'
                     ,hidden: config.record == undefined || config.record.show_autotag != 1
+                    ,listeners: {
+                        check: function(t, checked) {
+                            try {
+                                this.checkAsRadio(this.fp.form.getValues());
+                            } catch (err) {}
+                        }
+                        ,scope: this
+                    }
                 }]
+            }]
+        },{
+            layout: 'column'
+            ,border: false
+            ,anchor: '100%'
+            ,defaults: {
+                layout: 'form'
+                ,labelAlign: 'top'
+                ,labelSeparator: ''
+                ,anchor: '100%'
+                ,border: false
+            }
+            ,items: [{
+                columnWidth:.5
+                ,border: false
+                ,defaults: {
+                    msgTarget: 'under'
+                    ,anchor: '100%'
+                }
+                ,items: [{
+                    xtype: 'xcheckbox'
+                    ,fieldLabel: _('tagger.group.as_radio')
+                    ,description: _('tagger.group.as_radio_desc')
+                    ,name: 'as_radio'
+                    ,hidden: config.record == undefined || (!((config.record.show_autotag == 1) && (config.record.tag_limit == 1) && (config.record.hide_input == 1)))
+                }]
+            },{
+                columnWidth: .5
+                ,border: false
+                ,defaults: {
+                    msgTarget: 'under'
+                    ,anchor: '100%'
+                }
+                ,items: []
             }]
         },{
             xtype: 'numberfield'
             ,fieldLabel: _('tagger.group.tag_limit')
             ,description: _('tagger.group.tag_limit_desc')
             ,name: 'tag_limit'
-            ,hidden: config.record && config.record.field_type != 'tagger-field-tags'
+            ,hidden: false
             ,allowNegative: false
             ,allowDecimals: false
             ,hiddenName: 'tag_limit'
+            ,enableKeyEvents: true
             ,value: (config.record && config.record.tag_limit) ? config.record.tag_limit : 0
+            ,listeners: {
+                keyup: {
+                    fn: function() {
+                        try {
+                            this.checkAsRadio(this.fp.form.getValues());
+                        } catch (err) {}
+                    },
+                    scope: this
+                }
+            }
         }];
+    }
+    
+    ,checkAsRadio: function(formValues) {
+        var els = this.find('name', 'as_radio');
+        if (els.length == 1) {
+            if ((formValues.show_autotag == 1) && (formValues.hide_input == 1) && (formValues.tag_limit == 1)) {
+                els[0].show();
+            } else {
+                els[0].hide();
+            }
+        }
     }
 });
 Ext.reg('tagger-window-group',Tagger.window.Group);
