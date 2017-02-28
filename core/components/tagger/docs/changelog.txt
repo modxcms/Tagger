@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+- Fix updating hidden textfield
+
 Tagger 1.8.0
 ==============
 - Sort tags by tag asc in the form

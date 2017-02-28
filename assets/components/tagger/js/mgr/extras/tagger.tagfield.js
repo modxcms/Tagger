@@ -472,6 +472,10 @@ Ext.extend(Tagger.fields.Tag,Ext.Component, {
             var record = new Ext.data.Record({tag: this.value}, this.value);
             this.owner.myStore.add([record]);
 
+            if(this.owner.hiddenField){
+                this.owner.hiddenField.value = this.owner.myStore.collect('tag').join();
+            }
+
             this.el.addClass('x-superboxselect-item');
             this.el.addClass('modx-tag-checked');
         }
