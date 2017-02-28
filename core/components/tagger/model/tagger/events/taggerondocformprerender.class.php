@@ -33,16 +33,19 @@ class TaggerOnDocFormPrerender extends TaggerPlugin {
 
         if ($mode == 'upd') {
             $c = $this->modx->newQuery('TaggerTagResource');
+            $c->leftJoin('TaggerTag', 'Tag');
             $c->where(array('resource' => intval($_GET['id'])));
+            $c->sortby('Tag.alias', 'ASC');
+            $c->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', array('resource')));
+            $c->select($this->modx->getSelectColumns('TaggerTag', 'Tag', '', array('tag', 'group')));
 
-            /** @var TaggerTagResource[] $relatedTags */
-            $relatedTags = $this->modx->getIterator('TaggerTagResource', $c);
-
-            foreach ($relatedTags as $relatedTag) {
-                if (!isset($tagsArray['tagger-' . $relatedTag->Tag->group])) {
-                    $tagsArray['tagger-' . $relatedTag->Tag->group] = $relatedTag->Tag->tag;
+            $c->prepare();
+            $c->stmt->execute();
+            while($relatedTag = $c->stmt->fetch(PDO::FETCH_ASSOC)) {
+                if (!isset($tagsArray['tagger-' . $relatedTag['group']])) {
+                    $tagsArray['tagger-' . $relatedTag['group']] = $relatedTag['tag'];
                 } else {
-                    $tagsArray['tagger-' . $relatedTag->Tag->group] .= ',' . $relatedTag->Tag->tag;
+                    $tagsArray['tagger-' . $relatedTag['group']] .= ',' . $relatedTag['tag'];
                 }
             }
         }

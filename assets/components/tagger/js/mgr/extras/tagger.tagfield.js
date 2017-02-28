@@ -51,9 +51,9 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
     ,store: null
 
     ,initValue : function(){
-        if(this.value !== undefined){
+        if(this.value !== undefined) {
             this.setValue(this.value);
-        }else if(!Ext.isEmpty(this.el.dom.value) && this.el.dom.value != this.emptyText){
+        } else if(!Ext.isEmpty(this.el.dom.value) && this.el.dom.value != this.emptyText) {
             this.setValue(this.el.dom.value);
         }
 
@@ -68,14 +68,15 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
     }
 
     ,loadAutoTags: function() {
-        this.store.sort([{field : 'tag', direction: 'ASC'}]);
+        var initialValues = Ext.isEmpty(Tagger.tags[this.name]) ? '' : Tagger.tags[this.name];
+        initialValues = initialValues.split(/\s*[,]\s*/);
         
         Ext.each(this.store.data.items, function(item) {
             new Tagger.fields.Tag({
                 owner: this,
                 renderTo: this.insertedTagsEl,
                 value: item.data.tag,
-                active: false,
+                active: initialValues.indexOf(item.data.tag) !== -1,
                 listeners: {
                     remove: function(item){
                         this.fireEvent('removeitem',this,item);
@@ -294,7 +295,7 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
                 }
             }
 
-            if (this.config.autoTag == false || valueIndex == -1) {
+            if (this.config.autoTag == false) {
                 var item = new Tagger.fields.Tag({
                     owner: this,
                     renderTo: this.insertedTagsEl,
@@ -497,7 +498,7 @@ Ext.extend(Tagger.fields.Tag,Ext.Component, {
             el.remove();
         }
 
-        this.el = el = ct.createChild({ tag: 'li' }, ct.last());
+        this.el = el = ct.createChild({ tag: 'li' });
 
         if (this.owner.config.autoTag == true) {
             el.on('click', this.click, this);
