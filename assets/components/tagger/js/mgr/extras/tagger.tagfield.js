@@ -123,8 +123,10 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
         restValues = restValues.split(/\s*[,]\s*/);
 
         Ext.each(restValues, function(value){
-            var record = new Ext.data.Record({tag: value}, value);
-            this.myStore.add([record]);
+            if (value !== '') {
+                var record = new Ext.data.Record({tag: value}, value);
+                this.myStore.add([record]);
+            }
         }, this);
 
         return this.myStore.collect('tag').join();

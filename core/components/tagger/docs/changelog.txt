@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Fix assign from field when tag limit is set
 - Fix alphabetic sorting of tags
 - Add As Radio option to the Tagger Group
 - Fix updating hidden textfield
