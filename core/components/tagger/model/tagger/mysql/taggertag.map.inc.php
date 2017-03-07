@@ -12,6 +12,7 @@ $xpdo_meta_map['TaggerTag']= array (
     'tag' => NULL,
     'alias' => NULL,
     'group' => NULL,
+    'rank' => 0,
   ),
   'fieldMeta' => 
   array (
@@ -36,6 +37,15 @@ $xpdo_meta_map['TaggerTag']= array (
       'precision' => '10',
       'phptype' => 'int',
       'null' => false,
+    ),
+    'rank' => 
+    array (
+      'dbtype' => 'integer',
+      'attributes' => 'unsigned',
+      'precision' => '10',
+      'phptype' => 'int',
+      'null' => false,
+      'default' => 0,
     ),
   ),
   'indexes' => 

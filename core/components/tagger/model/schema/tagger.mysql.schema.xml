@@ -17,6 +17,8 @@
         <field key="description" dbtype="text" phptype="string" null="false" default="" />
         <field key="in_tvs_position" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="9999" />
         <field key="as_radio" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="sort_field" dbtype="varchar" precision="255" phptype="string" null="false" default="alias" />
+        <field key="sort_dir" dbtype="varchar" precision="255" phptype="string" null="false" default="asc" />
 
         <composite alias="Tags" class="TaggerTag" local="id" foreign="group" cardinality="many" owner="local" />
     </object>
@@ -25,6 +27,7 @@
         <field key="tag" dbtype="varchar" precision="100" phptype="string" null="false" />
         <field key="alias" dbtype="varchar" precision="100" phptype="string" null="false" />
         <field key="group" dbtype="integer" attributes="unsigned" precision="10" phptype="int" null="false" />
+        <field key="rank" dbtype="integer" attributes="unsigned" precision="10" phptype="int" null="false" default="0" />
 
         <index alias="iTagGroup" name="iTagGroup" primary="false" unique="true" type="BTREE">
             <column key="tag" length="" collation="A" null="false" />

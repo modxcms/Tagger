@@ -25,6 +25,8 @@ $xpdo_meta_map['TaggerGroup']= array (
     'description' => '',
     'in_tvs_position' => 9999,
     'as_radio' => 0,
+    'sort_field' => 'alias',
+    'sort_dir' => 'asc',
   ),
   'fieldMeta' => 
   array (
@@ -160,6 +162,22 @@ $xpdo_meta_map['TaggerGroup']= array (
       'phptype' => 'boolean',
       'null' => false,
       'default' => 0,
+    ),
+    'sort_field' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => 'alias',
+    ),
+    'sort_dir' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => 'asc',
     ),
   ),
   'composites' => 

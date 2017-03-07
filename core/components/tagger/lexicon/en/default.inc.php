@@ -65,6 +65,14 @@ $_lang['tagger.group.in_tvs_position'] = 'Position of Tagger tab in TVs section'
 $_lang['tagger.group.in_tvs_position_desc'] = 'Position in TVs section on which will be added Tagger tab';
 $_lang['tagger.group.as_radio'] = 'As Radio';
 $_lang['tagger.group.as_radio_desc'] = 'Auto tag will act like radio button.';
+$_lang['tagger.group.sort_asc'] = 'ASC';
+$_lang['tagger.group.sort_desc'] = 'DESC';
+$_lang['tagger.group.sort_dir'] = 'Sort Dir';
+$_lang['tagger.group.sort_dir_desc'] = 'Sort direction - direction of sorting when fetching tags.';
+$_lang['tagger.group.sort_field'] = 'Sort Field';
+$_lang['tagger.group.sort_field_desc'] = 'Sort field - field used for sorting Tags';
+$_lang['tagger.group.sort_field_alias'] = 'Alias';
+$_lang['tagger.group.sort_field_rank'] = 'Rank';
 
 $_lang['tagger.tab.label'] = 'Tagger';
 
@@ -90,6 +98,7 @@ $_lang['tagger.tag.remove_selected'] = 'Remove selected Tags';
 $_lang['tagger.tag.remove_selected_confirm'] = 'Are you sure, you want to remove all selected Tags?';
 $_lang['tagger.tag.merge'] = 'Merge Tags';
 $_lang['tagger.tag.assign'] = 'Assign';
+$_lang['tagger.tag.rank'] = 'Rank';
 
 $_lang['setting_tagger.place_above_content_header'] = 'Above content header';
 $_lang['setting_tagger.place_above_content_header_desc'] = 'Show or hide header of the Tagger block, that shows above the content block.';

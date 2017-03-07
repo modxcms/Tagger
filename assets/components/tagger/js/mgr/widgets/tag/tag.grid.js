@@ -24,7 +24,7 @@ Tagger.grid.Tag = function(config) {
         }
         ,save_action: 'mgr/tag/updatefromgrid'
         ,autosave: true
-        ,fields: ['id', 'tag', 'alias', 'group']
+        ,fields: ['id', 'tag', 'alias', 'group', 'rank']
         ,autoHeight: true
         ,paging: true
         ,remoteSort: true
@@ -53,6 +53,12 @@ Tagger.grid.Tag = function(config) {
             ,width: 200
             ,sortable: true
             ,editor: {xtype: 'tagger-combo-group', renderer: true, disabled: true}
+        },{
+            header: _('tagger.tag.rank')
+            ,dataIndex: 'rank'
+            ,width: 200
+            ,sortable: true
+            ,editor: {xtype: 'numberfield', allowNegative: false, allowDecimals: false}
         }]
         ,tbar: [{
             text: _('tagger.tag.create')

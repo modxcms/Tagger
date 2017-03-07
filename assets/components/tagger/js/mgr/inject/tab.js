@@ -193,6 +193,8 @@ Ext.override(MODx.panel.Resource, {
                    ,baseParams: {
                        action: 'mgr/extra/gettags'
                        ,group: group.id
+                       ,sort_field: group.sort_field
+                       ,sort_dir: group.sort_dir
                    }
                });
             }

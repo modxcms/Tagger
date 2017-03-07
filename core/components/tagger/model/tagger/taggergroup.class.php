@@ -15,6 +15,8 @@
  * @property string $show_for_templates
  * @property string $place
  * @property int $position
+ * @property string $sort_field
+ * @property string $sort_dir
  *
  * @property TaggerTag $Tags
  *
@@ -46,6 +48,14 @@ class TaggerGroup extends xPDOSimpleObject {
     public function save($cacheFlag= null) {
         if ($this->alias == '') {
             $this->set('alias', $this->generateUniqueAlias($this->name));
+        }
+        
+        if (!in_array($this->sort_field, array('alias', 'rank'))) {
+            $this->set('sort_field','alias');
+        }
+        
+        if (!in_array($this->sort_dir, array('asc', 'desc'))) {
+            $this->set('sort_dir','asc');
         }
 
         return parent :: save($cacheFlag);

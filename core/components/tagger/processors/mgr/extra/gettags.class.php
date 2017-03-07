@@ -13,7 +13,8 @@ class TaggerGetTagsProcessor extends modObjectGetListProcessor {
         $group = $this->getProperty('group');
         $limit = $this->getProperty('limit', 20);
         $start = $this->getProperty('start', 0);
-
+        $sortField = $this->getProperty('sort_field', 'alias');
+        $sortDir = $this->getProperty('sort_dir', 'asc');
 
         $c = $this->modx->newQuery('TaggerTag');
         $c->where(array('group' => $group));
@@ -30,7 +31,7 @@ class TaggerGetTagsProcessor extends modObjectGetListProcessor {
 
         $c->select($this->modx->getSelectColumns('TaggerTag', 'TaggerTag', '', array('tag')));
         $c->limit($limit, $start);
-        $c->sortby('alias','ASC');
+        $c->sortby($sortField,$sortDir);
 
         $c->prepare();
         $c->stmt->execute();

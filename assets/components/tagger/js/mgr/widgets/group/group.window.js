@@ -2,13 +2,13 @@ Tagger.window.Group = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         title: _('tagger.group.create')
-        ,height: 550
         ,width: 600
         ,closeAction: 'close'
         ,fileUpload: true
         ,url: Tagger.config.connectorUrl
         ,action: 'mgr/group/create'
         ,fields: this.getFields(config)
+        ,autoHeight: true
     });
     Tagger.window.Group.superclass.constructor.call(this,config);
 };
@@ -104,6 +104,46 @@ Ext.extend(Tagger.window.Group,MODx.Window, {
             ,description: _('tagger.group.show_for_templates_desc')
             ,name: 'show_for_templates'
             ,hiddenName: 'show_for_templates'
+        },{
+            layout: 'column'
+            ,border: false
+            ,anchor: '100%'
+            ,defaults: {
+                layout: 'form'
+                ,labelAlign: 'top'
+                ,labelSeparator: ''
+                ,anchor: '100%'
+                ,border: false
+            }
+            ,items: [{
+                columnWidth:.5
+                ,border: false
+                ,defaults: {
+                    msgTarget: 'under'
+                    ,anchor: '100%'
+                }
+                ,items: [{
+                    xtype: 'tagger-combo-sort-field'
+                    ,fieldLabel: _('tagger.group.sort_field')
+                    ,description: _('tagger.group.sort_field_desc')
+                    ,name: 'sort_field',
+                    hiddenName: 'sort_field'
+                }]
+            },{
+                columnWidth: .5
+                ,border: false
+                ,defaults: {
+                    msgTarget: 'under'
+                    ,anchor: '100%'
+                }
+                ,items: [{
+                    xtype: 'tagger-combo-sort-dir'
+                    ,fieldLabel: _('tagger.group.sort_dir')
+                    ,description: _('tagger.group.sort_dir_desc')
+                    ,name: 'sort_dir',
+                    hiddenName: 'sort_dir'
+                }]
+            }]
         }];
     }
 

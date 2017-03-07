@@ -3,6 +3,7 @@
  * @property int $id
  * @property string $tag
  * @property string $alias
+ * @property int $rank
  * @property int $group
  *
  * @property TaggerGroup $Group
@@ -36,6 +37,17 @@ class TaggerTag extends xPDOSimpleObject {
     public function save($cacheFlag= null) {
         if ($this->alias == '') {
             $this->set('alias', $this->generateUniqueAlias($this->tag));
+        }
+        
+        if ($this->rank == '') {
+            $c = $this->xpdo->newQuery('TaggerTag');
+            $c->sortby('rank', 'desc');
+            $c->where(array(
+                'group' => $this->group
+            ));
+            $last = $this->xpdo->getObject('TaggerTag', $c);
+
+            $this->set('rank', $last->rank + 1);
         }
 
         return parent :: save($cacheFlag);

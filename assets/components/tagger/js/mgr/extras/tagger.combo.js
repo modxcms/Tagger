@@ -153,3 +153,55 @@ Tagger.combo.GroupPlace = function(config) {
 };
 Ext.extend(Tagger.combo.GroupPlace,MODx.combo.ComboBox);
 Ext.reg('tagger-combo-group-place',Tagger.combo.GroupPlace);
+
+Tagger.combo.SortDir = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        store: new Ext.data.SimpleStore({
+            fields: ['d','v']
+            ,data: [
+                [_('tagger.group.sort_asc') ,'asc'],
+                [_('tagger.group.sort_desc') ,'desc']
+            ]
+        })
+        ,displayField: 'd'
+        ,valueField: 'v'
+        ,mode: 'local'
+        ,value: 'asc'
+        ,triggerAction: 'all'
+        ,editable: false
+        ,selectOnFocus: false
+        ,preventRender: true
+        ,forceSelection: true
+        ,enableKeyEvents: true
+    });
+    Tagger.combo.SortDir.superclass.constructor.call(this,config);
+};
+Ext.extend(Tagger.combo.SortDir,MODx.combo.ComboBox);
+Ext.reg('tagger-combo-sort-dir',Tagger.combo.SortDir);
+
+Tagger.combo.SortField = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        store: new Ext.data.SimpleStore({
+            fields: ['d','v']
+            ,data: [
+                [_('tagger.group.sort_field_alias') ,'alias'],
+                [_('tagger.group.sort_field_rank') ,'rank']
+            ]
+        })
+        ,displayField: 'd'
+        ,valueField: 'v'
+        ,mode: 'local'
+        ,value: 'alias'
+        ,triggerAction: 'all'
+        ,editable: false
+        ,selectOnFocus: false
+        ,preventRender: true
+        ,forceSelection: true
+        ,enableKeyEvents: true
+    });
+    Tagger.combo.SortField.superclass.constructor.call(this,config);
+};
+Ext.extend(Tagger.combo.SortField,MODx.combo.ComboBox);
+Ext.reg('tagger-combo-sort-field',Tagger.combo.SortField);
