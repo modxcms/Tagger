@@ -250,10 +250,12 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
     }
 
     ,addItemsFromField: function(){
-        this.addItems(this.getFieldValue());
+        this.addItems(this.getFieldValue(), true);
     }
 
-    ,addItems: function(items){
+    ,addItems: function(items, fromField){
+        fromField = fromField || false;
+        
         items = Ext.isEmpty(items) ? '' : items;
         var values = items.split(/\s*[,]\s*/);
 
@@ -297,7 +299,7 @@ Ext.extend(Tagger.fields.Tags,MODx.combo.ComboBox,{
                 }
             }
 
-            if (this.config.autoTag == false) {
+            if (this.config.autoTag == false || (fromField && valueIndex === -1)) {
                 var item = new Tagger.fields.Tag({
                     owner: this,
                     renderTo: this.insertedTagsEl,

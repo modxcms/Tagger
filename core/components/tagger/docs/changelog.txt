@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Fix adding tags from field
 - Add ability to sort tags in manager by rank or alias
 - Add sample translation to custom lexicon
 - Fix assign from field when tag limit is set
