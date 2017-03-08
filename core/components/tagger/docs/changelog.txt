@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Remove accent chars from tag's & group's alias
 - Fix adding tags from field
 - Add ability to sort tags in manager by rank or alias
 - Add sample translation to custom lexicon

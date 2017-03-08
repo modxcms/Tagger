@@ -27,6 +27,8 @@ class TaggerGroup extends xPDOSimpleObject {
     public function cleanAlias($name) {
         $res = new modResource($this->xpdo);
         $name = str_replace('/', '-', $name);
+        $name = iconv('UTF-8', 'ASCII//TRANSLIT', $name);
+        
         return $res->cleanAlias($name);
     }
 
