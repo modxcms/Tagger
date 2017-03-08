@@ -19,6 +19,7 @@
         <field key="as_radio" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
         <field key="sort_field" dbtype="varchar" precision="255" phptype="string" null="false" default="alias" />
         <field key="sort_dir" dbtype="varchar" precision="255" phptype="string" null="false" default="asc" />
+        <field key="show_for_contexts" dbtype="text" phptype="string" null="false" default="" />
 
         <composite alias="Tags" class="TaggerTag" local="id" foreign="group" cardinality="many" owner="local" />
     </object>

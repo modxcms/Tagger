@@ -166,7 +166,7 @@ Ext.override(MODx.panel.Resource, {
         };
 
         Ext.each(Tagger.groups, function(group) {
-           if (group.show_for_templates.indexOf(parseInt(config.record.template)) != -1) {
+           if ((group.show_for_templates.indexOf(parseInt(config.record.template)) != -1) && ((group.show_for_contexts.length == 0) || (group.show_for_contexts.indexOf(config.record.context_key) != -1))) {
                var groupName = _('tagger.custom.' + group.alias);
                var groupDescription = _('tagger.custom.' + group.alias + '_desc');
                fields[group.place].push({

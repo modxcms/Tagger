@@ -73,6 +73,8 @@ $_lang['tagger.group.sort_field'] = 'Sort Field';
 $_lang['tagger.group.sort_field_desc'] = 'Sort field - field used for sorting Tags';
 $_lang['tagger.group.sort_field_alias'] = 'Alias';
 $_lang['tagger.group.sort_field_rank'] = 'Rank';
+$_lang['tagger.group.show_for_contexts'] = 'Show for Contexts';
+$_lang['tagger.group.show_for_contexts_desc'] = 'Comma separated list of context <strong>KEY</strong>s for that should be this group displayed. By default the group will appear for all contexts.';
 
 $_lang['tagger.tab.label'] = 'Tagger';
 

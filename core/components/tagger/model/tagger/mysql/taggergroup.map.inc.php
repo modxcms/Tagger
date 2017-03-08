@@ -27,6 +27,7 @@ $xpdo_meta_map['TaggerGroup']= array (
     'as_radio' => 0,
     'sort_field' => 'alias',
     'sort_dir' => 'asc',
+    'show_for_contexts' => '',
   ),
   'fieldMeta' => 
   array (
@@ -178,6 +179,13 @@ $xpdo_meta_map['TaggerGroup']= array (
       'phptype' => 'string',
       'null' => false,
       'default' => 'asc',
+    ),
+    'show_for_contexts' => 
+    array (
+      'dbtype' => 'text',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
     ),
   ),
   'composites' => 

@@ -13,6 +13,7 @@
  * @property int $tag_limit
  * @property int $in_tvs_position
  * @property string $show_for_templates
+ * @property string $show_for_contexts
  * @property string $place
  * @property int $position
  * @property string $sort_field

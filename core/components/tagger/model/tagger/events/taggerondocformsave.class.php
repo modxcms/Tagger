@@ -12,8 +12,16 @@ class TaggerOnDocFormSave extends TaggerPlugin
             $showForTemplates = $group->show_for_templates;
             $showForTemplates = $this->tagger->explodeAndClean($showForTemplates);
             $showForTemplates = array_flip($showForTemplates);
+            
+            $showForContexts = $group->show_for_contexts;
+            $showForContexts = $this->tagger->explodeAndClean($showForContexts);
+            $showForContexts = array_flip($showForContexts);
 
             if (!isset($showForTemplates[$resource->template])) {
+                continue;
+            }
+            
+            if (!empty($showForContexts) && !isset($showForContexts[$resource->context_key])) {
                 continue;
             }
 

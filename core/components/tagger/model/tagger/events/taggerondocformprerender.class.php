@@ -26,7 +26,14 @@ class TaggerOnDocFormPrerender extends TaggerPlugin {
         foreach ($groups as $group) {
             $showForTemplates = $group->show_for_templates;
             $showForTemplates = $this->tagger->explodeAndClean($showForTemplates);
-            $groupsArray[] = array_merge($group->toArray(), array('show_for_templates' => $showForTemplates));
+            
+            $showForContexts = $group->show_for_contexts;
+            $showForContexts = $this->tagger->explodeAndClean($showForContexts);
+            
+            $groupsArray[] = array_merge($group->toArray(), array(
+                'show_for_templates' => $showForTemplates, 
+                'show_for_contexts' => $showForContexts
+            ));
         }
 
         $tagsArray = array();
