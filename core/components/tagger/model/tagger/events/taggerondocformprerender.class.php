@@ -25,14 +25,14 @@ class TaggerOnDocFormPrerender extends TaggerPlugin {
         $groupsArray = array();
         foreach ($groups as $group) {
             $showForTemplates = $group->show_for_templates;
-            $showForTemplates = $this->tagger->explodeAndClean($showForTemplates);
+            $showForTemplates = $this->tagger->explodeAndClean($showForTemplates, ',', true);
             
             $showForContexts = $group->show_for_contexts;
             $showForContexts = $this->tagger->explodeAndClean($showForContexts);
             
             $groupsArray[] = array_merge($group->toArray(), array(
-                'show_for_templates' => $showForTemplates, 
-                'show_for_contexts' => $showForContexts
+                'show_for_templates' => array_values($showForTemplates), 
+                'show_for_contexts' => array_values($showForContexts)
             ));
         }
 

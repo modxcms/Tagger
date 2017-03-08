@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- If TV tab is not present, add all Tagger groups to Tagger tab
 - Add ability to show Tagger only for specific contexts 
 - Remove accent chars from tag's & group's alias
 - Fix adding tags from field

@@ -29,6 +29,7 @@ Ext.override(MODx.panel.Resource, {
             if (tabs != false && tabs[0]) {
                 tabs[0].items.push({
                     title: this.taggerLabels['in_tab']
+                    ,id: 'tagger-resource-tab'
                     ,layout: 'form'
                     ,forceLayout: true
                     ,deferredRender: false
@@ -85,34 +86,59 @@ Ext.override(MODx.panel.Resource, {
         if (this.taggerFields['in-tvs'].length > 0) {
             Ext.onReady(function() {
                 var tvTab = Ext.getCmp('modx-resource-vtabs');
-
-                tvTab.insert(this.taggerFields['in-tvs'][0].inTVsPosition, {
-                    title: this.taggerLabels['tvs_tab']
-                    ,layout: 'form'
-                    ,forceLayout: true
-                    ,deferredRender: false
-                    ,labelWidth: 200
-                    ,bodyCssClass: 'main-wrapper'
-                    ,autoHeight: true
-                    ,labelAlign: 'top'
-                    ,defaults: {
-                        border: false
-                        ,msgTarget: 'under'
-                        ,labelSeparator: ''
-                        ,anchor: '100%'
+                if (tvTab) {
+                    tvTab.insert(this.taggerFields['in-tvs'][0].inTVsPosition, {
+                        title: this.taggerLabels['tvs_tab']
+                        ,layout: 'form'
+                        ,forceLayout: true
+                        ,deferredRender: false
+                        ,labelWidth: 200
+                        ,bodyCssClass: 'main-wrapper'
+                        ,autoHeight: true
+                        ,labelAlign: 'top'
+                        ,defaults: {
+                            border: false
+                            ,msgTarget: 'under'
+                            ,labelSeparator: ''
+                            ,anchor: '100%'
+                        }
+                        ,items: this.taggerFields['in-tvs']
+                    });
+    
+                    if (this.taggerFields['in-tvs'][0].inTVsPosition == 0) {
+                        tvTab.setActiveTab(0);
+    
+                        var tvPanel = Ext.getCmp('modx-panel-resource-tv');
+                        tvPanel.on('show', function () {
+                            tvTab.doLayout();
+                        }, this, {single: true});
                     }
-                    ,items: this.taggerFields['in-tvs']
-                });
-
-                if (this.taggerFields['in-tvs'][0].inTVsPosition == 0) {
-                    tvTab.setActiveTab(0);
-
-                    var tvPanel = Ext.getCmp('modx-panel-resource-tv');
-                    tvPanel.on('show', function () {
-                        tvTab.doLayout();
-                    }, this, {single: true});
+                } else {
+                    var taggerResourceTab = Ext.getCmp('tagger-resource-tab');
+                    if (taggerResourceTab) {
+                        taggerResourceTab.add(this.taggerFields['in-tvs']);
+                    } else {
+                        var resTab = Ext.getCmp('modx-resource-tabs');
+                        resTab.add({
+                            title: this.taggerLabels['tvs_tab']
+                            ,id: 'tagger-resource-tab'
+                            ,layout: 'form'
+                            ,forceLayout: true
+                            ,deferredRender: false
+                            ,labelWidth: 200
+                            ,bodyCssClass: 'main-wrapper'
+                            ,autoHeight: true
+                            ,labelAlign: 'top'
+                            ,defaults: {
+                                border: false
+                                ,msgTarget: 'under'
+                                ,labelSeparator: ''
+                                ,anchor: '100%'
+                            }
+                            ,items: this.taggerFields['in-tvs']
+                        });       
+                    }
                 }
-
             }, this, {delay: 1});
         }
 
