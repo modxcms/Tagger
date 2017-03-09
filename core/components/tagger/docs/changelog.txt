@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+Tagger 1.9.0
+==============
 - Add noActiveTags placeholder to the outTpl of TaggerGetTags snippet
 - If TV tab is not present, add all Tagger groups to Tagger tab
 - Add ability to show Tagger only for specific contexts 
