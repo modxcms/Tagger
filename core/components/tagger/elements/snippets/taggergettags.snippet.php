@@ -230,7 +230,8 @@ $out = implode($separator, $out);
 
 if ($outTpl != '') {
     if (!empty($out) || $wrapIfEmpty) {
-        $out = $tagger->getChunk($outTpl, array('tags' => $out, 'sp' => $scriptProperties));
+        $noActiveTags = (int)(count($currentTags) === 0);
+        $out = $tagger->getChunk($outTpl, array('tags' => $out, 'sp' => $scriptProperties, 'noActiveTags' => $noActiveTags));
     }
 }
 
