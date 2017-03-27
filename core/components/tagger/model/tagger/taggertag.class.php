@@ -16,7 +16,7 @@ class TaggerTag extends xPDOSimpleObject {
     public function cleanAlias($tag) {
         $res = new modResource($this->xpdo);
         $tag = str_replace('/', '-', $tag);
-        $tag = iconv('UTF-8', 'ASCII//TRANSLIT', $tag);
+        //$tag = iconv('UTF-8', 'ASCII//TRANSLIT', $tag);
         
         return $res->cleanAlias($tag);
     }
