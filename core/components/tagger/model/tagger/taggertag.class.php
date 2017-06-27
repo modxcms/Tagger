@@ -14,11 +14,14 @@
 class TaggerTag extends xPDOSimpleObject {
 
     public function cleanAlias($tag) {
-        $res = new modResource($this->xpdo);
         $tag = str_replace('/', '-', $tag);
-        $tag = iconv('UTF-8', 'ASCII//TRANSLIT', $tag);
+
+        $removeAccents = (int)$this->xpdo->getOption('tagger.remove_accents_tag', array(), 1);
+        if ($removeAccents == 1) {
+            $tag = iconv('UTF-8', 'ASCII//TRANSLIT', $tag);
+        }
         
-        return $res->cleanAlias($tag);
+        return modResource::filterPathSegment($this->xpdo, $tag);
     }
 
     public function generateUniqueAlias($tag) {

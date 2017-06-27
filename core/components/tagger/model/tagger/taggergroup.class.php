@@ -26,11 +26,14 @@
 class TaggerGroup extends xPDOSimpleObject {
 
     public function cleanAlias($name) {
-        $res = new modResource($this->xpdo);
         $name = str_replace('/', '-', $name);
-        $name = iconv('UTF-8', 'ASCII//TRANSLIT', $name);
         
-        return $res->cleanAlias($name);
+        $removeAccents = (int)$this->xpdo->getOption('tagger.remove_accents_group', array(), 1);
+        if ($removeAccents == 1) {
+            $name = iconv('UTF-8', 'ASCII//TRANSLIT', $name);
+        }
+
+        return modResource::filterPathSegment($this->xpdo, $name);
     }
 
     public function generateUniqueAlias($name) {

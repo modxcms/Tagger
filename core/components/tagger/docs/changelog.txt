@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+- Add an option (through system settings) to preserve accent characters in tag/group alias
+
 Tagger 1.9.0
 ==============
 - Add noActiveTags placeholder to the outTpl of TaggerGetTags snippet

@@ -118,9 +118,15 @@ $_lang['setting_tagger.place_below_content_label'] = 'Below content label';
 $_lang['setting_tagger.place_below_content_label_desc'] = 'Label of the Tagger block, that shows below the content block.';
 $_lang['setting_tagger.place_bottom_page_label'] = 'Bottom page label';
 $_lang['setting_tagger.place_bottom_page_label_desc'] = 'Label of the Tagger block, that shows at the bottom of the page.';
+$_lang['setting_tagger.remove_accents_tag'] = 'Tags Remove Accents';
+$_lang['setting_tagger.remove_accents_tag_desc'] = 'Remove accent characters from tag alias.';
+$_lang['setting_tagger.remove_accents_group'] = 'Groups Remove Accents';
+$_lang['setting_tagger.remove_accents_group_desc'] = 'Remove accent characters from group alias.';
+
 
 $_lang['area_places'] = 'Places';
 $_lang['area_default'] = 'Default';
+$_lang['area_settings'] = 'Settings';
 
 $_lang['tagger.err.group_name_ns'] = 'Group name is not specified. Please fill Group name.';
 $_lang['tagger.err.group_name_ae'] = 'Group with this name already exists. Please choose a different name.';

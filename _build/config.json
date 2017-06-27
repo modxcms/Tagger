@@ -204,6 +204,18 @@
         "key": "place_bottom_page_label",
         "value": "tagger.tab.label",
         "area": "places"
+      },
+      {
+        "key": "remove_accents_tag",
+        "value": 1,
+        "type": "combo-boolean",
+        "area": "settings"
+      },
+      {
+        "key": "remove_accents_group",
+        "value": 1,
+        "type": "combo-boolean",
+        "area": "settings"
       }
     ]
   },
