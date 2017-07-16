@@ -59,6 +59,7 @@ $totalPh = $modx->getOption('totalPh', $scriptProperties, 'tags_total');
 $weight = (int) $modx->getOption('weight', $scriptProperties, '0');
 
 $friendlyURL = $modx->getOption('friendlyURL', $scriptProperties, $modx->getOption('friendly_urls', null, 0));
+$linkTagScheme = $modx->getOption('linkTagScheme', $scriptProperties, $modx->getOption('link_tag_scheme', null, -1));
 
 $sort = $modx->getOption('sort', $scriptProperties, '{}');
 $sort = $modx->fromJSON($sort);
@@ -178,9 +179,9 @@ foreach ($tags as $tag) {
     $group = $tag->Group;
 
     if ($friendlyURL == 1) {
-        $uri = rtrim($modx->makeUrl($target, '', ''), '/') . '/' . $group->alias . '/' . $tag->alias . '/';
+        $uri = rtrim($modx->makeUrl($target, '', '', $linkTagScheme), '/') . '/' . $group->alias . '/' . $tag->alias . '/';
     } else {
-        $uri = $modx->makeUrl($target, '', $group->alias . '=' . $tag->alias);
+        $uri = $modx->makeUrl($target, '', $group->alias . '=' . $tag->alias, $linkTagScheme);
     }
 
     $phs['uri'] = $uri;
