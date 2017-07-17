@@ -8,23 +8,24 @@
  *
  * PROPERTIES:
  *
- * &resources       string  optional    Comma separated list of resources for which will be listed Tags
- * &parents         string  optional    Comma separated list of parents for which will be listed Tags
- * &groups          string  optional    Comma separated list of Tagger Groups for which will be listed Tags
- * &rowTpl          string  optional    Name of a chunk that will be used for each Tag. If no chunk is given, array with available placeholders will be rendered
- * &outTpl          string  optional    Name of a chunk that will be used for wrapping all tags. If no chunk is given, tags will be rendered without a wrapper
- * &separator       string  optional    String separator, that will be used for separating Tags
- * &limit           int     optional    Limit number of returned tag Tags
- * &offset          int     optional    Offset the output by this number of Tags
- * &totalPh         string  optional    Placeholder to output the total number of Tags regardless of &limit and &offset
- * &target          int     optional    An ID of a resource that will be used for generating URI for a Tag. If no ID is given, current Resource ID will be used
- * &showUnused      int     optional    If 1 is set, Tags that are not assigned to any Resource will be included to the output as well
- * &showUnpublished int     optional    If 1 is set, Tags that are assigned only to unpublished Resources will be included to the output as well
- * &showDeleted     int     optional    If 1 is set, Tags that are assigned only to deleted Resources will be included to the output as well
- * &contexts        string  optional    If set, will display only tags for resources in given contexts. Contexts can be separated by a comma
- * &toPlaceholder   string  optional    If set, output will return in placeholder with given name
- * &sort            string  optional    Sort options in JSON. Example {"tag": "ASC"} or multiple sort options {"group_id": "ASC", "tag": "ASC"}
- * &friendlyURL     int     optional    If set, will be used instead of friendly_urls system setting to generate URL
+ * &resources       string      optional    Comma separated list of resources for which will be listed Tags
+ * &parents         string      optional    Comma separated list of parents for which will be listed Tags
+ * &groups          string      optional    Comma separated list of Tagger Groups for which will be listed Tags
+ * &rowTpl          string      optional    Name of a chunk that will be used for each Tag. If no chunk is given, array with available placeholders will be rendered
+ * &outTpl          string      optional    Name of a chunk that will be used for wrapping all tags. If no chunk is given, tags will be rendered without a wrapper
+ * &separator       string      optional    String separator, that will be used for separating Tags
+ * &limit           int         optional    Limit number of returned tag Tags
+ * &offset          int         optional    Offset the output by this number of Tags
+ * &totalPh         string      optional    Placeholder to output the total number of Tags regardless of &limit and &offset
+ * &target          int         optional    An ID of a resource that will be used for generating URI for a Tag. If no ID is given, current Resource ID will be used
+ * &showUnused      int         optional    If 1 is set, Tags that are not assigned to any Resource will be included to the output as well
+ * &showUnpublished int         optional    If 1 is set, Tags that are assigned only to unpublished Resources will be included to the output as well
+ * &showDeleted     int         optional    If 1 is set, Tags that are assigned only to deleted Resources will be included to the output as well
+ * &contexts        string      optional    If set, will display only tags for resources in given contexts. Contexts can be separated by a comma
+ * &toPlaceholder   string      optional    If set, output will return in placeholder with given name
+ * &sort            string      optional    Sort options in JSON. Example {"tag": "ASC"} or multiple sort options {"group_id": "ASC", "tag": "ASC"}
+ * &friendlyURL     int         optional    If set, will be used instead of friendly_urls system setting to generate URL
+ * &linkTagScheme   int|string  optional    Strategy to generate URLs, available values: -1, 0, 1, full, abs, http, https; Default: link_tag_scheme system setting
  *
  * USAGE:
  *
@@ -59,6 +60,7 @@ $totalPh = $modx->getOption('totalPh', $scriptProperties, 'tags_total');
 $weight = (int) $modx->getOption('weight', $scriptProperties, '0');
 
 $friendlyURL = $modx->getOption('friendlyURL', $scriptProperties, $modx->getOption('friendly_urls', null, 0));
+$linkTagScheme = $modx->getOption('linkTagScheme', $scriptProperties, $modx->getOption('link_tag_scheme', null, -1));
 
 $sort = $modx->getOption('sort', $scriptProperties, '{}');
 $sort = $modx->fromJSON($sort);
@@ -178,9 +180,9 @@ foreach ($tags as $tag) {
     $group = $tag->Group;
 
     if ($friendlyURL == 1) {
-        $uri = rtrim($modx->makeUrl($target, '', ''), '/') . '/' . $group->alias . '/' . $tag->alias . '/';
+        $uri = rtrim($modx->makeUrl($target, '', '', $linkTagScheme), '/') . '/' . $group->alias . '/' . $tag->alias . '/';
     } else {
-        $uri = $modx->makeUrl($target, '', $group->alias . '=' . $tag->alias);
+        $uri = $modx->makeUrl($target, '', $group->alias . '=' . $tag->alias, $linkTagScheme);
     }
 
     $phs['uri'] = $uri;
