@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Add linkOneTagPerGroup option to TaggerGetTags
 - Add option to include current tags in TaggerGetTags url
 - Add Tag Label for frontend usage
 - Add scheme override to TaggerGetTags properties

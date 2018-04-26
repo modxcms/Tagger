@@ -8,25 +8,26 @@
  *
  * PROPERTIES:
  *
- * &resources       string      optional    Comma separated list of resources for which will be listed Tags
- * &parents         string      optional    Comma separated list of parents for which will be listed Tags
- * &groups          string      optional    Comma separated list of Tagger Groups for which will be listed Tags
- * &rowTpl          string      optional    Name of a chunk that will be used for each Tag. If no chunk is given, array with available placeholders will be rendered
- * &outTpl          string      optional    Name of a chunk that will be used for wrapping all tags. If no chunk is given, tags will be rendered without a wrapper
- * &separator       string      optional    String separator, that will be used for separating Tags
- * &limit           int         optional    Limit number of returned tag Tags
- * &offset          int         optional    Offset the output by this number of Tags
- * &totalPh         string      optional    Placeholder to output the total number of Tags regardless of &limit and &offset
- * &target          int         optional    An ID of a resource that will be used for generating URI for a Tag. If no ID is given, current Resource ID will be used
- * &showUnused      int         optional    If 1 is set, Tags that are not assigned to any Resource will be included to the output as well
- * &showUnpublished int         optional    If 1 is set, Tags that are assigned only to unpublished Resources will be included to the output as well
- * &showDeleted     int         optional    If 1 is set, Tags that are assigned only to deleted Resources will be included to the output as well
- * &linkCurrentTags int         optional    If 1 is set, Current Tags will be included in generated URL, default behavior is to generate links to a single tag
- * &contexts        string      optional    If set, will display only tags for resources in given contexts. Contexts can be separated by a comma
- * &toPlaceholder   string      optional    If set, output will return in placeholder with given name
- * &sort            string      optional    Sort options in JSON. Example {"tag": "ASC"} or multiple sort options {"group_id": "ASC", "tag": "ASC"}
- * &friendlyURL     int         optional    If set, will be used instead of friendly_urls system setting to generate URL
- * &linkTagScheme   int|string  optional    Strategy to generate URLs, available values: -1, 0, 1, full, abs, http, https; Default: link_tag_scheme system setting
+ * &resources           string      optional    Comma separated list of resources for which will be listed Tags
+ * &parents             string      optional    Comma separated list of parents for which will be listed Tags
+ * &groups              string      optional    Comma separated list of Tagger Groups for which will be listed Tags
+ * &rowTpl              string      optional    Name of a chunk that will be used for each Tag. If no chunk is given, array with available placeholders will be rendered
+ * &outTpl              string      optional    Name of a chunk that will be used for wrapping all tags. If no chunk is given, tags will be rendered without a wrapper
+ * &separator           string      optional    String separator, that will be used for separating Tags
+ * &limit               int         optional    Limit number of returned tag Tags
+ * &offset              int         optional    Offset the output by this number of Tags
+ * &totalPh             string      optional    Placeholder to output the total number of Tags regardless of &limit and &offset
+ * &target              int         optional    An ID of a resource that will be used for generating URI for a Tag. If no ID is given, current Resource ID will be used
+ * &showUnused          int         optional    If 1 is set, Tags that are not assigned to any Resource will be included to the output as well
+ * &showUnpublished     int         optional    If 1 is set, Tags that are assigned only to unpublished Resources will be included to the output as well
+ * &showDeleted         int         optional    If 1 is set, Tags that are assigned only to deleted Resources will be included to the output as well
+ * &linkCurrentTags     int         optional    If 1 is set, Current Tags will be included in generated URL, default behavior is to generate links to a single tag
+ * &linkOneTagPerGroup  int         optional    If 1 is set, Only one tag will be placed to a group (in the URI tags from same group will swap places); Only available for linkCurrentTags=1; Default: 0
+ * &contexts            string      optional    If set, will display only tags for resources in given contexts. Contexts can be separated by a comma
+ * &toPlaceholder       string      optional    If set, output will return in placeholder with given name
+ * &sort                string      optional    Sort options in JSON. Example {"tag": "ASC"} or multiple sort options {"group_id": "ASC", "tag": "ASC"}
+ * &friendlyURL         int         optional    If set, will be used instead of friendly_urls system setting to generate URL
+ * &linkTagScheme       int|string  optional    Strategy to generate URLs, available values: -1, 0, 1, full, abs, http, https; Default: link_tag_scheme system setting
  *
  * USAGE:
  *
@@ -48,6 +49,7 @@ $showUnused = (int) $modx->getOption('showUnused', $scriptProperties, '0');
 $showUnpublished = (int) $modx->getOption('showUnpublished', $scriptProperties, '0');
 $showDeleted = (int) $modx->getOption('showDeleted', $scriptProperties, '0');
 $linkCurrentTags = (int) $modx->getOption('linkCurrentTags', $scriptProperties, '0');
+$linkOneTagPerGroup = (int) $modx->getOption('linkOneTagPerGroup', $scriptProperties, '0');
 $contexts = $modx->getOption('contexts', $scriptProperties, '');
 $translate = (int) $modx->getOption('translate', $scriptProperties, '0');
 
@@ -188,10 +190,19 @@ foreach ($tags as $tag) {
 
     $group = $tag->Group;
 
-    $linkData = array_merge_recursive($currentTagsLink, array(
-        $group->alias => array($tag->alias)
-    ));
-    
+    if (($linkOneTagPerGroup === 1) && $currentTagsLink[$group->alias]) {
+        $linkData = $currentTagsLink;
+        if (!in_array($tag->alias, $linkData[$group->alias])) {
+            $linkData[$group->alias] = array($tag->alias);
+        } else {
+            $linkData[$group->alias] = array();
+        }
+    } else {
+        $linkData = array_merge_recursive($currentTagsLink, array(
+            $group->alias => array($tag->alias)
+        ));
+    }
+
     $linkData = array_filter(array_map(function($data) {
         return array_filter($data, function($value) use ($data) {
             return !(array_count_values($data)[$value] > 1);
@@ -202,7 +213,7 @@ foreach ($tags as $tag) {
         $linkPath = array_reduce(array_keys($linkData), function($carry, $item) use ($linkData) {
             return $carry . $item . '/' . implode('/', array_unique($linkData[$item])) . '/';
         }, '');
-        
+
         $uri = rtrim($modx->makeUrl($target, '', '', $linkTagScheme), '/') . '/' . $linkPath;
     } else {
         $linkPath = http_build_query(
@@ -210,7 +221,7 @@ foreach ($tags as $tag) {
                 return is_array($values) ? implode(',', array_unique($values)) : $values;
             }, $linkData)
         );
-        
+
         $uri = $modx->makeUrl($target, '', $linkPath, $linkTagScheme);
     }
 
