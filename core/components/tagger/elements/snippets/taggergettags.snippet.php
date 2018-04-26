@@ -21,6 +21,7 @@
  * &showUnused      int         optional    If 1 is set, Tags that are not assigned to any Resource will be included to the output as well
  * &showUnpublished int         optional    If 1 is set, Tags that are assigned only to unpublished Resources will be included to the output as well
  * &showDeleted     int         optional    If 1 is set, Tags that are assigned only to deleted Resources will be included to the output as well
+ * &linkCurrentTags int         optional    If 1 is set, Current Tags will be included in generated URL, default behavior is to generate links to a single tag
  * &contexts        string      optional    If set, will display only tags for resources in given contexts. Contexts can be separated by a comma
  * &toPlaceholder   string      optional    If set, output will return in placeholder with given name
  * &sort            string      optional    Sort options in JSON. Example {"tag": "ASC"} or multiple sort options {"group_id": "ASC", "tag": "ASC"}
@@ -46,6 +47,7 @@ $target = (int) $modx->getOption('target', $scriptProperties, $modx->resource->i
 $showUnused = (int) $modx->getOption('showUnused', $scriptProperties, '0');
 $showUnpublished = (int) $modx->getOption('showUnpublished', $scriptProperties, '0');
 $showDeleted = (int) $modx->getOption('showDeleted', $scriptProperties, '0');
+$linkCurrentTags = (int) $modx->getOption('linkCurrentTags', $scriptProperties, '0');
 $contexts = $modx->getOption('contexts', $scriptProperties, '');
 $translate = (int) $modx->getOption('translate', $scriptProperties, '0');
 
@@ -172,6 +174,13 @@ ksort($nthTpls);
 
 $idx = 1;
 $currentTags = $tagger->getCurrentTags();
+$currentTagsLink = array();
+
+if ($linkCurrentTags == 1) {
+    foreach($currentTags as $currentTag) {
+        $currentTagsLink[$currentTag['alias']] = array_keys($currentTag['tags']);
+    }
+}
 
 foreach ($tags as $tag) {
     /** @var TaggerTag $tag */
@@ -179,19 +188,39 @@ foreach ($tags as $tag) {
 
     $group = $tag->Group;
 
+    $linkData = array_merge_recursive($currentTagsLink, array(
+        $group->alias => array($tag->alias)
+    ));
+    
+    $linkData = array_filter(array_map(function($data) {
+        return array_filter($data, function($value) use ($data) {
+            return !(array_count_values($data)[$value] > 1);
+        });
+    }, $linkData));
+
     if ($friendlyURL == 1) {
-        $uri = rtrim($modx->makeUrl($target, '', '', $linkTagScheme), '/') . '/' . $group->alias . '/' . $tag->alias . '/';
+        $linkPath = array_reduce(array_keys($linkData), function($carry, $item) use ($linkData) {
+            return $carry . $item . '/' . implode('/', array_unique($linkData[$item])) . '/';
+        }, '');
+        
+        $uri = rtrim($modx->makeUrl($target, '', '', $linkTagScheme), '/') . '/' . $linkPath;
     } else {
-        $uri = $modx->makeUrl($target, '', $group->alias . '=' . $tag->alias, $linkTagScheme);
+        $linkPath = http_build_query(
+            array_map(function($values) {
+                return is_array($values) ? implode(',', array_unique($values)) : $values;
+            }, $linkData)
+        );
+        
+        $uri = $modx->makeUrl($target, '', $linkPath, $linkTagScheme);
     }
 
     $phs['uri'] = $uri;
     $phs['idx'] = $idx;
     $phs['target'] = $target;
     $phs['max_cnt'] = $maxCnt;
-    
+
     if (isset($currentTags[$group->alias]['tags'][$tag->alias])) {
-        $phs['active'] = 1;    
+        $phs['active'] = 1;
     } else {
         $phs['active'] = 0;
     }
