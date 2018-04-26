@@ -43,6 +43,13 @@ if ($object->xpdo) {
                     $group->save();
                 }
             }
+            
+            if ($oldPackage && $oldPackage->compareVersion('1.10.0-pl', '>')) {
+                $tags = $modx->getCollection('TaggerTag', array('label' => ''));
+                foreach ($tags as $tag) {
+                    $tag->save();
+                }
+            }
 
             break;
     }

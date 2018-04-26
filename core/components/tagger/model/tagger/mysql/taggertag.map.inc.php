@@ -7,9 +7,14 @@ $xpdo_meta_map['TaggerTag']= array (
   'version' => '1.1',
   'table' => 'tagger_tags',
   'extends' => 'xPDOSimpleObject',
+  'tableMeta' => 
+  array (
+    'engine' => 'MyISAM',
+  ),
   'fields' => 
   array (
     'tag' => NULL,
+    'label' => '',
     'alias' => NULL,
     'group' => NULL,
     'rank' => 0,
@@ -22,6 +27,14 @@ $xpdo_meta_map['TaggerTag']= array (
       'precision' => '100',
       'phptype' => 'string',
       'null' => false,
+    ),
+    'label' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '100',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
     ),
     'alias' => 
     array (

@@ -2,6 +2,7 @@
 /**
  * @property int $id
  * @property string $tag
+ * @property string $label
  * @property string $alias
  * @property int $rank
  * @property int $group
@@ -53,6 +54,10 @@ class TaggerTag extends xPDOSimpleObject {
             $last = $this->xpdo->getObject('TaggerTag', $c);
 
             $this->set('rank', $last->rank + 1);
+        }
+        
+        if (empty($this->label)) {
+            $this->label = $this->tag;
         }
 
         return parent :: save($cacheFlag);

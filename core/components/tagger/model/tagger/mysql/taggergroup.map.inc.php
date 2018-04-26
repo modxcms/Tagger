@@ -7,6 +7,10 @@ $xpdo_meta_map['TaggerGroup']= array (
   'version' => '1.1',
   'table' => 'tagger_groups',
   'extends' => 'xPDOSimpleObject',
+  'tableMeta' => 
+  array (
+    'engine' => 'MyISAM',
+  ),
   'fields' => 
   array (
     'name' => NULL,

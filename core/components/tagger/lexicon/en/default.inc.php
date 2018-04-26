@@ -101,6 +101,7 @@ $_lang['tagger.tag.remove_selected_confirm'] = 'Are you sure, you want to remove
 $_lang['tagger.tag.merge'] = 'Merge Tags';
 $_lang['tagger.tag.assign'] = 'Assign';
 $_lang['tagger.tag.rank'] = 'Rank';
+$_lang['tagger.tag.label'] = 'Label';
 
 $_lang['setting_tagger.place_above_content_header'] = 'Above content header';
 $_lang['setting_tagger.place_above_content_header_desc'] = 'Show or hide header of the Tagger block, that shows above the content block.';

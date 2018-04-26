@@ -7,6 +7,10 @@ $xpdo_meta_map['TaggerTagResource']= array (
   'version' => '1.1',
   'table' => 'tagger_tag_resources',
   'extends' => 'xPDOObject',
+  'tableMeta' => 
+  array (
+    'engine' => 'MyISAM',
+  ),
   'fields' => 
   array (
     'tag' => NULL,

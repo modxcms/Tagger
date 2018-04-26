@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Add Tag Label for frontend usage
 - Add scheme override to TaggerGetTags properties
 - Add an option (through system settings) to preserve accent characters in tag/group alias
 
