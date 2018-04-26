@@ -1,5 +1,6 @@
 Changelog for Tagger.
 
+- Add URI to TaggerGetCurrentTag snippet
 - Add linkOneTagPerGroup option to TaggerGetTags
 - Add option to include current tags in TaggerGetTags url
 - Add Tag Label for frontend usage
