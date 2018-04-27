@@ -1,5 +1,7 @@
 Changelog for Tagger.
 
+Tagger 1.10.0
+==============
 - Add URI to TaggerGetCurrentTag snippet
 - Add linkOneTagPerGroup option to TaggerGetTags
 - Add option to include current tags in TaggerGetTags url
