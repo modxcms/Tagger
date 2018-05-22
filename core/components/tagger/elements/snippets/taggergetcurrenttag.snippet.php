@@ -77,6 +77,7 @@ foreach ($currentTags as $currentTag) {
         
         $phs = array (
             'tag' => $tag['tag'],
+            'label' => $tag['label'],
             'alias' => $tag['alias'],
             'uri' => $uri,
             'group_name' => $currentTag['group'],

@@ -115,6 +115,7 @@ class Tagger {
                         if ($tag) {
                             $tags[$tag->alias] = array(
                                 'tag' => $tag->tag,
+                                'label' => $tag->label,
                                 'alias' => $tag->alias
                             );
                         } else {
