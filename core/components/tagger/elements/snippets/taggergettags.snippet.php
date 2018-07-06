@@ -184,9 +184,14 @@ if ($linkCurrentTags == 1) {
     }
 }
 
+$phsBase = array();
+foreach($scriptProperties as $prop => $value) {
+    $phsBase['sp.' . $prop] = $value;
+}
+
 foreach ($tags as $tag) {
     /** @var TaggerTag $tag */
-    $phs = $tag->toArray();
+    $phs = array_merge($phsBase, $tag->toArray());
 
     $group = $tag->Group;
 
@@ -249,7 +254,6 @@ foreach ($tags as $tag) {
     }
 
     $rowTpl = $defaultRowTpl;
-    $phs['sp'] = $scriptProperties;
 
     if ($rowTpl == '') {
         $out[] = '<pre>' . print_r($phs, true) . '</pre>';
