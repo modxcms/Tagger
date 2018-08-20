@@ -55,9 +55,13 @@ $weight = (int) $modx->getOption('weight', $scriptProperties, '0');
 $friendlyURL = (int) $modx->getOption('friendlyURL', $scriptProperties, $modx->getOption('friendly_urls', null, 0));
 $linkTagScheme = $modx->getOption('linkTagScheme', $scriptProperties, $modx->getOption('link_tag_scheme', null, -1));
 $toPlaceholder = $modx->getOption('toPlaceholder', $scriptProperties, '');
+$totalPh = $modx->getOption('totalPh', $scriptProperties, 'tags_total');
 
 
-$tags = $tagger->getTags($scriptProperties);
+$taggerResult = $tagger->getTags($scriptProperties);
+$tags = $taggerResult->tags;
+$total = $taggerResult->total;
+$maxCnt = $taggerResult->maxCnt;
 
 $modx->setPlaceholder($totalPh, $total);
 

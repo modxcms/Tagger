@@ -149,7 +149,6 @@ class Tagger {
         $contexts = $this->modx->getOption('contexts', $scriptProperties, '');
         $limit = intval($this->modx->getOption('limit', $scriptProperties, 0));
         $offset = intval($this->modx->getOption('offset', $scriptProperties, 0));
-        $totalPh = $this->modx->getOption('totalPh', $scriptProperties, 'tags_total');
 
         $sort = $this->modx->getOption('sort', $scriptProperties, '{}');
         $sort = $this->modx->fromJSON($sort);
@@ -225,13 +224,12 @@ class Tagger {
         $countQuery = new xPDOCriteria($this->modx, "SELECT COUNT(*) as total, MAX(cnt) as max_cnt FROM ({$c->toSQL(false)}) cq", $c->bindings, $c->cacheFlag);
         $stmt = $countQuery->prepare();
 
+        $result = new TaggerResult();
+
         if ($stmt && $stmt->execute()) {
             $fetchedData = $stmt->fetch(PDO::FETCH_ASSOC);
-            $total = intval($fetchedData['total']);
-            $maxCnt = intval($fetchedData['max_cnt']);
-        } else {
-            $total = 0;
-            $maxCnt = 0;
+            $result->total = intval($fetchedData['total']);
+            $result->maxCnt = intval($fetchedData['max_cnt']);
         }
 
 
@@ -242,6 +240,7 @@ class Tagger {
 
         $c->limit($limit, $offset);
 
-        return $this->modx->getIterator('TaggerTag', $c);
+        $result->tags = $this->modx->getIterator('TaggerTag', $c);
+        return $result;
     }
 }
