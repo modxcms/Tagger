@@ -3,7 +3,7 @@
   "lowCaseName": "tagger",
   "description": "Tag management component",
   "author": "John Peca",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "package": {
     "actions": [
       {
@@ -25,7 +25,7 @@
           "events": [
             "OnDocFormSave",
             "OnDocFormPrerender",
-            "OnHandleRequest",
+            "OnPageNotFound",
             "OnResourceDuplicate"
           ]
         }

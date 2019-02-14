@@ -43,9 +43,8 @@ class TaggerGateway {
         asort($this->tags);
 
         if ($this->pieces[count($this->pieces) - 1] != '') {
-            $this->modx->sendRedirect(MODX_SITE_URL . implode('/', $this->pieces) . '/', array('responseCode' => 'HTTP/1.1 301 Moved Permanently'));
+            $this->modx->sendRedirect(MODX_SITE_URL . implode('/', $this->pieces) . '/', array('responseCode' => $_SERVER['SERVER_PROTOCOL'] . ' 301 Moved Permanently'));
         }
-
         if (count($this->pieces) == 0 || (count($this->pieces) == 1 && $this->pieces[0] == '')) return false;
 
         $this->processRequest();
@@ -77,8 +76,25 @@ class TaggerGateway {
             $q = $siteStart->alias;
         }
 
-        $_REQUEST[$this->modx->getOption('request_param_alias', null, 'q')] = $q;
+        $containerSuffix = trim($this->modx->getOption('container_suffix', null, ''));
+        $found = $this->modx->findResource($q);
 
+        if ($found === false && !empty ($containerSuffix)) {
+            $suffixLen = strlen($containerSuffix);
+            $identifierLen = strlen($q);
+            if (substr($q, $identifierLen - $suffixLen) === $containerSuffix) {
+                $identifier = substr($q, 0, $identifierLen - $suffixLen);
+                $found = $this->modx->findResource($identifier);
+            } else {
+                $identifier = "{$q}{$containerSuffix}";
+                $found = $this->modx->findResource($identifier);
+            }
+        }
+        
+        if ($found) {
+            $this->modx->sendForward($found);
+        }
+        
         return true;
     }
 }

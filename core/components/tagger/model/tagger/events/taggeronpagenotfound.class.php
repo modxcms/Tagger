@@ -1,5 +1,5 @@
 <?php
-class TaggerOnHandleRequest extends TaggerPlugin
+class TaggerOnPageNotFound extends TaggerPlugin
 {
     public function run()
     {
