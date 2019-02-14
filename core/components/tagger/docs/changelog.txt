@@ -1,5 +1,10 @@
 Changelog for Tagger.
 
+Tagger 1.11.0
+==============
+- Move the Gateway handler from OnHandleRequest to OnPageNotFound
+- Fix FURL issue with Revo >= 2.7.0
+
 Tagger 1.10.0
 ==============
 - Add URI to TaggerGetCurrentTag snippet
