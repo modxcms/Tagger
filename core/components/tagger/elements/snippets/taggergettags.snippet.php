@@ -13,6 +13,7 @@
  * &groups              string      optional    Comma separated list of Tagger Groups for which will be listed Tags
  * &rowTpl              string      optional    Name of a chunk that will be used for each Tag. If no chunk is given, array with available placeholders will be rendered
  * &outTpl              string      optional    Name of a chunk that will be used for wrapping all tags. If no chunk is given, tags will be rendered without a wrapper
+ * &groupTpl            string      optional    Name of a chunk that will be used for wrapping tags with their group. If no chunk is given, tags will be rendered without a group wrapper
  * &separator           string      optional    String separator, that will be used for separating Tags
  * &limit               int         optional    Limit number of returned tag Tags
  * &offset              int         optional    Offset the output by this number of Tags
@@ -55,6 +56,8 @@ $translate = (int) $modx->getOption('translate', $scriptProperties, '0');
 
 $defaultRowTpl = $modx->getOption('rowTpl', $scriptProperties, '');
 $outTpl = $modx->getOption('outTpl', $scriptProperties, '');
+$groupTpl = $modx->getOption('groupTpl', $scriptProperties, '');
+$tagGroups = array();
 $wrapIfEmpty = $modx->getOption('wrapIfEmpty', $scriptProperties, 1);
 $separator = $modx->getOption('separator', $scriptProperties, '');
 $limit = intval($modx->getOption('limit', $scriptProperties, 0));
@@ -262,10 +265,24 @@ foreach ($tags as $tag) {
             }
         }
 
-        $out[] = $tagger->getChunk($rowTpl, $phs);
+        if ($groupTpl == '') {
+            $out[] = $tagger->getChunk($rowTpl, $phs);
+        } else {
+            $tagGroups[$group->id]['group'] = $group->toArray();
+            $tagGroups[$group->id]['tags'][] = $tagger->getChunk($rowTpl, $phs);
+        }
+
     }
 
     $idx++;
+}
+
+if ($tagGroups != '' && $groupTpl != '') {
+    foreach ($tagGroups as $tagGroup) {
+        $tagGroup['tags'] = implode($separator, $tagGroup['tags']);
+        $out[] = $tagger->getChunk($groupTpl, array('group' => $tagGroup['group'], 'tags' => $tagGroup['tags']));
+    }
+
 }
 
 $out = implode($separator, $out);
