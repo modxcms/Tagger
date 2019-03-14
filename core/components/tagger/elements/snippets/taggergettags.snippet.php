@@ -15,6 +15,7 @@
  * &outTpl              string      optional    Name of a chunk that will be used for wrapping all tags. If no chunk is given, tags will be rendered without a wrapper
  * &separator           string      optional    String separator, that will be used for separating Tags
  * &limit               int         optional    Limit number of returned tag Tags
+ * &depth               int         optional    Depth to search for child resources from each parent
  * &offset              int         optional    Offset the output by this number of Tags
  * &totalPh             string      optional    Placeholder to output the total number of Tags regardless of &limit and &offset
  * &target              int         optional    An ID of a resource that will be used for generating URI for a Tag. If no ID is given, current Resource ID will be used
@@ -58,6 +59,7 @@ $outTpl = $modx->getOption('outTpl', $scriptProperties, '');
 $wrapIfEmpty = $modx->getOption('wrapIfEmpty', $scriptProperties, 1);
 $separator = $modx->getOption('separator', $scriptProperties, '');
 $limit = intval($modx->getOption('limit', $scriptProperties, 0));
+$depth = intval($modx->getOption('depth', $scriptProperties, 10));
 $offset = intval($modx->getOption('offset', $scriptProperties, 0));
 $totalPh = $modx->getOption('totalPh', $scriptProperties, 'tags_total');
 
@@ -87,9 +89,9 @@ $c->leftJoin('TaggerGroup', 'Group');
 $c->leftJoin('modResource', 'Resource', array('Resources.resource = Resource.id'));
 
 if (!empty($parents)) {
-    $c->where(array(
-        'Resource.parent:IN' => $parents,
-    ));
+    if (!empty($parents)) {
+        $resources = array_merge($parents, $modx->getChildIds(implode(',', $parents),$depth),$resources);
+    }
 }
 
 if (!empty($contexts)) {
