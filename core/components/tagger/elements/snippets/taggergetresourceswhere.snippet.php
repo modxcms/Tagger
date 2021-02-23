@@ -31,7 +31,7 @@ $where = $modx->getOption('where', $scriptProperties, '');
 $tagField = $modx->getOption('tagField', $scriptProperties, 'alias');
 $likeComparison = (int) $modx->getOption('likeComparison', $scriptProperties, 0);
 $matchAll = (int) $modx->getOption('matchAll', $scriptProperties, 0);
-$errorOnInvalidTags = $modx->getOption('errorOnInvalidTags', $scriptProperties, false);
+$errorOnInvalidTags = (int) $modx->getOption('errorOnInvalidTags', $scriptProperties, 0);
 $field = $modx->getOption('field', $scriptProperties, 'id');
 $where = $modx->fromJSON($where);
 if ($where == false) {
@@ -132,7 +132,7 @@ $tagIDs = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
 if (count($tagIDs) == 0) {
     $tagIDs[] = 0;
-    if($errorOnInvalidTags)
+    if($errorOnInvalidTags == 1)
         $modx->sendForward($modx->getOption('error_page'),array('response_code' => 'HTTP/1.1 404 Not Found'));
 }
 
