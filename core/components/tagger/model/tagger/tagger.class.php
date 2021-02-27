@@ -137,4 +137,110 @@ class Tagger {
         
         return $currentTags;
     }
+
+    public function getTags($scriptProperties)
+    {
+        $resources = $this->modx->getOption('resources', $scriptProperties, '');
+        $parents = $this->modx->getOption('parents', $scriptProperties, '');
+        $groups = $this->modx->getOption('groups', $scriptProperties, '');
+        $showUnused = (int) $this->modx->getOption('showUnused', $scriptProperties, '0');
+        $showUnpublished = (int) $this->modx->getOption('showUnpublished', $scriptProperties, '0');
+        $showDeleted = (int) $this->modx->getOption('showDeleted', $scriptProperties, '0');
+        $contexts = $this->modx->getOption('contexts', $scriptProperties, '');
+        $limit = intval($this->modx->getOption('limit', $scriptProperties, 0));
+        $offset = intval($this->modx->getOption('offset', $scriptProperties, 0));
+
+        $sort = $this->modx->getOption('sort', $scriptProperties, '{}');
+        $sort = $this->modx->fromJSON($sort);
+        if ($sort === null || $sort == '' || count($sort) == 0) {
+            $sort = array(
+                'tag' => 'ASC'
+            );
+        }
+
+        $resources = $this->explodeAndClean($resources);
+        $parents = $this->explodeAndClean($parents);
+        $groups = $this->explodeAndClean($groups);
+        $contexts = $this->explodeAndClean($contexts);
+
+        $c = $this->modx->newQuery('TaggerTag');
+
+        $c->leftJoin('TaggerTagResource', 'Resources');
+        $c->leftJoin('TaggerGroup', 'Group');
+        $c->leftJoin('modResource', 'Resource', array('Resources.resource = Resource.id'));
+
+        if (!empty($parents)) {
+            $c->where(array(
+                'Resource.parent:IN' => $parents,
+            ));
+        }
+
+        if (!empty($contexts)) {
+            $c->where(array(
+                'Resource.context_key:IN' => $contexts,
+            ));
+        }
+
+        if ($showUnpublished == 0) {
+            $c->where(array(
+                'Resource.published' => 1,
+                'OR:Resource.published:IN' => null,
+            ));
+        }
+
+        if ($showDeleted == 0) {
+            $c->where(array(
+                'Resource.deleted' => 0,
+                'OR:Resource.deleted:IS' => null,
+            ));
+        }
+
+        if ($showUnused == 0) {
+            $c->having(array(
+                'cnt > 0',
+            ));
+        }
+
+        if (!empty($resources)) {
+            $c->where(array(
+                'Resources.resource:IN' => $resources
+            ));
+        }
+
+        if ($groups) {
+            $c->where(array(
+                'Group.id:IN' => $groups,
+                'OR:Group.name:IN' => $groups,
+                'OR:Group.alias:IN' => $groups,
+            ));
+        }
+        $c->select($this->modx->getSelectColumns('TaggerTag', 'TaggerTag'));
+        $c->select($this->modx->getSelectColumns('TaggerGroup', 'Group', 'group_'));
+        $c->select(array('cnt' => 'COUNT(Resources.tag)'));
+        $c->groupby($this->modx->getSelectColumns('TaggerTag', 'TaggerTag') . ',' . $this->modx->getSelectColumns('TaggerGroup', 'Group'));
+
+        $c->prepare();
+
+        $countQuery = new xPDOCriteria($this->modx, "SELECT COUNT(*) as total, MAX(cnt) as max_cnt FROM ({$c->toSQL(false)}) cq", $c->bindings, $c->cacheFlag);
+        $stmt = $countQuery->prepare();
+
+        $result = new TaggerResult();
+
+        if ($stmt && $stmt->execute()) {
+            $fetchedData = $stmt->fetch(PDO::FETCH_ASSOC);
+            $result->total = intval($fetchedData['total']);
+            $result->maxCnt = intval($fetchedData['max_cnt']);
+        }
+
+
+        foreach ($sort as $field => $dir) {
+            $dir = (strtolower($dir) == 'asc') ? 'asc' : 'desc';
+            $c->sortby($field, $dir);
+        }
+
+        $c->limit($limit, $offset);
+
+        $result->tags = $this->modx->getIterator('TaggerTag', $c);
+        return $result;
+    }
 }

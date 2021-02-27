@@ -41,125 +41,29 @@
 $tagger = $modx->getService('tagger','Tagger',$modx->getOption('tagger.core_path',null,$modx->getOption('core_path').'components/tagger/').'model/tagger/',$scriptProperties);
 if (!($tagger instanceof Tagger)) return '';
 
-$resources = $modx->getOption('resources', $scriptProperties, '');
-$parents = $modx->getOption('parents', $scriptProperties, '');
-$groups = $modx->getOption('groups', $scriptProperties, '');
 $target = (int) $modx->getOption('target', $scriptProperties, $modx->resource->id, true);
-$showUnused = (int) $modx->getOption('showUnused', $scriptProperties, '0');
-$showUnpublished = (int) $modx->getOption('showUnpublished', $scriptProperties, '0');
-$showDeleted = (int) $modx->getOption('showDeleted', $scriptProperties, '0');
 $linkCurrentTags = (int) $modx->getOption('linkCurrentTags', $scriptProperties, '0');
 $linkOneTagPerGroup = (int) $modx->getOption('linkOneTagPerGroup', $scriptProperties, '0');
-$contexts = $modx->getOption('contexts', $scriptProperties, '');
 $translate = (int) $modx->getOption('translate', $scriptProperties, '0');
 
 $defaultRowTpl = $modx->getOption('rowTpl', $scriptProperties, '');
 $outTpl = $modx->getOption('outTpl', $scriptProperties, '');
 $wrapIfEmpty = $modx->getOption('wrapIfEmpty', $scriptProperties, 1);
 $separator = $modx->getOption('separator', $scriptProperties, '');
-$limit = intval($modx->getOption('limit', $scriptProperties, 0));
-$offset = intval($modx->getOption('offset', $scriptProperties, 0));
-$totalPh = $modx->getOption('totalPh', $scriptProperties, 'tags_total');
-
 $weight = (int) $modx->getOption('weight', $scriptProperties, '0');
 
 $friendlyURL = (int) $modx->getOption('friendlyURL', $scriptProperties, $modx->getOption('friendly_urls', null, 0));
 $linkTagScheme = $modx->getOption('linkTagScheme', $scriptProperties, $modx->getOption('link_tag_scheme', null, -1));
-
-$sort = $modx->getOption('sort', $scriptProperties, '{}');
-$sort = $modx->fromJSON($sort);
-if ($sort === null || $sort == '' || count($sort) == 0) {
-    $sort = array(
-        'tag' => 'ASC'
-    );
-}
-
-$resources = $tagger->explodeAndClean($resources);
-$parents = $tagger->explodeAndClean($parents);
-$groups = $tagger->explodeAndClean($groups);
-$contexts = $tagger->explodeAndClean($contexts);
 $toPlaceholder = $modx->getOption('toPlaceholder', $scriptProperties, '');
+$totalPh = $modx->getOption('totalPh', $scriptProperties, 'tags_total');
 
-$c = $modx->newQuery('TaggerTag');
 
-$c->leftJoin('TaggerTagResource', 'Resources');
-$c->leftJoin('TaggerGroup', 'Group');
-$c->leftJoin('modResource', 'Resource', array('Resources.resource = Resource.id'));
-
-if (!empty($parents)) {
-    $c->where(array(
-        'Resource.parent:IN' => $parents,
-    ));
-}
-
-if (!empty($contexts)) {
-    $c->where(array(
-        'Resource.context_key:IN' => $contexts,
-    ));
-}
-
-if ($showUnpublished == 0) {
-    $c->where(array(
-        'Resource.published' => 1,
-        'OR:Resource.published:IN' => null,
-    ));
-}
-
-if ($showDeleted == 0) {
-    $c->where(array(
-        'Resource.deleted' => 0,
-        'OR:Resource.deleted:IS' => null,
-    ));
-}
-
-if ($showUnused == 0) {
-    $c->having(array(
-        'cnt > 0',
-    ));
-}
-
-if (!empty($resources)) {
-    $c->where(array(
-        'Resources.resource:IN' => $resources
-    ));
-}
-
-if ($groups) {
-    $c->where(array(
-        'Group.id:IN' => $groups,
-        'OR:Group.name:IN' => $groups,
-        'OR:Group.alias:IN' => $groups,
-    ));
-}
-$c->select($modx->getSelectColumns('TaggerTag', 'TaggerTag'));
-$c->select($modx->getSelectColumns('TaggerGroup', 'Group', 'group_'));
-$c->select(array('cnt' => 'COUNT(Resources.tag)'));
-$c->groupby($modx->getSelectColumns('TaggerTag', 'TaggerTag') . ',' . $modx->getSelectColumns('TaggerGroup', 'Group'));
-
-$c->prepare();
-
-$countQuery = new xPDOCriteria($modx, "SELECT COUNT(*) as total, MAX(cnt) as max_cnt FROM ({$c->toSQL(false)}) cq", $c->bindings, $c->cacheFlag);
-$stmt = $countQuery->prepare();
-
-if ($stmt && $stmt->execute()) {
-    $fetchedData = $stmt->fetch(PDO::FETCH_ASSOC);
-    $total = intval($fetchedData['total']);
-    $maxCnt = intval($fetchedData['max_cnt']);
-} else {
-    $total = 0;
-    $maxCnt = 0;
-}
+$taggerResult = $tagger->getTags($scriptProperties);
+$tags = $taggerResult->tags;
+$total = $taggerResult->total;
+$maxCnt = $taggerResult->maxCnt;
 
 $modx->setPlaceholder($totalPh, $total);
-
-foreach ($sort as $field => $dir) {
-    $dir = (strtolower($dir) == 'asc') ? 'asc' : 'desc';
-    $c->sortby($field, $dir);
-}
-
-$c->limit($limit, $offset);
-
-$tags = $modx->getIterator('TaggerTag', $c);
 
 $out = array();
 
