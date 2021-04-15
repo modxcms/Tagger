@@ -1,31 +1,42 @@
 <?php
-require_once dirname(__FILE__) . '/model/tagger/tagger.class.php';
+
+use MODX\Revolution\modExtraManagerController;
+use Tagger\Tagger;
+
 /**
  * @package tagger
  */
+abstract class TaggerBaseManagerController extends modExtraManagerController
+{
 
-abstract class TaggerBaseManagerController extends modExtraManagerController {
     /** @var Tagger $tagger */
     public $tagger;
-    public function initialize() {
-        $this->tagger = new Tagger($this->modx);
 
-        $this->addCss($this->tagger->getOption('cssUrl').'mgr.css');
-        $this->addJavascript($this->tagger->getOption('jsUrl').'mgr/tagger.js');
-        $this->addHtml('<script type="text/javascript">
-        Ext.onReady(function() {
-            Tagger.config = '.$this->modx->toJSON($this->tagger->options).';
-            Tagger.config.connector_url = "'.$this->tagger->getOption('connectorUrl').'";
-        });
-        </script>');
-        return parent::initialize();
-    }
-    public function getLanguageTopics() {
-        return array('tagger:default');
-    }
-    public function checkPermissions() { return true;}
-}
+    public function initialize()
+    {
+        $this->tagger = $this->modx->services->get('tagger');
 
-class IndexManagerController extends TaggerBaseManagerController {
-    public static function getDefaultController() { return 'home'; }
+        $this->addCss($this->tagger->getOption('cssUrl') . 'mgr.css');
+        $this->addJavascript($this->tagger->getOption('jsUrl') . 'mgr/tagger.js');
+        $this->addHtml('
+            <script type="text/javascript">
+                Ext.onReady(function() {
+                    tagger.config = ' . $this->modx->toJSON($this->tagger->options) . ';
+                });
+            </script>
+        ');
+
+        parent::initialize();
+    }
+
+    public function getLanguageTopics()
+    {
+        return ['tagger:default'];
+    }
+
+    public function checkPermissions()
+    {
+        return true;
+    }
+
 }

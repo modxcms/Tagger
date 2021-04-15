@@ -6,4 +6,4 @@ Ext.extend(Tagger,Ext.Component,{
     page:{},window:{},grid:{},tree:{},panel:{},combo:{},config: {}, fields: {}
 });
 Ext.reg('tagger',Tagger);
-Tagger = new Tagger();
+tagger = new Tagger();

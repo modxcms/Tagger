@@ -1,0 +1,224 @@
+{
+  "name": "Tagger",
+  "lowCaseName": "tagger",
+  "description": "Tag management component",
+  "author": "John Peca",
+  "version": "2.0.0-alpha1",
+  "menus": [
+    {
+      "text": "tagger.menu.tagger",
+      "description": "tagger.menu.tagger_desc",
+      "action": "home"
+    }
+  ],
+  "plugins": [
+    {
+      "name": "Tagger",
+      "events": [
+        "OnDocFormSave",
+        "OnDocFormPrerender",
+        "OnPageNotFound",
+        "OnResourceDuplicate"
+      ]
+    }
+  ],
+  "snippets": [
+    {
+      "name": "TaggerGetTags",
+      "properties": [
+        {
+          "name": "resources",
+          "description": "tagger.gettags.resources_desc",
+          "value": ""
+        },
+        {
+          "name": "groups",
+          "description": "tagger.gettags.groups_desc",
+          "value": ""
+        },
+        {
+          "name": "rowTpl",
+          "description": "tagger.gettags.rowTpl_desc",
+          "value": ""
+        },
+        {
+          "name": "outTpl",
+          "description": "tagger.gettags.outTpl_desc",
+          "value": ""
+        },
+        {
+          "name": "separator",
+          "description": "tagger.gettags.separator_desc",
+          "value": ""
+        },
+        {
+          "name": "target",
+          "description": "tagger.gettags.target_desc",
+          "value": ""
+        },
+        {
+          "name": "showUnused",
+          "description": "tagger.gettags.showUnused_desc",
+          "type": "numberfield",
+          "value": "0"
+        },
+        {
+          "name": "showUnpublished",
+          "description": "tagger.gettags.showUnpublished_desc",
+          "type": "numberfield",
+          "value": "0"
+        },
+        {
+          "name": "showDeleted",
+          "description": "tagger.gettags.showDeleted_desc",
+          "type": "numberfield",
+          "value": "0"
+        },
+        {
+          "name": "contexts",
+          "description": "tagger.gettags.contexts_desc",
+          "value": ""
+        },
+        {
+          "name": "toPlaceholder",
+          "description": "tagger.gettags.toPlaceholder_desc",
+          "value": ""
+        },
+        {
+          "name": "limit",
+          "description": "tagger.gettags.limit_desc",
+          "type": "numberfield",
+          "value": "0"
+        },
+        {
+          "name": "offset",
+          "description": "tagger.gettags.offset_desc",
+          "type": "numberfield",
+          "value": "0"
+        },
+        {
+          "name": "totalPh",
+          "description": "tagger.gettags.totalPh_desc",
+          "value": "tags_total"
+        },
+        {
+          "name": "sort",
+          "description": "tagger.gettags.sort_desc",
+          "value": "{\"tag\": \"asc\"}"
+        }
+      ]
+    },
+    {
+      "name": "TaggerGetResourcesWhere",
+      "properties": [
+        {
+          "name": "tags",
+          "description": "tagger.getresourceswhere.tags_desc",
+          "value": ""
+        },
+        {
+          "name": "groups",
+          "description": "tagger.getresourceswhere.groups_desc",
+          "value": ""
+        },
+        {
+          "name": "where",
+          "description": "tagger.getresourceswhere.where_desc",
+          "value": ""
+        },
+        {
+          "name": "likeComparison",
+          "description": "tagger.getresourceswhere.likeComparison_desc",
+          "type": "numberfield",
+          "value": "0"
+        },
+        {
+          "name": "tagField",
+          "description": "tagger.getresourceswhere.tagField_desc",
+          "value": "alias"
+        },
+        {
+          "name": "matchAll",
+          "description": "tagger.getresourceswhere.matchAll_desc",
+          "type": "numberfield",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "name": "TaggerGetRelatedWhere"
+    },
+    {
+      "name": "TaggerGetCurrentTag"
+    }
+  ],
+  "systemSettings": [
+    {
+      "key": "place_above_content_header",
+      "value": 1,
+      "type": "combo-boolean",
+      "area": "places"
+    },
+    {
+      "key": "place_below_content_header",
+      "value": 1,
+      "type": "combo-boolean",
+      "area": "places"
+    },
+    {
+      "key": "place_bottom_page_header",
+      "value": 1,
+      "type": "combo-boolean",
+      "area": "places"
+    },
+    {
+      "key": "place_in_tab_label",
+      "value": "tagger.tab.label",
+      "area": "places"
+    },
+    {
+      "key": "place_tvs_tab_label",
+      "value": "tagger.tab.label",
+      "area": "places"
+    },
+    {
+      "key": "place_above_content_label",
+      "value": "tagger.tab.label",
+      "area": "places"
+    },
+    {
+      "key": "place_below_content_label",
+      "value": "tagger.tab.label",
+      "area": "places"
+    },
+    {
+      "key": "place_bottom_page_label",
+      "value": "tagger.tab.label",
+      "area": "places"
+    },
+    {
+      "key": "remove_accents_tag",
+      "value": 1,
+      "type": "combo-boolean",
+      "area": "settings"
+    },
+    {
+      "key": "remove_accents_group",
+      "value": 1,
+      "type": "combo-boolean",
+      "area": "settings"
+    }
+  ],
+  "database": {
+    "tables": [
+      "\\Tagger\\Model\\TaggerGroup",
+      "\\Tagger\\Model\\TaggerTag",
+      "\\Tagger\\Model\\TaggerTagResource"
+    ]
+  },
+  "build": {
+    "scriptsAfter": [
+      "after.migration.php"
+    ]
+  }
+}
