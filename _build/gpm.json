@@ -219,6 +219,10 @@
   "build": {
     "scriptsAfter": [
       "after.migration.php"
-    ]
+    ],
+    "requires": {
+      "gpm": ">=3.0.0",
+      "modx": ">=3.0.0-alpha"
+    }
   }
 }
