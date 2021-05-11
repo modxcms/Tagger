@@ -16,6 +16,7 @@
  * &matchAll        int     optional    If set to 1, resource must have all specified tags. Default: 0
  * &errorOnInvalidTags bool optional    If set to true, will 404 on an invalid tag name request. Default: false
  * &field           string  optional    modResource field that will be used to compare with assigned resource ID
+ * &class           string  optional    
  *
  * USAGE:
  *
@@ -34,6 +35,7 @@ $matchAll = (int) $modx->getOption('matchAll', $scriptProperties, 0);
 $errorOnInvalidTags = (int) $modx->getOption('errorOnInvalidTags', $scriptProperties, 0);
 $field = $modx->getOption('field', $scriptProperties, 'id');
 $where = $modx->fromJSON($where);
+$class = $modx->getOption('class', $scriptProperties, 'modResource');
 if ($where == false) {
     $where = array();
 }
@@ -137,9 +139,9 @@ if (count($tagIDs) == 0) {
 }
 
 if ($matchAll == 0) {
-    $where[] = "EXISTS (SELECT 1 FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource." . $field . ")";
+    $where[] = "EXISTS (SELECT 1 FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = ".$class."." . $field . ")";
 } else {
-    $where[] = "EXISTS (SELECT 1 as found FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = modResource." . $field . " GROUP BY found HAVING count(found) = " . $tagsCount . ")";
+    $where[] = "EXISTS (SELECT 1 as found FROM {$modx->getTableName('TaggerTagResource')} r WHERE r.tag IN (" . implode(',', $tagIDs) . ") AND r.resource = ".$class."." . $field . " GROUP BY found HAVING count(found) = " . $tagsCount . ")";
 }
 
 return $modx->toJSON($where);
