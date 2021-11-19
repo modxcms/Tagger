@@ -1,6 +1,6 @@
 <?php
 /**
- * Englische Standard-Lexikoneinträge für Tagger
+ * Default German Lexicon Entries for Tagger
  *
  * @package tagger
  * @subpackage lexicon
