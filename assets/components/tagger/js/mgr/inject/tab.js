@@ -183,8 +183,6 @@ Ext.override(MODx.panel.Resource, {
 
     taggerGetFields: function(config) {
         var fields = {
-            'above-content': [],
-            'below-content': [],
             'bottom-page': [],
             'in-tab': [],
             'in-tvs': []
@@ -233,8 +231,6 @@ Ext.override(MODx.panel.Resource, {
 
     taggerGetLabels: function(config) {
         return {
-            'above_content': this.taggerGetLabel('above_content', config.record.template),
-            'below_content': this.taggerGetLabel('below_content', config.record.template),
             'bottom_page': this.taggerGetLabel('bottom_page', config.record.template),
             'in_tab': this.taggerGetLabel('in_tab', config.record.template),
             'tvs_tab': this.taggerGetLabel('tvs_tab', config.record.template)
