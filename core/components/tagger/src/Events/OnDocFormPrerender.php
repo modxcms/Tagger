@@ -6,7 +6,7 @@ use Tagger\Model\TaggerGroup;
 use Tagger\Model\TaggerTag;
 use Tagger\Model\TaggerTagResource;
 
-class OnDocFormPreRender extends Event
+class OnDocFormPrerender extends Event
 {
 
     public function run()

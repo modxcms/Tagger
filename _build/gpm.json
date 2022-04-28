@@ -3,7 +3,7 @@
   "lowCaseName": "tagger",
   "description": "Tag management component",
   "author": "John Peca",
-  "version": "2.0.0-beta",
+  "version": "2.0.0-pl",
   "menus": [
     {
       "text": "tagger.menu.tagger",
