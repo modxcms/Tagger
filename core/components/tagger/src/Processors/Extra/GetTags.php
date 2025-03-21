@@ -24,6 +24,7 @@ class GetTags extends GetListProcessor
         $start = $this->getProperty('start', 0);
         $sortField = $this->getProperty('sort_field', 'alias');
         $sortDir = $this->getProperty('sort_dir', 'asc');
+        $tags = $this->getProperty('tags', []);
 
         $c = $this->modx->newQuery(TaggerTag::class);
         $c->where(['group' => $group]);
@@ -36,6 +37,12 @@ class GetTags extends GetListProcessor
                     'tag:LIKE' => '%' . $query . '%',
                 ]
             );
+        }
+
+        if (!empty($tags)) {
+            $c->where([
+                'tag:in' => $tags
+            ]);
         }
 
         $cnt = $this->modx->getCount(TaggerTag::class, $c);

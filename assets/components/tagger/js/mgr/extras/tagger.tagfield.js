@@ -253,11 +253,78 @@ Ext.extend(tagger.fields.Tags,MODx.combo.ComboBox,{
         this.addItems(this.getFieldValue(), true);
     },
 
+    addTag: function(value, fromField) {
+        if (this.config.tagLimit > 0) {
+            if (this.myStore.find('tag', value) == -1) {
+                if (this.myStore.getCount() >= this.config.tagLimit) {
+                    return false;
+                }
+            }
+        }
+
+        var valueIndex = -1;
+        if (this.config.autoTag == true) {
+            valueIndex = this.autoTagStore.find('tag', value);
+            if (valueIndex != -1) {
+                var rec = this.autoTagStore.getAt(valueIndex);
+                if (rec.data.el.el && !rec.data.el.el.hasClass('x-superboxselect-item')) {
+                    rec.data.el.click();
+                } else {
+                    if (this.myStore.find('tag', value) == -1) {
+                        var record = new Ext.data.Record({tag: value}, value);
+                        this.myStore.add([record]);
+                    }
+                }
+            }
+        }
+
+        if (this.config.autoTag == false || (fromField && valueIndex === -1)) {
+            var item = new tagger.fields.Tag({
+                owner: this,
+                renderTo: this.insertedTagsEl,
+                value: value,
+                active: true,
+                listeners: {
+                    remove: function(item){
+                        this.fireEvent('removeitem',this,item);
+                    },scope: this
+                }
+            });
+            item.render();
+            this.fireEvent('additem',this,value);
+        }
+
+        return true;
+    },
+
     addItems: function(items, fromField){
         fromField = fromField || false;
 
         items = Ext.isEmpty(items) ? '' : items;
         var values = items.split(/\s*[,]\s*/);
+        if (this.config.allowAdd == false && this.store.loaded) {
+            this.findTags(values, (data) => {
+                Ext.each(values, function (value) {
+                    if(this.ignoreCase){
+                        value = value.toLowerCase();
+                    }
+
+                    if(value == ''){
+                        return;
+                    }
+
+                    this.store.clearFilter();
+                    if (data.findIndex((i) => i.data.tag === value) == -1) {
+                        return;
+                    }
+
+                    this.addTag(value, fromField);
+                }, this);
+
+                this.setFieldValue();
+            });
+            return;
+        }
 
         Ext.each(values, function (value) {
             if(this.ignoreCase){
@@ -275,45 +342,7 @@ Ext.extend(tagger.fields.Tags,MODx.combo.ComboBox,{
                 }
             }
 
-            if (this.config.tagLimit > 0) {
-                if (this.myStore.find('tag', value) == -1) {
-                    if (this.myStore.getCount() >= this.config.tagLimit) {
-                        return;
-                    }
-                }
-            }
-
-            var valueIndex = -1;
-            if (this.config.autoTag == true) {
-                valueIndex = this.autoTagStore.find('tag', value);
-                if (valueIndex != -1) {
-                    var rec = this.autoTagStore.getAt(valueIndex);
-                    if (rec.data.el.el && !rec.data.el.el.hasClass('x-superboxselect-item')) {
-                        rec.data.el.click();
-                    } else {
-                        if (this.myStore.find('tag', value) == -1) {
-                            var record = new Ext.data.Record({tag: value}, value);
-                            this.myStore.add([record]);
-                        }
-                    }
-                }
-            }
-
-            if (this.config.autoTag == false || (fromField && valueIndex === -1)) {
-                var item = new tagger.fields.Tag({
-                    owner: this,
-                    renderTo: this.insertedTagsEl,
-                    value: value,
-                    active: true,
-                    listeners: {
-                        remove: function(item){
-                            this.fireEvent('removeitem',this,item);
-                        },scope: this
-                    }
-                });
-                item.render();
-                this.fireEvent('additem',this,value);
-            }
+            this.addTag(value, fromField);
         }, this);
 
 
@@ -363,6 +392,34 @@ Ext.extend(tagger.fields.Tags,MODx.combo.ComboBox,{
                 this.onLoad();
             }
         }
+    },
+
+    findTags: function (tags, callback) {
+        tags = Array.isArray(tags) ? tags : [tags];
+        tags = tags.filter(Boolean);
+        if (tags.length === 0) {
+            return;
+        }
+        this.store.load({
+            params: {
+                limit: 0,
+                offset: 0,
+                'tags[]': tags,
+                [this.queryParam]: '',
+
+            },
+            callback: (x) => {
+                callback(x);
+                this.collapse();
+
+                this.store.load({
+                    params: this.getParams(),
+                    callback: () => {
+                        this.collapse();
+                    }
+                });
+            }
+        });
     },
 
     onSelect : function(record, index){
