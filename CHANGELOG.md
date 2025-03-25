@@ -1,5 +1,11 @@
 Changelog for Tagger.
 
+Tagger 2.1.0
+==============
+- Fix adding tags from multiple pages
+- Add &groupTpl to TaggerGetTags
+- Add &matchAll=2 to TaggerGetResourcesWhere
+
 Tagger 2.0.0
 ==============
 - Add support for Revolution 3.0.0
