@@ -16,7 +16,7 @@
  * current getResources call, move it here
  * &likeComparison  int     optional    If set to 1, tags will compare using LIKE
  * &tagField        string  optional    Field that will be used to compare with given tags. Default: alias
- * &matchAll        int     optional    If set to 1, resource must have all specified tags. Default: 0
+ * &matchAll        int     optional    If set to 1, resource must have all specified tags. Default: 0 | If set to 2, an AND condition is used between different groups, an OR condition is used for tags in the same group
  * &errorOnInvalidTags bool optional    If set to true, will 404 on an invalid tag name request. Default: false
  * &field           string  optional    modResource field that will be used to compare with assigned resource ID
  *
@@ -94,6 +94,7 @@ if ($tags == '') {
 
     $c = $modx->newQuery(TaggerTag::class);
     $c->leftJoin(TaggerGroup::class, 'Group');
+    $c->select($modx->getSelectColumns(TaggerTag::class, 'TaggerTag', '', ['id', 'group']));
 
     $c->where($conditions);
 } else {
@@ -110,7 +111,7 @@ if ($tags == '') {
     $groups = \Tagger\Utils::explodeAndClean($groups);
 
     $c = $modx->newQuery(TaggerTag::class);
-    $c->select($modx->getSelectColumns(TaggerTag::class, 'TaggerTag', '', ['id']));
+    $c->select($modx->getSelectColumns(TaggerTag::class, 'TaggerTag', '', ['id', 'group']));
 
     $compare = [
         $tagField . ':IN' => $tags,
@@ -138,7 +139,22 @@ if ($tags == '') {
 
 $c->prepare();
 $c->stmt->execute();
-$tagIDs = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$tagGroups = [];
+$tagIDs = [];
+if ($matchAll === 2) {
+    // Group the tags
+    $taggerTags = $c->stmt->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($taggerTags as $tag) {
+        if (!array_key_exists($tag['group'], $tagGroups)) {
+            $tagGroups[$tag['group']] = [];
+        }
+        $tagGroups[$tag['group']][] = $tag['id'];
+        $tagIDs[] = $tag['id'];
+    }
+} else {
+    $tagIDs = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+}
 
 if (count($tagIDs) == 0) {
     $tagIDs[] = 0;
@@ -152,6 +168,13 @@ if ($matchAll == 0) {
             ',',
             $tagIDs
         ) . ") AND r.resource = modResource." . $field . ")";
+} elseif ($matchAll === 2) {
+    foreach ($tagGroups as $tagGroupIDs) {
+        $where[] = "EXISTS (SELECT 1 FROM {$modx->getTableName(TaggerTagResource::class)} r WHERE r.tag IN (" . implode(
+            ',',
+            $tagGroupIDs
+        ) . ") AND r.resource = modResource." . $field . ")";
+    }
 } else {
     $where[] = "EXISTS (SELECT 1 as found FROM {$modx->getTableName(TaggerTagResource::class)} r WHERE r.tag IN ("
         . implode(',', $tagIDs) . ") AND r.resource = modResource." . $field . " GROUP BY found HAVING count(found) = "
