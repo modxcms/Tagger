@@ -185,7 +185,9 @@ tagger.combo.SortField = function(config) {
             fields: ['d','v'],
             data: [
                 [_('tagger.group.sort_field_alias') ,'alias'],
-                [_('tagger.group.sort_field_rank') ,'rank']
+                [_('tagger.group.sort_field_rank') ,'rank'],
+                [_('tagger.group.sort_field_tag') ,'tag'],
+                [_('tagger.group.sort_field_label') ,'label']
             ]
         }),
         displayField: 'd',

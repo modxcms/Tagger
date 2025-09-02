@@ -40,7 +40,7 @@ class TaggerGroup extends \xPDO\Om\xPDOSimpleObject
             $this->set('alias', $this->generateUniqueAlias($this->name));
         }
 
-        if (!in_array($this->sort_field, ['alias', 'rank'])) {
+        if (!in_array($this->sort_field, ['alias', 'rank', 'tag', 'label'])) {
             $this->set('sort_field', 'alias');
         }
 
