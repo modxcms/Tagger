@@ -136,7 +136,7 @@ $modx->setPlaceholder($totalPh, $total);
 
 $tags = [];
 
-if ($collection = $modx->getIterator('TaggerTag', $c)) {
+if ($collection = $modx->getIterator(TaggerTag::class, $c)) {
     foreach ($collection as $tag) {
         $tags[] = $tag->get('alias');
     }
